@@ -3,26 +3,26 @@ import { useState } from "react";
 
 export default function Home() {
   const districts = [
-    { name: "Mtatsminda", nameKa: "მთაწმინდა", avgPrice: 2459, change: 4, type: "premium" },
-    { name: "Vake", nameKa: "ვაკე", avgPrice: 2143, change: 13, type: "premium" },
-    { name: "Vera", nameKa: "ვერა", avgPrice: 1950, change: 8, type: "premium" },
-    { name: "Saburtalo", nameKa: "საბურთალო", avgPrice: 1573, change: 4, type: "mid" },
-    { name: "Chughureti", nameKa: "ჩუღურეთი", avgPrice: 1588, change: 5, type: "mid" },
-    { name: "Krtsanisi", nameKa: "კრწანისი", avgPrice: 1525, change: -2, type: "mid" },
-    { name: "Didube", nameKa: "დიდუბე", avgPrice: 1478, change: 8, type: "mid" },
-    { name: "Avlabari", nameKa: "ავლაბარი", avgPrice: 1350, change: 6, type: "mid" },
-    { name: "Isani", nameKa: "ისანი", avgPrice: 1406, change: 3, type: "mid" },
-    { name: "Nadzaladevi", nameKa: "ნაძალადევი", avgPrice: 1451, change: 4, type: "mid" },
-    { name: "Didi Dighomi", nameKa: "დიდი დიღომი", avgPrice: 1100, change: -1, type: "affordable" },
-    { name: "Gldani", nameKa: "გლდანი", avgPrice: 1361, change: 7, type: "affordable" },
-    { name: "Samgori", nameKa: "სამგორი", avgPrice: 1179, change: -1, type: "affordable" },
-    { name: "Varketili", nameKa: "ვარკეთილი", avgPrice: 950, change: 3, type: "affordable" },
-    { name: "Vazisubani", nameKa: "ვაზისუბანი", avgPrice: 980, change: 2, type: "affordable" },
-    { name: "Lilo", nameKa: "ლილო", avgPrice: 850, change: 2, type: "affordable" },
-    { name: "Ponichala", nameKa: "პონიჭალა", avgPrice: 780, change: 1, type: "affordable" },
-    { name: "Vashlijvari", nameKa: "ვაშლიჯვარი", avgPrice: 1100, change: 5, type: "affordable" },
-    { name: "Tskneti", nameKa: "წყნეთი", avgPrice: 900, change: 3, type: "affordable" },
-    { name: "Ortachala", nameKa: "ორთაჭალა", avgPrice: 1050, change: 4, type: "affordable" },
+    { name: "Mtatsminda", nameKa: "მთაწმინდა", avgPrice: 2007, change: 2, type: "premium" },
+    { name: "Vake", nameKa: "ვაკე", avgPrice: 2170, change: 13, type: "premium" },
+    { name: "Vera", nameKa: "ვერა", avgPrice: 1900, change: 8, type: "premium" },
+    { name: "Chughureti", nameKa: "ჩუღურეთი", avgPrice: 1275, change: 0, type: "mid" },
+    { name: "Saburtalo", nameKa: "საბურთალო", avgPrice: 1583, change: 4, type: "mid" },
+    { name: "Krtsanisi", nameKa: "კრწანისი", avgPrice: 1334, change: -9, type: "mid" },
+    { name: "Didube", nameKa: "დიდუბე", avgPrice: 1297, change: 8, type: "mid" },
+    { name: "Nadzaladevi", nameKa: "ნაძალადევი", avgPrice: 1116, change: 4, type: "mid" },
+    { name: "Isani", nameKa: "ისანი", avgPrice: 1175, change: 3, type: "mid" },
+    { name: "Avlabari", nameKa: "ავლაბარი", avgPrice: 1150, change: 6, type: "mid" },
+    { name: "Gldani", nameKa: "გლდანი", avgPrice: 1092, change: 7, type: "affordable" },
+    { name: "Samgori", nameKa: "სამგორი", avgPrice: 1027, change: -1, type: "affordable" },
+    { name: "Didi Dighomi", nameKa: "დიდი დიღომი", avgPrice: 1129, change: -1, type: "affordable" },
+    { name: "Vashlijvari", nameKa: "ვაშლიჯვარი", avgPrice: 1050, change: 5, type: "affordable" },
+    { name: "Varketili", nameKa: "ვარკეთილი", avgPrice: 900, change: 3, type: "affordable" },
+    { name: "Vazisubani", nameKa: "ვაზისუბანი", avgPrice: 920, change: 2, type: "affordable" },
+    { name: "Ortachala", nameKa: "ორთაჭალა", avgPrice: 980, change: 4, type: "affordable" },
+    { name: "Lilo", nameKa: "ლილო", avgPrice: 800, change: 2, type: "affordable" },
+    { name: "Ponichala", nameKa: "პონიჭალა", avgPrice: 750, change: 1, type: "affordable" },
+    { name: "Tskneti", nameKa: "წყნეთი", avgPrice: 850, change: 3, type: "affordable" },
   ];
 
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -46,7 +46,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">TbilisiPrice.ge</h1>
-            <p className="text-sm text-gray-500">Real estate prices based on actual transactions</p>
+            <p className="text-sm text-gray-500">Real estate prices based on actual market transactions</p>
           </div>
           <button className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">
             Find my apartment
@@ -57,7 +57,7 @@ export default function Home() {
       <section className="bg-blue-700 text-white px-6 py-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-4">What are apartments actually selling for in Tbilisi?</h2>
-          <p className="text-blue-200 text-lg mb-8">Real prices from NAPR transaction records — not asking prices, not estimates.</p>
+          <p className="text-blue-200 text-lg mb-8">Real market prices covering all apartment types — new builds and resale.</p>
 
           <div className="bg-white rounded-xl p-6 max-w-2xl">
             <p className="text-gray-700 font-semibold mb-3 text-lg">Is this listing fairly priced?</p>
@@ -101,6 +101,7 @@ export default function Home() {
                 </p>
               </div>
             )}
+            <p className="text-gray-400 text-xs mt-3">Source: TBC Capital Tbilisi Residential Market Report, September 2025. Covers all apartment types.</p>
           </div>
         </div>
       </section>
@@ -108,7 +109,7 @@ export default function Home() {
       <section className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">Average prices by district</h3>
-          <p className="text-gray-500 mb-8 text-sm">Source: GeoStat & NAPR transaction data — Q4 2025</p>
+          <p className="text-gray-500 mb-8 text-sm">Source: TBC Capital Tbilisi Residential Market Report — September 2025</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {districts.map(function(district) {
               return (
@@ -137,8 +138,8 @@ export default function Home() {
 
       <footer className="border-t border-gray-200 px-6 py-8 mt-8">
         <div className="max-w-6xl mx-auto text-center text-gray-400 text-sm">
-          <p>Data source: GeoStat (National Statistics Office of Georgia) & NAPR transaction records.</p>
-          <p className="mt-1">Prices shown are averages for all apartment types. Individual prices vary by floor, condition, and building age.</p>
+          <p>Data source: TBC Capital Tbilisi Residential Market Report, September 2025.</p>
+          <p className="mt-1">Prices are averages covering all apartment types. Individual prices vary by floor, condition, and building age.</p>
         </div>
       </footer>
     </main>
