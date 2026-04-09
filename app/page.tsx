@@ -28,7 +28,7 @@ export default function Home() {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [size, setSize] = useState("");
   const [price, setPrice] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<any>(null);
 
   function checkPrice() {
     const district = districts.find(function(d) { return d.name === selectedDistrict; });
