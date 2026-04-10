@@ -3,26 +3,26 @@ import { useState } from "react";
 
 export default function Home() {
   const districts = [
-    { name: "Mtatsminda", nameKa: "მთაწმინდა", avgPrice: 2007, change: 2, type: "premium" },
-    { name: "Vake", nameKa: "ვაკე", avgPrice: 2170, change: 13, type: "premium" },
-    { name: "Vera", nameKa: "ვერა", avgPrice: 1900, change: 8, type: "premium" },
-    { name: "Chughureti", nameKa: "ჩუღურეთი", avgPrice: 1275, change: 0, type: "mid" },
-    { name: "Saburtalo", nameKa: "საბურთალო", avgPrice: 1583, change: 4, type: "mid" },
-    { name: "Krtsanisi", nameKa: "კრწანისი", avgPrice: 1334, change: -9, type: "mid" },
-    { name: "Didube", nameKa: "დიდუბე", avgPrice: 1297, change: 8, type: "mid" },
-    { name: "Nadzaladevi", nameKa: "ნაძალადევი", avgPrice: 1116, change: 4, type: "mid" },
-    { name: "Isani", nameKa: "ისანი", avgPrice: 1175, change: 3, type: "mid" },
+    { name: "Vake", nameKa: "ვაკე", avgPrice: 2380, change: 20, type: "premium" },
+    { name: "Mtatsminda", nameKa: "მთაწმინდა", avgPrice: 2293, change: 7, type: "premium" },
+    { name: "Vera", nameKa: "ვერა", avgPrice: 1950, change: 8, type: "premium" },
+    { name: "Saburtalo", nameKa: "საბურთალო", avgPrice: 1602, change: 5, type: "mid" },
+    { name: "Chughureti", nameKa: "ჩუღურეთი", avgPrice: 1455, change: 7, type: "mid" },
+    { name: "Krtsanisi", nameKa: "კრწანისი", avgPrice: 1451, change: 3, type: "mid" },
+    { name: "Didube", nameKa: "დიდუბე", avgPrice: 1236, change: -1, type: "mid" },
+    { name: "Isani", nameKa: "ისანი", avgPrice: 1195, change: 2, type: "mid" },
+    { name: "Nadzaladevi", nameKa: "ნაძალადევი", avgPrice: 1123, change: -3, type: "mid" },
     { name: "Avlabari", nameKa: "ავლაბარი", avgPrice: 1150, change: 6, type: "mid" },
-    { name: "Gldani", nameKa: "გლდანი", avgPrice: 1092, change: 7, type: "affordable" },
-    { name: "Samgori", nameKa: "სამგორი", avgPrice: 1027, change: -1, type: "affordable" },
-    { name: "Didi Dighomi", nameKa: "დიდი დიღომი", avgPrice: 1129, change: -1, type: "affordable" },
+    { name: "Didi Dighomi", nameKa: "დიდი დიღომი", avgPrice: 1142, change: 3, type: "affordable" },
+    { name: "Samgori", nameKa: "სამგორი", avgPrice: 1138, change: 12, type: "affordable" },
+    { name: "Gldani", nameKa: "გლდანი", avgPrice: 1134, change: 1, type: "affordable" },
     { name: "Vashlijvari", nameKa: "ვაშლიჯვარი", avgPrice: 1050, change: 5, type: "affordable" },
-    { name: "Varketili", nameKa: "ვარკეთილი", avgPrice: 900, change: 3, type: "affordable" },
-    { name: "Vazisubani", nameKa: "ვაზისუბანი", avgPrice: 920, change: 2, type: "affordable" },
     { name: "Ortachala", nameKa: "ორთაჭალა", avgPrice: 980, change: 4, type: "affordable" },
+    { name: "Vazisubani", nameKa: "ვაზისუბანი", avgPrice: 920, change: 2, type: "affordable" },
+    { name: "Varketili", nameKa: "ვარკეთილი", avgPrice: 900, change: 3, type: "affordable" },
+    { name: "Tskneti", nameKa: "წყნეთი", avgPrice: 850, change: 3, type: "affordable" },
     { name: "Lilo", nameKa: "ლილო", avgPrice: 800, change: 2, type: "affordable" },
     { name: "Ponichala", nameKa: "პონიჭალა", avgPrice: 750, change: 1, type: "affordable" },
-    { name: "Tskneti", nameKa: "წყნეთი", avgPrice: 850, change: 3, type: "affordable" },
   ];
 
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -35,14 +35,8 @@ export default function Home() {
   const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
-    budget: "",
-    purpose: "",
-    district: "",
-    propertyType: "",
-    timeline: "",
-    financing: "",
-    whatsapp: "",
-    name: "",
+    budget: "", purpose: "", district: "", propertyType: "",
+    timeline: "", financing: "", whatsapp: "", name: "",
   });
 
   function openForm() {
@@ -51,14 +45,25 @@ export default function Home() {
     setSubmitted(false);
   }
 
+  function getSizeAdjustment(sqm: number) {
+    if (sqm < 35) return 1.35;
+    if (sqm < 50) return 1.20;
+    if (sqm < 75) return 1.00;
+    if (sqm < 125) return 0.90;
+    return 0.80;
+  }
+
   function checkPrice() {
     const district = districts.find(function(d) { return d.name === selectedDistrict; });
     if (!district) { alert("Please select a district"); return; }
     if (!size) { alert("Please enter size"); return; }
     if (!price) { alert("Please enter price"); return; }
-    const pricePerSqm = Math.round(parseInt(price) / parseInt(size));
-    const diff = Math.round(((pricePerSqm - district.avgPrice) / district.avgPrice) * 100);
-    setResult({ pricePerSqm: pricePerSqm, diff: diff, district: district });
+    const sqm = parseInt(size);
+    const pricePerSqm = Math.round(parseInt(price) / sqm);
+    const adjustment = getSizeAdjustment(sqm);
+    const adjustedAvg = Math.round(district.avgPrice * adjustment);
+    const diff = Math.round(((pricePerSqm - adjustedAvg) / adjustedAvg) * 100);
+    setResult({ pricePerSqm, diff, district, adjustedAvg, sqm });
   }
 
   function calcScore() {
@@ -119,10 +124,9 @@ export default function Home() {
               <div className="text-5xl mb-4">✅</div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank you!</h2>
               <p className="text-gray-600 mb-6">We will contact you on WhatsApp within 24 hours with apartments matching your criteria.</p>
-              <button
-                onClick={() => { setShowForm(false); setSubmitted(false); setFormStep(1); }}
+              <button onClick={() => { setShowForm(false); setSubmitted(false); setFormStep(1); }}
                 style={{touchAction: 'manipulation'}}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 w-full">
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium w-full">
                 Back to prices
               </button>
             </div>
@@ -132,7 +136,6 @@ export default function Home() {
                 <h2 className="text-xl font-bold text-gray-900">Find my apartment</h2>
                 <span className="text-sm text-gray-400">Step {formStep} of 3</span>
               </div>
-
               <div className="w-full bg-gray-100 rounded-full h-1.5 mb-8">
                 <div className="bg-blue-600 h-1.5 rounded-full transition-all" style={{width: `${(formStep/3)*100}%`}}></div>
               </div>
@@ -142,29 +145,24 @@ export default function Home() {
                   <p className="font-semibold text-gray-800 mb-4">What is your budget?</p>
                   {["Under $40,000", "$40,000 - $80,000", "$80,000 - $150,000", "$150,000+"].map(function(opt) {
                     return (
-                      <button key={opt}
-                        onClick={() => setFormData({...formData, budget: opt})}
+                      <button key={opt} onClick={() => setFormData({...formData, budget: opt})}
                         style={{touchAction: 'manipulation'}}
                         className={`w-full text-left px-4 py-3 rounded-lg border mb-2 text-sm font-medium ${formData.budget === opt ? "border-blue-600 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-700"}`}>
                         {opt}
                       </button>
                     );
                   })}
-
                   <p className="font-semibold text-gray-800 mb-4 mt-6">Own use or investment?</p>
                   {["Own use", "Investment / rental", "Both"].map(function(opt) {
                     return (
-                      <button key={opt}
-                        onClick={() => setFormData({...formData, purpose: opt})}
+                      <button key={opt} onClick={() => setFormData({...formData, purpose: opt})}
                         style={{touchAction: 'manipulation'}}
                         className={`w-full text-left px-4 py-3 rounded-lg border mb-2 text-sm font-medium ${formData.purpose === opt ? "border-blue-600 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-700"}`}>
                         {opt}
                       </button>
                     );
                   })}
-
-                  <button
-                    onClick={() => { if(!formData.budget || !formData.purpose) { alert("Please answer both questions"); return; } setFormStep(2); }}
+                  <button onClick={() => { if(!formData.budget || !formData.purpose) { alert("Please answer both questions"); return; } setFormStep(2); }}
                     style={{touchAction: 'manipulation'}}
                     className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium mt-4">
                     Next →
@@ -175,8 +173,7 @@ export default function Home() {
               {formStep === 2 && (
                 <div>
                   <p className="font-semibold text-gray-800 mb-4">Preferred district?</p>
-                  <select
-                    onChange={e => setFormData({...formData, district: e.target.value})}
+                  <select onChange={e => setFormData({...formData, district: e.target.value})}
                     className="w-full border border-gray-300 rounded-lg px-3 py-3 text-gray-700 text-sm mb-6">
                     <option value="">Select district</option>
                     {districts.map(function(d) {
@@ -184,44 +181,32 @@ export default function Home() {
                     })}
                     <option value="Open to suggestions">Open to suggestions</option>
                   </select>
-
                   <p className="font-semibold text-gray-800 mb-4">New build or resale?</p>
                   {["New build", "Resale", "No preference"].map(function(opt) {
                     return (
-                      <button key={opt}
-                        onClick={() => setFormData({...formData, propertyType: opt})}
+                      <button key={opt} onClick={() => setFormData({...formData, propertyType: opt})}
                         style={{touchAction: 'manipulation'}}
                         className={`w-full text-left px-4 py-3 rounded-lg border mb-2 text-sm font-medium ${formData.propertyType === opt ? "border-blue-600 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-700"}`}>
                         {opt}
                       </button>
                     );
                   })}
-
                   <p className="font-semibold text-gray-800 mb-4 mt-6">How soon are you buying?</p>
                   {["Within 1 month", "1-3 months", "3-6 months", "Just browsing"].map(function(opt) {
                     return (
-                      <button key={opt}
-                        onClick={() => setFormData({...formData, timeline: opt})}
+                      <button key={opt} onClick={() => setFormData({...formData, timeline: opt})}
                         style={{touchAction: 'manipulation'}}
                         className={`w-full text-left px-4 py-3 rounded-lg border mb-2 text-sm font-medium ${formData.timeline === opt ? "border-blue-600 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-700"}`}>
                         {opt}
                       </button>
                     );
                   })}
-
                   <div className="flex gap-3 mt-4">
-                    <button
-                      onClick={() => setFormStep(1)}
+                    <button onClick={() => setFormStep(1)} style={{touchAction: 'manipulation'}}
+                      className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-medium">← Back</button>
+                    <button onClick={() => { if(!formData.district || !formData.propertyType || !formData.timeline) { alert("Please answer all questions"); return; } setFormStep(3); }}
                       style={{touchAction: 'manipulation'}}
-                      className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-medium">
-                      ← Back
-                    </button>
-                    <button
-                      onClick={() => { if(!formData.district || !formData.propertyType || !formData.timeline) { alert("Please answer all questions"); return; } setFormStep(3); }}
-                      style={{touchAction: 'manipulation'}}
-                      className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium">
-                      Next →
-                    </button>
+                      className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium">Next →</button>
                   </div>
                 </div>
               )}
@@ -231,36 +216,25 @@ export default function Home() {
                   <p className="font-semibold text-gray-800 mb-4">How will you finance?</p>
                   {["Cash", "Mortgage - approved", "Mortgage - not yet", "Undecided"].map(function(opt) {
                     return (
-                      <button key={opt}
-                        onClick={() => setFormData({...formData, financing: opt})}
+                      <button key={opt} onClick={() => setFormData({...formData, financing: opt})}
                         style={{touchAction: 'manipulation'}}
                         className={`w-full text-left px-4 py-3 rounded-lg border mb-2 text-sm font-medium ${formData.financing === opt ? "border-blue-600 bg-blue-50 text-blue-700" : "border-gray-200 text-gray-700"}`}>
                         {opt}
                       </button>
                     );
                   })}
-
                   <p className="font-semibold text-gray-800 mb-3 mt-6">Your name</p>
                   <input type="text" placeholder="First name"
                     className="w-full border border-gray-300 rounded-lg px-3 py-3 text-gray-700 text-sm mb-4"
                     onChange={e => setFormData({...formData, name: e.target.value})} />
-
                   <p className="font-semibold text-gray-800 mb-3">WhatsApp number</p>
                   <input type="tel" placeholder="+995 5XX XXX XXX"
                     className="w-full border border-gray-300 rounded-lg px-3 py-3 text-gray-700 text-sm mb-6"
                     onChange={e => setFormData({...formData, whatsapp: e.target.value})} />
-
                   <div className="flex gap-3">
-                    <button
-                      onClick={() => setFormStep(2)}
-                      style={{touchAction: 'manipulation'}}
-                      className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-medium">
-                      ← Back
-                    </button>
-                    <button
-                      onClick={submitForm}
-                      disabled={submitting}
-                      style={{touchAction: 'manipulation'}}
+                    <button onClick={() => setFormStep(2)} style={{touchAction: 'manipulation'}}
+                      className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-medium">← Back</button>
+                    <button onClick={submitForm} disabled={submitting} style={{touchAction: 'manipulation'}}
                       className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium disabled:opacity-50">
                       {submitting ? "Sending..." : "Submit →"}
                     </button>
@@ -282,9 +256,7 @@ export default function Home() {
             <h1 className="text-2xl font-bold text-gray-900">TbilisiPrice.ge</h1>
             <p className="text-sm text-gray-500">Real estate prices based on actual market transactions</p>
           </div>
-          <button
-            onClick={openForm}
-            style={{touchAction: 'manipulation', minHeight: '44px', minWidth: '44px'}}
+          <button onClick={openForm} style={{touchAction: 'manipulation', minHeight: '44px'}}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg text-sm font-medium">
             Find my apartment
           </button>
@@ -294,13 +266,12 @@ export default function Home() {
       <section className="bg-blue-700 text-white px-6 py-16">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-4">What are apartments actually selling for in Tbilisi?</h2>
-          <p className="text-blue-200 text-lg mb-8">Real market prices covering all apartment types — new builds and resale.</p>
+          <p className="text-blue-200 text-lg mb-8">Real market prices — February 2026 data.</p>
 
           <div className="bg-white rounded-xl p-6 max-w-2xl">
             <p className="text-gray-700 font-semibold mb-3 text-lg">Is this listing fairly priced?</p>
             <div className="flex gap-3 flex-wrap">
-              <select
-                className="border border-gray-300 rounded-lg px-3 py-2 text-gray-700 text-sm flex-1 min-w-32"
+              <select className="border border-gray-300 rounded-lg px-3 py-2 text-gray-700 text-sm flex-1 min-w-32"
                 onChange={function(e) { setSelectedDistrict(e.target.value); }}>
                 <option value="">Select district</option>
                 {districts.map(function(d) {
@@ -313,9 +284,7 @@ export default function Home() {
               <input type="text" placeholder="Total price ($)"
                 className="border border-gray-300 rounded-lg px-3 py-2 text-gray-700 text-sm w-36"
                 onChange={function(e) { setPrice(e.target.value); }} />
-              <button
-                onClick={checkPrice}
-                style={{touchAction: 'manipulation'}}
+              <button onClick={checkPrice} style={{touchAction: 'manipulation'}}
                 className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium">
                 Check
               </button>
@@ -324,14 +293,17 @@ export default function Home() {
             {result && (
               <div className={result.diff > 15 ? "mt-4 p-4 rounded-lg bg-red-50 border border-red-200" : result.diff < -10 ? "mt-4 p-4 rounded-lg bg-green-50 border border-green-200" : "mt-4 p-4 rounded-lg bg-yellow-50 border border-yellow-200"}>
                 <p className="font-bold text-gray-800 text-lg">
-                  ${result.pricePerSqm}/sqm — {result.diff > 15 ? "Overpriced ⚠️" : result.diff < -10 ? "Good deal ✅" : "Fair price ✓"}
+                  ${result.pricePerSqm}/sqm — {result.diff > 15 ? "Above market average ⚠️" : result.diff < -10 ? "Below market average ✅" : "Close to market average ✓"}
                 </p>
                 <p className="text-gray-600 text-sm mt-1">
-                  Average in {result.district.name} is ${result.district.avgPrice}/sqm. This listing is {Math.abs(result.diff)}% {result.diff > 0 ? "above" : "below"} market average.
+                  Expected price for {result.sqm}sqm in {result.district.name}: ${result.adjustedAvg}/sqm. This listing is {Math.abs(result.diff)}% {result.diff > 0 ? "above" : "below"} that.
+                </p>
+                <p className="text-gray-400 text-xs mt-2">
+                  Price adjusted for apartment size. Smaller apartments naturally cost more per sqm. Views, floor, and renovation also affect price.
                 </p>
               </div>
             )}
-            <p className="text-gray-400 text-xs mt-3">Source: TBC Capital Tbilisi Residential Market Report, September 2025. Covers all apartment types.</p>
+            <p className="text-gray-400 text-xs mt-3">Source: TBC Capital Tbilisi Residential Market Report, February 2026.</p>
           </div>
         </div>
       </section>
@@ -339,7 +311,7 @@ export default function Home() {
       <section className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">Average prices by district</h3>
-          <p className="text-gray-500 mb-8 text-sm">Source: TBC Capital Tbilisi Residential Market Report — September 2025</p>
+          <p className="text-gray-500 mb-8 text-sm">Source: TBC Capital Tbilisi Residential Market Report — February 2026</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {districts.map(function(district) {
               return (
@@ -370,9 +342,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto">
           <h3 className="text-3xl font-bold mb-4">Looking for an apartment?</h3>
           <p className="text-blue-200 text-lg mb-8">Tell us what you need and we will find the best options for your budget and district.</p>
-          <button
-            onClick={openForm}
-            style={{touchAction: 'manipulation', minHeight: '52px'}}
+          <button onClick={openForm} style={{touchAction: 'manipulation', minHeight: '52px'}}
             className="bg-white text-blue-700 px-8 py-3 rounded-lg font-semibold text-lg w-full sm:w-auto">
             Find my apartment →
           </button>
@@ -381,8 +351,8 @@ export default function Home() {
 
       <footer className="border-t border-gray-200 px-6 py-8">
         <div className="max-w-6xl mx-auto text-center text-gray-400 text-sm">
-          <p>Data source: TBC Capital Tbilisi Residential Market Report, September 2025.</p>
-          <p className="mt-1">Prices are averages covering all apartment types. Individual prices vary by floor, condition, and building age.</p>
+          <p>Data source: TBC Capital Tbilisi Residential Market Report, February 2026.</p>
+          <p className="mt-1">Prices are averages for the secondary market. Individual prices vary by size, floor, condition, and building age.</p>
         </div>
       </footer>
     </main>
