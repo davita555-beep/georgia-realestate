@@ -1,21 +1,21 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
 
 export default function Home() {
   const districts = [
-    { name: "Vake", nameKa: "ვაკე", avgPrice: 2380, change: 20, type: "premium" },
-    { name: "Mtatsminda", nameKa: "მთაწმინდა", avgPrice: 2293, change: 7, type: "premium" },
+    { name: "Vake", nameKa: "ვაკე", avgPrice: 1903, change: 20, type: "premium" },
+    { name: "Mtatsminda", nameKa: "მთაწმინდა", avgPrice: 2243, change: 7, type: "premium" },
     { name: "Vera", nameKa: "ვერა", avgPrice: 1950, change: 8, type: "premium" },
-    { name: "Saburtalo", nameKa: "საბურთალო", avgPrice: 1602, change: 5, type: "mid" },
-    { name: "Chughureti", nameKa: "ჩუღურეთი", avgPrice: 1455, change: 7, type: "mid" },
-    { name: "Krtsanisi", nameKa: "კრწანისი", avgPrice: 1451, change: 3, type: "mid" },
-    { name: "Didube", nameKa: "დიდუბე", avgPrice: 1236, change: -1, type: "mid" },
-    { name: "Isani", nameKa: "ისანი", avgPrice: 1195, change: 2, type: "mid" },
-    { name: "Nadzaladevi", nameKa: "ნაძალადევი", avgPrice: 1123, change: -3, type: "mid" },
+    { name: "Saburtalo", nameKa: "საბურთალო", avgPrice: 1903, change: 5, type: "mid" },
+    { name: "Chughureti", nameKa: "ჩუღურეთი", avgPrice: 1657, change: 7, type: "mid" },
+    { name: "Krtsanisi", nameKa: "კრწანისი", avgPrice: 2243, change: 3, type: "mid" },
+    { name: "Didube", nameKa: "დიდუბე", avgPrice: 1657, change: -1, type: "mid" },
+    { name: "Isani", nameKa: "ისანი", avgPrice: 1527, change: 2, type: "mid" },
+    { name: "Nadzaladevi", nameKa: "ნაძალადევი", avgPrice: 1374, change: -3, type: "mid" },
     { name: "Avlabari", nameKa: "ავლაბარი", avgPrice: 1150, change: 6, type: "mid" },
     { name: "Didi Dighomi", nameKa: "დიდი დიღომი", avgPrice: 1142, change: 3, type: "affordable" },
     { name: "Samgori", nameKa: "სამგორი", avgPrice: 1138, change: 12, type: "affordable" },
-    { name: "Gldani", nameKa: "გლდანი", avgPrice: 1134, change: 1, type: "affordable" },
+    { name: "Gldani", nameKa: "გლდანი", avgPrice: 1374, change: 1, type: "affordable" },
     { name: "Vashlijvari", nameKa: "ვაშლიჯვარი", avgPrice: 1050, change: 5, type: "affordable" },
     { name: "Ortachala", nameKa: "ორთაჭალა", avgPrice: 980, change: 4, type: "affordable" },
     { name: "Vazisubani", nameKa: "ვაზისუბანი", avgPrice: 920, change: 2, type: "affordable" },
