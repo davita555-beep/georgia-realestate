@@ -67,19 +67,28 @@ export default function Home() {
   }
 
   function checkPrice() {
-    const district = districts.find(d => d.name === selectedDistrict);
-    if (!district) { alert("Please select a district"); return; }
-    if (!size) { alert("Please enter size"); return; }
-    if (!price) { alert("Please enter price"); return; }
-    const sqm = parseInt(size);
-    const pricePerSqm = Math.round(parseInt(price) / sqm);
-    const sizeAdj = getSizeAdjustment(sqm);
-    const finishMult = getFinishMultiplier(selectedFinish);
-    const adjustedAvg = Math.round(district.avgPrice * sizeAdj * finishMult);
-    const diff = Math.round(((pricePerSqm - adjustedAvg) / adjustedAvg) * 100);
-    const finish = FINISH_TYPES.find(f => f.id === selectedFinish);
-    setResult({ pricePerSqm, diff, district, adjustedAvg, sqm, finish });
-  }
+    const districts = [
+  { name: "Vake", nameKa: "ვაკე", avgPrice: 2860, change: 20, type: "premium" },
+  { name: "Mtatsminda", nameKa: "მთაწმინდა", avgPrice: 2400, change: 7, type: "premium" },
+  { name: "Vera", nameKa: "ვერა", avgPrice: 2200, change: 8, type: "premium" },
+  { name: "Saburtalo", nameKa: "საბურთალო", avgPrice: 1850, change: 5, type: "mid" },
+  { name: "Chughureti", nameKa: "ჩუღურეთი", avgPrice: 1700, change: 7, type: "mid" },
+  { name: "Krtsanisi", nameKa: "კრწანისი", avgPrice: 1805, change: 3, type: "mid" },
+  { name: "Didube", nameKa: "დიდუბე", avgPrice: 1600, change: -1, type: "mid" },
+  { name: "Isani", nameKa: "ისანი", avgPrice: 1510, change: 2, type: "mid" },
+  { name: "Nadzaladevi", nameKa: "ნაძალადევი", avgPrice: 1760, change: -3, type: "mid" },
+  { name: "Avlabari", nameKa: "ავლაბარი", avgPrice: 1500, change: 6, type: "mid" },
+  { name: "Didi Dighomi", nameKa: "დიდი დიღომი", avgPrice: 1390, change: 3, type: "affordable" },
+  { name: "Samgori", nameKa: "სამგორი", avgPrice: 1450, change: 12, type: "affordable" },
+  { name: "Gldani", nameKa: "გლდანი", avgPrice: 1370, change: 1, type: "affordable" },
+  { name: "Vashlijvari", nameKa: "ვაშლიჯვარი", avgPrice: 1200, change: 5, type: "affordable" },
+  { name: "Ortachala", nameKa: "ორთაჭალა", avgPrice: 1805, change: 4, type: "affordable" },
+  { name: "Vazisubani", nameKa: "ვაზისუბანი", avgPrice: 1110, change: 2, type: "affordable" },
+  { name: "Varketili", nameKa: "ვარკეთილი", avgPrice: 1315, change: 3, type: "affordable" },
+  { name: "Tskneti", nameKa: "წყნეთი", avgPrice: 1250, change: 3, type: "affordable" },
+  { name: "Lilo", nameKa: "ლილო", avgPrice: 2080, change: 2, type: "affordable" },
+  { name: "Ponichala", nameKa: "პონიჭალა", avgPrice: 848, change: 1, type: "affordable" },
+];
 
   function calcScore() {
     let score = 0;
