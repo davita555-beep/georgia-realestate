@@ -1,4 +1,5 @@
-"use client"; import ApartmentEstimator from "@/components/ApartmentEstimator";
+"use client"; 
+import ApartmentEstimator from "@/components/ApartmentEstimator";
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 
