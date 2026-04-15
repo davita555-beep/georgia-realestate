@@ -423,12 +423,13 @@ export default function Home() {
           </div>
         </div>
       </header>
-<section className="px-6 py-12 bg-white border-t border-gray-100">
+
+      <section className="text-white px-6 py-16" style={{background: "linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #0f766e 100%)"}}>
+        <section className="px-6 py-12 bg-white border-t border-gray-100">
   <div className="max-w-6xl mx-auto">
     <ApartmentEstimator districts={districts} lang={lang} />
   </div>
 </section>
-      <section className="text-white px-6 py-16" style={{background: "linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #0f766e 100%)"}}>
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-4">{t.hero}</h2>
           <p className="text-blue-200 text-lg mb-8">{t.heroSub}</p>
