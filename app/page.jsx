@@ -424,7 +424,7 @@ export default function Home() {
       </header>
 <section className="px-6 py-12 bg-white border-t border-gray-100">
   <div className="max-w-6xl mx-auto">
-    <ApartmentEstimator /><ApartmentEstimator districts={districts} lang={lang} />
+    <ApartmentEstimator districts={districts} lang={lang} />
   </div>
 </section>
       <section className="text-white px-6 py-16" style={{background: "linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #0f766e 100%)"}}>
