@@ -77,7 +77,7 @@ export default function ApartmentEstimator({ districts = [], lang = "en" }) {
       </div>
       <span style={S.lbl}>{t.size}</span>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.25rem" }}>
-        <input type="range" min={20} max={200} step={5} value={size} onChange={(e) => setSize(Number(e.target.value))} style={{ flex: 1 }} />
+        <input type="range" min={20} max={10000} step={10} value={size} onChange={(e) => setSize(Number(e.target.value))} style={{ flex: 1 }} />
         <span style={{ fontSize: 22, fontWeight: 300, color: "#111", minWidth: 70 }}>{size} m²</span>
       </div>
       <span style={S.lbl}>{t.details}</span>

@@ -1,0 +1,42 @@
+{
+  "vake_saburtalo": {
+    "name_ka": "ვაკე-საბურთალო",
+    "price_per_sqm": 1585.0,
+    "price_per_sqm_new_build": 1424.0,
+    "price_per_sqm_resale": 1635.0,
+    "sample_size": 238,
+    "updated": "2026-04-20T17:39:20.967246+00:00"
+  },
+  "isani_samgori": {
+    "name_ka": "ისანი-სამგორი",
+    "price_per_sqm": 1425.0,
+    "price_per_sqm_new_build": 1535.0,
+    "price_per_sqm_resale": 1389.0,
+    "sample_size": 237,
+    "updated": "2026-04-20T17:39:20.967246+00:00"
+  },
+  "gldani_nadzaladevi": {
+    "name_ka": "გლდანი-ნაძალადევი",
+    "price_per_sqm": 1414.0,
+    "price_per_sqm_new_build": 1577.0,
+    "price_per_sqm_resale": 1299.0,
+    "sample_size": 240,
+    "updated": "2026-04-20T17:39:20.967246+00:00"
+  },
+  "didube_chugureti": {
+    "name_ka": "დიდუბე-ჩუღურეთი",
+    "price_per_sqm": 1647.0,
+    "price_per_sqm_new_build": 1481.0,
+    "price_per_sqm_resale": 1675.0,
+    "sample_size": 240,
+    "updated": "2026-04-20T17:39:20.967246+00:00"
+  },
+  "dzveli_tbilisi": {
+    "name_ka": "ძველი თბილისი",
+    "price_per_sqm": 2200.5,
+    "price_per_sqm_new_build": null,
+    "price_per_sqm_resale": 2143.0,
+    "sample_size": 239,
+    "updated": "2026-04-20T17:39:20.967246+00:00"
+  }
+}
