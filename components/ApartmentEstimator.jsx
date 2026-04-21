@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FACTORS = [
   { key: "floor", label: { en: "Floor", ka: "სართული" }, opts: [{ label: { en: "1st", ka: "1-ლი" }, mult: 0.90 }, { label: { en: "2–4", ka: "2–4" }, mult: 0.97 }, { label: { en: "5–9", ka: "5–9" }, mult: 1.00 }, { label: { en: "10+", ka: "10+" }, mult: 1.08 }] },
@@ -9,9 +9,86 @@ const FACTORS = [
 ];
 
 const T = {
-  en: { title: "Apartment Estimator", sub: "Instant price range based on real market data · Updated monthly from ss.ge", district: "Choose district", size: "Apartment size", details: "Apartment details", selectFirst: "Select a district above to see your estimate", estimated: "estimated average", ctaBtn: "Get exact valuation from an agent →", formTitle: "Leave your details — our agent will call you with a free exact valuation.", namePlaceholder: "Your name", phonePlaceholder: "Phone number (+995...)", callBtn: "Call me back →", sending: "Sending...", thankYou: "Thank you", agentCall: "Our agent will call you shortly.", disclaimer: "Estimate based on ss.ge market data. TbilisiPrice.ge" },
-  ka: { title: "ბინის ფასის კალკულატორი", sub: "სწრაფი ფასის შეფასება ss.ge-ის რეალური მონაცემებზე დაყრდნობით", district: "აირჩიეთ რაიონი", size: "ფართი", details: "ბინის დეტალები", selectFirst: "ფასის სანახავად აირჩიეთ რაიონი", estimated: "სავარაუდო საშუალო", ctaBtn: "მიიღეთ ზუსტი შეფასება აგენტისგან →", formTitle: "დატოვეთ კონტაქტი — ჩვენი აგენტი დაგიკავშირდება უფასო შეფასებისთვის.", namePlaceholder: "თქვენი სახელი", phonePlaceholder: "ტელეფონის ნომერი (+995...)", callBtn: "დამირეკეთ →", sending: "იგზავნება...", thankYou: "გმადლობთ", agentCall: "ჩვენი აგენტი მალე დაგიკავშირდებათ.", disclaimer: "შეფასება ss.ge-ის მონაცემებზეა დაფუძნებული. TbilisiPrice.ge" },
+  en: { title: "Apartment Estimator", sub: "Instant price range based on real market data · Updated weekly from ss.ge", district: "Choose district", size: "Apartment size", details: "Apartment details", selectFirst: "Select a district above to see your estimate", estimated: "estimated average", ctaBtn: "Get exact valuation from an agent →", formTitle: "Leave your details — our agent will call you with a free exact valuation.", namePlaceholder: "Your name", phonePlaceholder: "Phone number (+995...)", callBtn: "Call me back →", sending: "Sending...", thankYou: "Thank you", agentCall: "Our agent will call you shortly.", disclaimer: "Estimate based on ss.ge market data. TbilisiPrice.ge", weeklyUpdate: "Prices updated this week", updated: "Updated" },
+  ka: { title: "ბინის ფასის კალკულატორი", sub: "სწრაფი ფასის შეფასება ss.ge-ის რეალური მონაცემებზე დაყრდნობით · ყოველკვირეული განახლება", district: "აირჩიეთ რაიონი", size: "ფართი", details: "ბინის დეტალები", selectFirst: "ფასის სანახავად აირჩიეთ რაიონი", estimated: "სავარაუდო საშუალო", ctaBtn: "მიიღეთ ზუსტი შეფასება აგენტისგან →", formTitle: "დატოვეთ კონტაქტი — ჩვენი აგენტი დაგიკავშირდება უფასო შეფასებისთვის.", namePlaceholder: "თქვენი სახელი", phonePlaceholder: "ტელეფონის ნომერი (+995...)", callBtn: "დამირეკეთ →", sending: "იგზავნება...", thankYou: "გმადლობთ", agentCall: "ჩვენი აგენტი მალე დაგიკავშირდებათ.", disclaimer: "შეფასება ss.ge-ის მონაცემებზეა დაფუძნებული. TbilisiPrice.ge", weeklyUpdate: "ფასები განახლებულია ამ კვირაში", updated: "განახლდა" },
 };
+
+function UpdateBadge({ lang = "en" }) {
+  const [updateDate, setUpdateDate] = useState(null);
+  const t = T[lang] || T.en;
+
+  useEffect(() => {
+    // Try to fetch the actual update timestamp from the scraped data
+    async function fetchUpdateDate() {
+      try {
+        const response = await fetch('/data/prices.json');
+        const data = await response.json();
+        // Get the most recent update date from any district
+        const dates = Object.values(data)
+          .map(d => d.updated)
+          .filter(Boolean)
+          .sort()
+          .reverse();
+        
+        if (dates.length > 0) {
+          const date = new Date(dates[0]);
+          const formatted = date.toLocaleDateString(lang === 'ka' ? 'ka-GE' : 'en-US', {
+            month: 'long',
+            day: 'numeric'
+          });
+          setUpdateDate(formatted);
+        }
+      } catch (error) {
+        // Fallback to current week if fetch fails
+        console.log('Could not fetch update date, using fallback');
+        const now = new Date();
+        const formatted = now.toLocaleDateString(lang === 'ka' ? 'ka-GE' : 'en-US', {
+          month: 'long',
+          day: 'numeric'
+        });
+        setUpdateDate(formatted);
+      }
+    }
+
+    fetchUpdateDate();
+  }, [lang]);
+
+  const badgeStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    background: 'linear-gradient(135deg, #10b981, #059669)',
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 500,
+    padding: '6px 12px',
+    borderRadius: 20,
+    marginBottom: 16,
+    boxShadow: '0 2px 4px rgba(16, 185, 129, 0.2)',
+  };
+
+  const dotStyle = {
+    width: 6,
+    height: 6,
+    borderRadius: '50%',
+    background: '#34d399',
+    boxShadow: '0 0 6px rgba(52, 211, 153, 0.8)',
+  };
+
+  return (
+    <div style={badgeStyle}>
+      <div style={dotStyle}></div>
+      <span>
+        {t.weeklyUpdate}
+        {updateDate && (
+          <span style={{ marginLeft: 6, opacity: 0.9 }}>
+            • {t.updated} {updateDate}
+          </span>
+        )}
+      </span>
+    </div>
+  );
+}
 
 export default function ApartmentEstimator({ districts = [], lang = "en" }) {
   const t = T[lang] || T.en;
@@ -64,6 +141,7 @@ export default function ApartmentEstimator({ districts = [], lang = "en" }) {
 
   return (
     <div style={S.wrap}>
+      <UpdateBadge lang={lang} />
       <p style={S.title}>{t.title}</p>
       <p style={S.sub}>{t.sub}</p>
       <span style={S.lbl}>{t.district}</span>
