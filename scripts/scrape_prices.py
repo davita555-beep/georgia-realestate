@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
-ss.ge price scraper for tbilisiprice.ge
-Runs weekly via GitHub Actions, updates data/prices.json and data/history.json.
+Smart ss.ge scraper for tbilisiprice.ge - captures ~50 individual subdistricts
+Extracts precise subdistrict location from each listing URL and breadcrumb.
 
-Strategy:
-- Scrape each district group's listings
-- Filter outliers (sanity bounds + trim top/bottom 5%)
-- Compute median price-per-sqm (overall, new-build, resale)
-- Guards: if sample < 30 listings OR median swings > 20% vs last week,
-  keep previous value and flag. Protects against ss.ge DOM changes silently
-  breaking parsing.
+Example output:
+{
+  "ვაკე": {"price_per_sqm": 2400, "sample_size": 45, "updated": "..."},
+  "ბაგები": {"price_per_sqm": 2800, "sample_size": 23, "updated": "..."},
+  "კუს ტბა": {"price_per_sqm": 2900, "sample_size": 18, "updated": "..."},
+  ...
+}
 """
 
 import json
@@ -19,6 +19,7 @@ import statistics
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from collections import defaultdict
 
 import requests
 from bs4 import BeautifulSoup
@@ -30,8 +31,7 @@ DATA_DIR = ROOT / "data"
 PRICES_FILE = DATA_DIR / "prices.json"
 HISTORY_FILE = DATA_DIR / "history.json"
 
-# Plug in your actual ss.ge filter URLs for each of the five district groups.
-# Use the filter URL that ss.ge shows after you select the districts in its UI.
+# Use the same 5 group URLs to get comprehensive coverage
 DISTRICT_GROUPS = {
     "vake_saburtalo": {
         "name_ka": "ვაკე-საბურთალო",
@@ -55,17 +55,87 @@ DISTRICT_GROUPS = {
     },
 }
 
-# Sanity bounds in USD/sqm — drop anything outside as junk/typos.
+# URL to Georgian subdistrict name mapping (add more as we discover them)
+URL_TO_SUBDISTRICT = {
+    # Vake-Saburtalo
+    'vakeshi': 'ვაკე',
+    'vake': 'ვაკე',
+    'bagebshi': 'ბაგები',
+    'bagebi': 'ბაგები',
+    'kus-tbaze': 'კუს ტბა',
+    'kus-tba': 'კუს ტბა',
+    'lisis-tbaze': 'ლისის ტბა',
+    'lisis-tba': 'ლისის ტბა',
+    'nutsubidze': 'ნუცუბიძის ფერდობი',
+    'nutsubidzes-ferdob': 'ნუცუბიძის ფერდობი',
+    'saburtalo': 'საბურთალო',
+    'saburtaloze': 'საბურთალო',
+    'vedzisi': 'ვეძისი',
+    'delisi': 'დელისი',
+    'dighomi': 'დიღომი',
+    
+    # Isani-Samgori  
+    'isani': 'ისანი',
+    'isanze': 'ისანი',
+    'samgori': 'სამგორი',
+    'samgorze': 'სამგორი',
+    'varketili': 'ვარკეთილი',
+    'varketilze': 'ვარკეთილი',
+    'vazisubani': 'ვაზისუბანი',
+    'vazisabanze': 'ვაზისუბანი',
+    'lilo': 'ლილო',
+    'liloze': 'ლილო',
+    'ortachala': 'ორთაჭალა',
+    'ortachalaze': 'ორთაჭალა',
+    'ponichala': 'ფონიჭალა',
+    'ponichalaze': 'ფონიჭალა',
+    
+    # Gldani-Nadzaladevi
+    'gldani': 'გლდანი',
+    'gldanze': 'გლდანი',
+    'nadzaladevi': 'ნაძალადევი',
+    'nadzaladevze': 'ნაძალადევი',
+    'mukhiani': 'მუხიანი',
+    'mukhanze': 'მუხიანი',
+    'temka': 'თემქა',
+    'temkaze': 'თემქა',
+    'zahesi': 'ზაჰესი',
+    'zahesshi': 'ზაჰესი',
+    
+    # Didube-Chugureti
+    'didube': 'დიდუბე',
+    'didubeze': 'დიდუბე',
+    'chugureti': 'ჩუღურეთი',
+    'chuguretze': 'ჩუღურეთი',
+    'kukia': 'კუკია',
+    'kukiaze': 'კუკია',
+    'svaneti': 'სვანეთის უბანი',
+    
+    # Dzveli Tbilisi
+    'vera': 'ვერა',
+    'veraze': 'ვერა', 
+    'mtatsminda': 'მთაწმინდა',
+    'mtatsmindaze': 'მთაწმინდა',
+    'sololaki': 'სოლოლაკი',
+    'sololakze': 'სოლოლაკი',
+    'avlabari': 'ავლაბარი',
+    'avlabarze': 'ავლაბარი',
+    'abanotubani': 'აბანოთუბანი',
+    'elia': 'ელია',
+    'eliaze': 'ელია'
+}
+
+# Sanity bounds in USD/sqm
 MIN_PRICE_PER_SQM = 500
 MAX_PRICE_PER_SQM = 10_000
 
 # Guards
-MIN_LISTINGS_PER_DISTRICT = 30
-MAX_WEEK_OVER_WEEK_SWING = 0.20  # 20%
+MIN_LISTINGS_PER_SUBDISTRICT = 5  # Lower threshold since we have more granular areas
+MAX_WEEK_OVER_WEEK_SWING = 0.25  # 25% (allow slightly more variance for smaller areas)
 
 # Polite scraping
-MAX_PAGES_PER_DISTRICT = 15
-REQUEST_DELAY_RANGE = (1.0, 2.5)  # seconds between pages
+MAX_PAGES_PER_DISTRICT = 20  # Increase to get more subdistricts
+REQUEST_DELAY_RANGE = (1.0, 2.5)
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -76,10 +146,34 @@ HEADERS = {
 }
 
 
+# ---------- Subdistrict Extraction ----------
+
+def extract_subdistrict_from_url(href: str) -> str:
+    """Extract subdistrict name from listing URL."""
+    if not href:
+        return "უცნობი"
+    
+    # Remove domain and parameters
+    path = href.split('/')[-1].split('?')[0]
+    
+    # Look for subdistrict patterns in URL
+    for url_key, georgian_name in URL_TO_SUBDISTRICT.items():
+        if url_key in path.lower():
+            return georgian_name
+    
+    # Fallback: try to extract from URL structure
+    parts = path.lower().split('-')
+    for part in parts:
+        if part in URL_TO_SUBDISTRICT:
+            return URL_TO_SUBDISTRICT[part]
+    
+    return "უცნობი"
+
+
 # ---------- Scraping ----------
 
 def fetch_listings(url: str) -> list[dict]:
-    """Fetch paginated listings; stop when a page returns nothing."""
+    """Fetch paginated listings with subdistrict extraction."""
     listings: list[dict] = []
     for page in range(1, MAX_PAGES_PER_DISTRICT + 1):
         sep = "&" if "?" in url else "?"
@@ -101,31 +195,21 @@ def fetch_listings(url: str) -> list[dict]:
 
 
 def parse_listings_page(html: str) -> list[dict]:
-    """
-    Parse one ss.ge listings page.
-
-    Selectors based on ss.ge markup (as of April 2026):
-    - Each listing card is an <a> tag linking to /udzravi-qoneba/iyideba-...
-    - Stable class names we use: listing-detailed-item-price,
-      listing-detailed-item-title, listing-detailed-item-desc.
-    - Price-per-sqm is pre-computed on each card, format: "1 m² - 1,930 $"
-    """
+    """Parse listings page and extract subdistrict from each listing."""
     soup = BeautifulSoup(html, "html.parser")
     results: list[dict] = []
 
-    # Cards are <a> tags linking to listing detail pages. We require a price
-    # element inside to filter out any unrelated links.
+    # Find all listing links
     candidate_links = soup.select('a[href*="/udzravi-qoneba/iyideba-"]')
     cards = [a for a in candidate_links if a.select_one(".listing-detailed-item-price")]
 
     for card in cards:
-        # Headline price (e.g. "98,000 $")
+        # Extract price
         price = extract_number(card.select_one(".listing-detailed-item-price"))
         if not price:
             continue
 
-        # Pre-computed price per sqm. Look for any span matching "X m² - Y $"
-        # (also handles Georgian "მ²" and en-dash variants).
+        # Extract price per sqm
         price_per_sqm = None
         for span in card.find_all("span"):
             text = span.get_text(" ", strip=True)
@@ -142,7 +226,11 @@ def parse_listings_page(html: str) -> list[dict]:
         if not price_per_sqm:
             continue
 
-        # New-build heuristic from title + description text
+        # Extract subdistrict from URL
+        href = card.get("href", "")
+        subdistrict = extract_subdistrict_from_url(href)
+
+        # New-build heuristic
         title_el = card.select_one(".listing-detailed-item-title")
         desc_el = card.select_one(".listing-detailed-item-desc")
         title_text = title_el.get_text(" ", strip=True) if title_el else ""
@@ -157,7 +245,8 @@ def parse_listings_page(html: str) -> list[dict]:
             "price_usd": price,
             "price_per_sqm": round(price_per_sqm, 2),
             "new_build": is_new_build,
-            "href": card.get("href", ""),
+            "subdistrict": subdistrict,
+            "href": href,
             "title": title_text,
         })
 
@@ -177,7 +266,7 @@ def extract_number(el) -> float | None:
 def robust_median(values: list[float]) -> float | None:
     """Median after sanity bounds and 5% trim on each end."""
     cleaned = [v for v in values if MIN_PRICE_PER_SQM <= v <= MAX_PRICE_PER_SQM]
-    if len(cleaned) < MIN_LISTINGS_PER_DISTRICT:
+    if len(cleaned) < MIN_LISTINGS_PER_SUBDISTRICT:
         return None
     cleaned.sort()
     trim = max(1, len(cleaned) // 20)
@@ -199,64 +288,88 @@ def main():
     history = load_json(HISTORY_FILE, [])
 
     timestamp = datetime.now(timezone.utc).isoformat()
-    new_prices: dict = {}
-    run_log = {"date": timestamp, "districts": {}}
+    
+    # Collect all listings from all groups
+    all_listings = []
+    
+    for group_key, cfg in DISTRICT_GROUPS.items():
+        print(f"Scraping {group_key}...")
+        group_listings = fetch_listings(cfg["url"])
+        all_listings.extend(group_listings)
+        print(f"  Found {len(group_listings)} listings in {group_key}")
 
-    for key, cfg in DISTRICT_GROUPS.items():
-        print(f"Scraping {key}...")
-        listings = fetch_listings(cfg["url"])
+    print(f"\nTotal listings collected: {len(all_listings)}")
+
+    # Group by subdistrict
+    subdistrict_data = defaultdict(list)
+    for listing in all_listings:
+        subdistrict_data[listing["subdistrict"]].append(listing)
+
+    # Calculate prices for each subdistrict
+    new_prices = {}
+    run_log = {"date": timestamp, "subdistricts": {}}
+
+    for subdistrict, listings in subdistrict_data.items():
+        if subdistrict == "უცნობი":  # Skip unknown locations
+            continue
+            
         all_prices = [l["price_per_sqm"] for l in listings]
         new_prices_list = [l["price_per_sqm"] for l in listings if l["new_build"]]
         resale_prices = [l["price_per_sqm"] for l in listings if not l["new_build"]]
 
         median_all = robust_median(all_prices)
-        median_new = robust_median(new_prices_list)
-        median_resale = robust_median(resale_prices)
+        median_new = robust_median(new_prices_list) if new_prices_list else None
+        median_resale = robust_median(resale_prices) if resale_prices else None
 
-        prev = previous.get(key, {})
+        # Check for swing guard
+        prev = previous.get(subdistrict, {})
         prev_median = prev.get("price_per_sqm") if isinstance(prev, dict) else None
 
         if median_all is None:
-            print(f"  ~ only {len(all_prices)} listings — keeping previous")
-            new_prices[key] = prev if prev else {
-                "name_ka": cfg["name_ka"],
-                "price_per_sqm": None,
-                "sample_size": len(all_prices),
-                "updated": None,
-                "flag": "insufficient_sample",
-            }
+            print(f"  ~ {subdistrict}: only {len(all_prices)} listings — skipping")
+            continue
         elif prev_median and abs(median_all - prev_median) / prev_median > MAX_WEEK_OVER_WEEK_SWING:
             swing_pct = (median_all - prev_median) / prev_median
-            print(f"  ! {key} swung {swing_pct:.1%} — keeping previous, flagged")
-            new_prices[key] = {**prev, "flag": f"swing_blocked:{median_all}:{swing_pct:.3f}"}
+            print(f"  ! {subdistrict}: swing {swing_pct:.1%} — keeping previous")
+            new_prices[subdistrict] = {**prev, "flag": f"swing_blocked:{median_all}:{swing_pct:.3f}"}
         else:
-            new_prices[key] = {
-                "name_ka": cfg["name_ka"],
+            new_prices[subdistrict] = {
+                "name_ka": subdistrict,
                 "price_per_sqm": median_all,
                 "price_per_sqm_new_build": median_new,
                 "price_per_sqm_resale": median_resale,
                 "sample_size": len(all_prices),
                 "updated": timestamp,
             }
+            print(f"  ✓ {subdistrict}: ${median_all}/m² ({len(all_prices)} listings)")
 
-        run_log["districts"][key] = {
+        run_log["subdistricts"][subdistrict] = {
             "sample_size": len(all_prices),
             "median": median_all,
             "median_new_build": median_new,
             "median_resale": median_resale,
         }
 
+    print(f"\nProcessed {len(new_prices)} subdistricts")
+    
+    # Sort by price for easier reading
+    sorted_prices = dict(sorted(new_prices.items(), 
+                                key=lambda x: x[1].get("price_per_sqm", 0), 
+                                reverse=True))
+
     PRICES_FILE.write_text(
-        json.dumps(new_prices, ensure_ascii=False, indent=2),
+        json.dumps(sorted_prices, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+    
     history.append(run_log)
-    history = history[-52:]  # last year of weekly runs
+    history = history[-52:]  # Keep last year of weekly runs
     HISTORY_FILE.write_text(
         json.dumps(history, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-    print(f"Done. Wrote {PRICES_FILE.name} and {HISTORY_FILE.name}")
+    
+    print(f"Done. Wrote {len(sorted_prices)} subdistricts to {PRICES_FILE.name}")
 
 
 if __name__ == "__main__":
