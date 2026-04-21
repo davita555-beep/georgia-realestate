@@ -33,5 +33,40 @@
         "median_resale": 2143.0
       }
     }
+  },
+  {
+    "date": "2026-04-21T15:52:04.940057+00:00",
+    "districts": {
+      "vake_saburtalo": {
+        "sample_size": 238,
+        "median": 1569.5,
+        "median_new_build": 1424.0,
+        "median_resale": 1612.0
+      },
+      "isani_samgori": {
+        "sample_size": 239,
+        "median": 1450.0,
+        "median_new_build": 1524.0,
+        "median_resale": 1443.0
+      },
+      "gldani_nadzaladevi": {
+        "sample_size": 239,
+        "median": 1378.5,
+        "median_new_build": 1492.0,
+        "median_resale": 1318.0
+      },
+      "didube_chugureti": {
+        "sample_size": 240,
+        "median": 1622.0,
+        "median_new_build": 1808.0,
+        "median_resale": 1587.0
+      },
+      "dzveli_tbilisi": {
+        "sample_size": 238,
+        "median": 2200.0,
+        "median_new_build": null,
+        "median_resale": 2168.0
+      }
+    }
   }
 ]
