@@ -1,5 +1,5 @@
 "use client"; 
-import SubdistrictPriceChart from '../components/SubdistrictPriceChart';
+import SubdistrictPriceChart from '@/components/SubdistrictPriceChart';
 import ApartmentEstimator from "@/components/ApartmentEstimator";
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
@@ -15,7 +15,6 @@ const FINISH_TYPES = [
   { id: "green", ka: "მწვანე კარკასი", en: "Green Frame", desc_ka: "ნახევრად დამთავრებული", desc_en: "Semi-finished, flooring included", multiplier: 1.18, color: "bg-green-50 text-green-700 border-green-300" },
   { id: "renovated", ka: "გარემონტებული", en: "Renovated", desc_ka: "სრულად მოწყობილი", desc_en: "Fully finished, move-in ready", multiplier: 1.32, color: "bg-amber-50 text-amber-700 border-amber-300" },
 ];
-
 const T = {
   ka: {
     tagline: "ბინის ფასების შემოწმება - თბილისი 2026",
