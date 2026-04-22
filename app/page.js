@@ -523,7 +523,10 @@ export default function Home() {
 
       {/* THIS IS THE REPLACED SECTION - Interactive chart instead of static grid */}
       <section className="px-6 py-12" style={{background: "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)"}}>
-        <SubdistrictPriceChart lang={lang} />
+        <div>
+  <h2>DEBUG: Chart should appear here</h2>
+  <SubdistrictPriceChart lang={lang} />
+</div>
       </section>
 
       <section className="px-6 py-12 bg-white">
