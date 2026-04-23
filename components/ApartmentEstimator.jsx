@@ -9,49 +9,12 @@ const FACTORS = [
 ];
 
 const T = {
-  en: { title: "Apartment Estimator", sub: "Instant price range based on real market data · Updated weekly from ss.ge", district: "Choose district", size: "Apartment size", details: "Apartment details", selectFirst: "Select a district above to see your estimate", estimated: "estimated average", ctaBtn: "Get exact valuation from an agent →", formTitle: "Leave your details — our agent will call you with a free exact valuation.", namePlaceholder: "Your name", phonePlaceholder: "Phone number (+995...)", callBtn: "Call me back →", sending: "Sending...", thankYou: "Thank you", agentCall: "Our agent will call you shortly.", disclaimer: "Estimate based on ss.ge market data. TbilisiPrice.ge", weeklyUpdate: "Prices updated this week", updated: "Updated" },
-  ka: { title: "ბინის ფასის კალკულატორი", sub: "სწრაფი ფასის შეფასება ss.ge-ის რეალური მონაცემებზე დაყრდნობით · ყოველკვირეული განახლება", district: "აირჩიეთ რაიონი", size: "ფართი", details: "ბინის დეტალები", selectFirst: "ფასის სანახავად აირჩიეთ რაიონი", estimated: "სავარაუდო საშუალო", ctaBtn: "მიიღეთ ზუსტი შეფასება აგენტისგან →", formTitle: "დატოვეთ კონტაქტი — ჩვენი აგენტი დაგიკავშირდება უფასო შეფასებისთვის.", namePlaceholder: "თქვენი სახელი", phonePlaceholder: "ტელეფონის ნომერი (+995...)", callBtn: "დამირეკეთ →", sending: "იგზავნება...", thankYou: "გმადლობთ", agentCall: "ჩვენი აგენტი მალე დაგიკავშირდებათ.", disclaimer: "შეფასება ss.ge-ის მონაცემებზეა დაფუძნებული. TbilisiPrice.ge", weeklyUpdate: "ფასები განახლებულია ამ კვირაში", updated: "განახლდა" },
+  en: { title: "Apartment Estimator", sub: "Instant price range based on real market data · Updated weekly from ss.ge", district: "Choose district", size: "Apartment size", details: "Apartment details", selectFirst: "Select a district above to see your estimate", estimated: "estimated average", ctaBtn: "Get exact valuation from an agent →", formTitle: "Leave your details — our agent will call you with a free exact valuation.", namePlaceholder: "Your name", phonePlaceholder: "Phone number (+995...)", callBtn: "Call me back →", sending: "Sending...", thankYou: "Thank you", agentCall: "Our agent will call you shortly.", disclaimer: "Estimate based on ss.ge market data. TbilisiPrice.ge", weeklyUpdate: "Prices updated this week", updated: "Updated", loading: "Loading prices..." },
+  ka: { title: "ბინის ფასის კალკულატორი", sub: "სწრაფი ფასის შეფასება ss.ge-ის რეალური მონაცემებზე დაყრდნობით · ყოველკვირეული განახლება", district: "აირჩიეთ რაიონი", size: "ფართი", details: "ბინის დეტალები", selectFirst: "ფასის სანახავად აირჩიეთ რაიონი", estimated: "სავარაუდო საშუალო", ctaBtn: "მიიღეთ ზუსტი შეფასება აგენტისგან →", formTitle: "დატოვეთ კონტაქტი — ჩვენი აგენტი დაგიკავშირდება უფასო შეფასებისთვის.", namePlaceholder: "თქვენი სახელი", phonePlaceholder: "ტელეფონის ნომერი (+995...)", callBtn: "დამირეკეთ →", sending: "იგზავნება...", thankYou: "გმადლობთ", agentCall: "ჩვენი აგენტი მალე დაგიკავშირდებათ.", disclaimer: "შეფასება ss.ge-ის მონაცემებზეა დაფუძნებული. TbilisiPrice.ge", weeklyUpdate: "ფასები განახლებულია ამ კვირაში", updated: "განახლდა", loading: "იტვირთება..." },
 };
 
-function UpdateBadge({ lang = "en" }) {
-  const [updateDate, setUpdateDate] = useState(null);
+function UpdateBadge({ lang = "en", updateDate }) {
   const t = T[lang] || T.en;
-
-  useEffect(() => {
-    // Try to fetch the actual update timestamp from the scraped data
-    async function fetchUpdateDate() {
-      try {
-        const response = await fetch('/data/prices.json');
-        const data = await response.json();
-        // Get the most recent update date from any district
-        const dates = Object.values(data)
-          .map(d => d.updated)
-          .filter(Boolean)
-          .sort()
-          .reverse();
-        
-        if (dates.length > 0) {
-          const date = new Date(dates[0]);
-          const formatted = date.toLocaleDateString(lang === 'ka' ? 'ka-GE' : 'en-US', {
-            month: 'long',
-            day: 'numeric'
-          });
-          setUpdateDate(formatted);
-        }
-      } catch (error) {
-        // Fallback to current week if fetch fails
-        console.log('Could not fetch update date, using fallback');
-        const now = new Date();
-        const formatted = now.toLocaleDateString(lang === 'ka' ? 'ka-GE' : 'en-US', {
-          month: 'long',
-          day: 'numeric'
-        });
-        setUpdateDate(formatted);
-      }
-    }
-
-    fetchUpdateDate();
-  }, [lang]);
 
   const badgeStyle = {
     display: 'inline-flex',
@@ -90,8 +53,14 @@ function UpdateBadge({ lang = "en" }) {
   );
 }
 
-export default function ApartmentEstimator({ districts = [], lang = "en" }) {
+// ✅ FIX: Component now fetches live prices from prices.json directly
+// instead of relying on hardcoded districts prop from parent
+export default function ApartmentEstimator({ lang = "en" }) {
   const t = T[lang] || T.en;
+  const [districts, setDistricts] = useState([]);
+  const [updateDate, setUpdateDate] = useState(null);
+  const [loadingDistricts, setLoadingDistricts] = useState(true);
+
   const [district, setDistrict] = useState(null);
   const [size, setSize] = useState(60);
   const [selections, setSelections] = useState({});
@@ -99,6 +68,51 @@ export default function ApartmentEstimator({ districts = [], lang = "en" }) {
   const [form, setForm] = useState({ name: "", phone: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // ✅ Fetch live prices from prices.json on mount
+  useEffect(() => {
+    async function fetchPrices() {
+      try {
+        const response = await fetch('/data/prices.json');
+        const data = await response.json();
+
+        // Transform prices.json into districts array for the calculator
+        const loaded = Object.entries(data)
+          .filter(([, value]) => value.price_per_sqm > 0 && (value.sample_size || 0) >= 5)
+          .map(([key, value]) => ({
+            name: key,
+            nameKa: value.name_ka || key,
+            avgPrice: value.price_per_sqm,
+          }))
+          // Sort by price descending so most expensive districts appear first
+          .sort((a, b) => b.avgPrice - a.avgPrice);
+
+        setDistricts(loaded);
+
+        // Get update date
+        const dates = Object.values(data)
+          .map(d => d.updated)
+          .filter(Boolean)
+          .sort()
+          .reverse();
+
+        if (dates.length > 0) {
+          const date = new Date(dates[0]);
+          const formatted = date.toLocaleDateString(lang === 'ka' ? 'ka-GE' : 'en-US', {
+            month: 'long',
+            day: 'numeric'
+          });
+          setUpdateDate(formatted);
+        }
+      } catch (error) {
+        console.error('Could not fetch prices.json:', error);
+      } finally {
+        setLoadingDistricts(false);
+      }
+    }
+
+    fetchPrices();
+  }, [lang]);
 
   let mult = 1.0;
   FACTORS.forEach((f) => { if (selections[f.key]) mult *= selections[f.key].mult; });
@@ -141,18 +155,24 @@ export default function ApartmentEstimator({ districts = [], lang = "en" }) {
 
   return (
     <div style={S.wrap}>
-      <UpdateBadge lang={lang} />
+      <UpdateBadge lang={lang} updateDate={updateDate} />
       <p style={S.title}>{t.title}</p>
       <p style={S.sub}>{t.sub}</p>
       <span style={S.lbl}>{t.district}</span>
-      <div style={S.distGrid}>
-        {districts.map((d) => (
-          <div key={d.name} style={dBtnStyle(district?.name === d.name)} onClick={() => { setDistrict(d); setShowForm(false); setSubmitted(false); }}>
-            <span style={{ fontSize: 12, fontWeight: 500, display: "block", color: district?.name === d.name ? "#fff" : "#111" }}>{lang === "ka" ? d.nameKa : d.name}</span>
-            <span style={{ fontSize: 11, display: "block", marginTop: 2, color: district?.name === d.name ? "#aaa" : "#999" }}>${d.avgPrice.toLocaleString()}/m²</span>
-          </div>
-        ))}
-      </div>
+
+      {loadingDistricts ? (
+        <div style={{ fontSize: 14, color: "#bbb", padding: "1rem 0" }}>{t.loading}</div>
+      ) : (
+        <div style={S.distGrid}>
+          {districts.map((d) => (
+            <div key={d.name} style={dBtnStyle(district?.name === d.name)} onClick={() => { setDistrict(d); setShowForm(false); setSubmitted(false); }}>
+              <span style={{ fontSize: 12, fontWeight: 500, display: "block", color: district?.name === d.name ? "#fff" : "#111" }}>{lang === "ka" ? d.nameKa : d.name}</span>
+              <span style={{ fontSize: 11, display: "block", marginTop: 2, color: district?.name === d.name ? "#aaa" : "#999" }}>${d.avgPrice.toLocaleString()}/m²</span>
+            </div>
+          ))}
+        </div>
+      )}
+
       <span style={S.lbl}>{t.size}</span>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.25rem" }}>
         <input type="range" min={20} max={10000} step={10} value={size} onChange={(e) => setSize(Number(e.target.value))} style={{ flex: 1 }} />

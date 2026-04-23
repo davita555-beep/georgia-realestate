@@ -68,5 +68,64 @@
         "median_resale": 2168.0
       }
     }
+  },
+  {
+    "date": "2026-04-21T19:16:58.488345+00:00",
+    "subdistricts": {
+      "ლისის ტბა": {
+        "sample_size": 22,
+        "median": 1793.5,
+        "median_new_build": 1665.0,
+        "median_resale": 1891.5
+      },
+      "ვაკე": {
+        "sample_size": 24,
+        "median": 2628.0,
+        "median_new_build": null,
+        "median_resale": 2672.0
+      },
+      "საბურთალო": {
+        "sample_size": 128,
+        "median": 1768.5,
+        "median_new_build": 1915.0,
+        "median_resale": 1747.5
+      },
+      "ბაგები": {
+        "sample_size": 12,
+        "median": 2004.5,
+        "median_new_build": null,
+        "median_resale": 2097.0
+      },
+      "ლილო": {
+        "sample_size": 5,
+        "median": 1015.0,
+        "median_new_build": null,
+        "median_resale": 1015.0
+      },
+      "დიდუბე": {
+        "sample_size": 132,
+        "median": 1702.5,
+        "median_new_build": 2009.0,
+        "median_resale": 1657.0
+      },
+      "ვერა": {
+        "sample_size": 104,
+        "median": 2432.0,
+        "median_new_build": 2990.0,
+        "median_resale": 2367.0
+      },
+      "ელია": {
+        "sample_size": 12,
+        "median": 1167.0,
+        "median_new_build": null,
+        "median_resale": 1167.0
+      },
+      "მთაწმინდა": {
+        "sample_size": 101,
+        "median": 2388.0,
+        "median_new_build": null,
+        "median_resale": 2318.0
+      }
+    }
   }
 ]

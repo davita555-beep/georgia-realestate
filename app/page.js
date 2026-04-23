@@ -423,11 +423,11 @@ export default function Home() {
           </div>
         </div>
       </header>
-
+<ApartmentEstimator lang={lang} />
       <section className="text-white px-6 py-16" style={{background: "linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #0f766e 100%)"}}>
         <section className="px-6 py-12 bg-white border-t border-gray-100">
   <div className="max-w-6xl mx-auto">
-    <ApartmentEstimator districts={districts} lang={lang} />
+    
   </div>
 </section>
         <div className="max-w-6xl mx-auto">
@@ -520,16 +520,11 @@ export default function Home() {
           </div>}
         </div>
       </section>
-
-      {/* THIS IS THE REPLACED SECTION - Interactive chart instead of static grid */}
-      <section className="px-6 py-12" style={{background: "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)"}}>
-        <div>
-  <h2>DEBUG: Chart should appear here</h2>
-  <SubdistrictPriceChart lang={lang} />
-</div>
-      </section>
-
-      <section className="px-6 py-12 bg-white">
+<section className="px-6 py-12" style={{background: "linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)"}}>
+  <div className="max-w-6xl mx-auto">
+    <SubdistrictPriceChart lang={lang} />
+  </div>
+</section><section className="px-6 py-12 bg-white">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-2xl font-bold text-gray-900 mb-2">{lang === "ka" ? "რაიონები" : "Districts"}</h3>
           <p className="text-gray-500 mb-6 text-sm">{lang === "ka" ? "დაწვრილებითი ინფორმაცია თითოეული რაიონის შესახებ" : "Detailed information about each district"}</p>
