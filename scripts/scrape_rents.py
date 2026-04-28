@@ -66,8 +66,10 @@ ENGLISH_SLUG_TO_GEORGIAN: dict[str, str] = {
     "vazisubani": "ვაზისუბანი",
     "vazha-pshavela-quarters": "ვაჟა-ფშაველას კვარტლები",
     "vazha-pshavela": "ვაჟა-ფშაველას კვარტლები",
+    "districts-of-vazha-pshavela": "ვაჟა-ფშაველას კვარტლები",  # ss.ge actual slug (ID 5)
     "vashlijvari": "ვაშლიჯვარი",
     "tskhinvali-settlement": "ტყინვალი",
+    "tkhinvala": "ტყინვალი",                    # ss.ge actual slug (ID 50)
     # Isani-Samgori
     "isani": "ისანი",
     "samgori": "სამგორი",
@@ -83,8 +85,12 @@ ENGLISH_SLUG_TO_GEORGIAN: dict[str, str] = {
     "third-massif": "მესამე მასივი",
     "orkhevi": "ორხევი",
     "airport-settlement": "აეროპორტის დასახლება",
+    "airport-village": "აეროპორტის დასახლება",  # ss.ge actual slug (ID 6)
     "airport-highway": "აეროპორტის გზატკეცილი",
     "africa-settlement": "აფრიკის დასახლება",
+    "afrika": "აფრიკის დასახლება",              # ss.ge actual slug (ID 19)
+    "mesame-masivi": "მესამე მასივი",            # ss.ge actual slug (ID 13)
+    "navtlugi": "ნავთლუღი",                      # ss.ge actual slug (ID 24)
     # Gldani-Nadzaladevi
     "gldani": "გლდანი",
     "nadzaladevi": "ნაძალადევი",
@@ -99,13 +105,21 @@ ENGLISH_SLUG_TO_GEORGIAN: dict[str, str] = {
     "dighomi-massif": "დიღმის მასივი",
     "gldanula": "გლდანული",
     "konyaki-settlement": "კონიაკის დასახლება",
+    "koniaki-village": "კონიაკის დასახლება",   # ss.ge actual slug
     "sanzona": "სანზონა",
     "gldani-village": "სოფელი გლდანი",
+    "digomi": "დიღომი",                          # ss.ge actual slug (IDs 28, 46)
+    "digomi-village": "სოფელი დიღომი",          # ss.ge actual slug (ID 4)
+    "didi-digomi": "დიდი დიღომი",               # ss.ge actual slug (ID 45)
+    "tbilisi-sea": "თბილისის ზღვა",             # ss.ge actual slug (ID 36)
+    "temqa": "თემქა",                            # ss.ge actual slug (ID 37)
+    "lotkini": "ლოქინი",                         # ss.ge actual slug (ID 39)
     # Didube-Chugureti
     "didube": "დიდუბე",
     "chugureti": "ჩუღურეთი",
     "kukia": "კუკია",
     "svaneti-district": "სვანეთის უბანი",
+    "svanetis-ubani": "სვანეთის უბანი",         # ss.ge actual slug (ID 30)
     "narikala": "ნარიყალა",
     # Dzveli Tbilisi / Old Town
     "vera": "ვერა",
