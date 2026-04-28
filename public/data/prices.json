@@ -1,74 +1,370 @@
 {
-  "ვაკე": {
-    "name_ka": "ვაკე",
-    "price_per_sqm": 2628.0,
-    "price_per_sqm_new_build": null,
-    "price_per_sqm_resale": 2672.0,
-    "sample_size": 24,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+  "მთაწმინდა": {
+    "name_ka": "მთაწმინდა",
+    "price_per_sqm": 2355.5,
+    "price_per_sqm_new_build": 2976.5,
+    "price_per_sqm_resale": 2252.5,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   },
   "ვერა": {
     "name_ka": "ვერა",
-    "price_per_sqm": 2432.0,
-    "price_per_sqm_new_build": 2990.0,
-    "price_per_sqm_resale": 2367.0,
-    "sample_size": 104,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+    "price_per_sqm": 2353.0,
+    "price_per_sqm_new_build": 2608.0,
+    "price_per_sqm_resale": 2303.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   },
-  "მთაწმინდა": {
-    "name_ka": "მთაწმინდა",
-    "price_per_sqm": 2388.0,
-    "price_per_sqm_new_build": null,
-    "price_per_sqm_resale": 2318.0,
-    "sample_size": 101,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+  "ვაკე": {
+    "name_ka": "ვაკე",
+    "price_per_sqm": 2334.0,
+    "price_per_sqm_new_build": 2100.0,
+    "price_per_sqm_resale": 2336.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   },
-  "ბაგები": {
-    "name_ka": "ბაგები",
-    "price_per_sqm": 2004.5,
+  "ტყინვალი": {
+    "name_ka": "ტყინვალი",
+    "price_per_sqm": 2153.0,
+    "price_per_sqm_new_build": 2153.0,
+    "price_per_sqm_resale": null,
+    "sample_size": 16,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "სოლოლაკი": {
+    "name_ka": "სოლოლაკი",
+    "price_per_sqm": 2094.0,
+    "price_per_sqm_new_build": 2094.0,
+    "price_per_sqm_resale": 2072.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "აბანოთუბანი": {
+    "name_ka": "აბანოთუბანი",
+    "price_per_sqm": 2005.0,
     "price_per_sqm_new_build": null,
-    "price_per_sqm_resale": 2097.0,
+    "price_per_sqm_resale": 2000.0,
     "sample_size": 12,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
-  },
-  "ლისის ტბა": {
-    "name_ka": "ლისის ტბა",
-    "price_per_sqm": 1793.5,
-    "price_per_sqm_new_build": 1665.0,
-    "price_per_sqm_resale": 1891.5,
-    "sample_size": 22,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   },
   "საბურთალო": {
     "name_ka": "საბურთალო",
-    "price_per_sqm": 1768.5,
-    "price_per_sqm_new_build": 1915.0,
-    "price_per_sqm_resale": 1747.5,
+    "price_per_sqm": 1939.5,
+    "price_per_sqm_new_build": 1920.5,
+    "price_per_sqm_resale": 1965.0,
+    "sample_size": 126,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ბაგები": {
+    "name_ka": "ბაგები",
+    "price_per_sqm": 1881.0,
+    "price_per_sqm_new_build": 1789.0,
+    "price_per_sqm_resale": 1897.5,
     "sample_size": 128,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ორთაჭალა": {
+    "name_ka": "ორთაჭალა",
+    "price_per_sqm": 1867.0,
+    "price_per_sqm_new_build": 1886.5,
+    "price_per_sqm_resale": 1865.5,
+    "sample_size": 126,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ვეძისი": {
+    "name_ka": "ვეძისი",
+    "price_per_sqm": 1858.0,
+    "price_per_sqm_new_build": 2114.0,
+    "price_per_sqm_resale": 1782.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ავლაბარი": {
+    "name_ka": "ავლაბარი",
+    "price_per_sqm": 1840.5,
+    "price_per_sqm_new_build": 1911.0,
+    "price_per_sqm_resale": 1840.5,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ვაჟა-ფშაველას კვარტლები": {
+    "name_ka": "ვაჟა-ფშაველას კვარტლები",
+    "price_per_sqm": 1836.0,
+    "price_per_sqm_new_build": 1849.0,
+    "price_per_sqm_resale": 1788.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ლისის ტბა": {
+    "name_ka": "ლისის ტბა",
+    "price_per_sqm": 1831.0,
+    "price_per_sqm_new_build": 1631.0,
+    "price_per_sqm_resale": 1831.5,
+    "sample_size": 127,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ისანი": {
+    "name_ka": "ისანი",
+    "price_per_sqm": 1650.0,
+    "price_per_sqm_new_build": 1500.0,
+    "price_per_sqm_resale": 1658.5,
+    "sample_size": 127,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ჩუღურეთი": {
+    "name_ka": "ჩუღურეთი",
+    "price_per_sqm": 1579.0,
+    "price_per_sqm_new_build": 1749.0,
+    "price_per_sqm_resale": 1568.0,
+    "sample_size": 126,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   },
   "დიდუბე": {
     "name_ka": "დიდუბე",
-    "price_per_sqm": 1702.5,
-    "price_per_sqm_new_build": 2009.0,
-    "price_per_sqm_resale": 1657.0,
-    "sample_size": 132,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+    "price_per_sqm": 1563.0,
+    "price_per_sqm_new_build": 1506.5,
+    "price_per_sqm_resale": 1572.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ნაძალადევი": {
+    "name_ka": "ნაძალადევი",
+    "price_per_sqm": 1550.0,
+    "price_per_sqm_new_build": 1649.5,
+    "price_per_sqm_resale": 1500.0,
+    "sample_size": 127,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ვაშლიჯვარი": {
+    "name_ka": "ვაშლიჯვარი",
+    "price_per_sqm": 1461.0,
+    "price_per_sqm_new_build": 1521.0,
+    "price_per_sqm_resale": 1455.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ნუცუბიძის ფერდობი": {
+    "name_ka": "ნუცუბიძის ფერდობი",
+    "price_per_sqm": 1405.5,
+    "price_per_sqm_new_build": 1588.0,
+    "price_per_sqm_resale": 1392.0,
+    "sample_size": 126,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "დიღმის მასივი": {
+    "name_ka": "დიღმის მასივი",
+    "price_per_sqm": 1350.0,
+    "price_per_sqm_new_build": 1495.5,
+    "price_per_sqm_resale": 1308.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "სანზონა": {
+    "name_ka": "სანზონა",
+    "price_per_sqm": 1334.0,
+    "price_per_sqm_new_build": 1507.0,
+    "price_per_sqm_resale": 1321.5,
+    "sample_size": 127,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "დიღომი": {
+    "name_ka": "დიღომი",
+    "price_per_sqm": 1328.0,
+    "price_per_sqm_new_build": 1373.0,
+    "price_per_sqm_resale": 1319.0,
+    "sample_size": 382,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ლისი": {
+    "name_ka": "ლისი",
+    "price_per_sqm": 1326.0,
+    "price_per_sqm_new_build": null,
+    "price_per_sqm_resale": 1326.0,
+    "sample_size": 40,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "მესამე მასივი": {
+    "name_ka": "მესამე მასივი",
+    "price_per_sqm": 1320.0,
+    "price_per_sqm_new_build": 1254.0,
+    "price_per_sqm_resale": 1342.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "მუხიანი": {
+    "name_ka": "მუხიანი",
+    "price_per_sqm": 1308.0,
+    "price_per_sqm_new_build": 1411.0,
+    "price_per_sqm_resale": 1308.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "კონიაკის დასახლება": {
+    "name_ka": "კონიაკის დასახლება",
+    "price_per_sqm": 1296.0,
+    "price_per_sqm_new_build": 1296.0,
+    "price_per_sqm_resale": 1296.0,
+    "sample_size": 117,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "სამგორი": {
+    "name_ka": "სამგორი",
+    "price_per_sqm": 1284.5,
+    "price_per_sqm_new_build": 1392.0,
+    "price_per_sqm_resale": 1257.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "გლდანი": {
+    "name_ka": "გლდანი",
+    "price_per_sqm": 1275.0,
+    "price_per_sqm_new_build": 1495.5,
+    "price_per_sqm_resale": 1250.0,
+    "sample_size": 136,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ავჭალა": {
+    "name_ka": "ავჭალა",
+    "price_per_sqm": 1273.0,
+    "price_per_sqm_new_build": 1375.0,
+    "price_per_sqm_resale": 1273.0,
+    "sample_size": 126,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ვაზისუბანი": {
+    "name_ka": "ვაზისუბანი",
+    "price_per_sqm": 1267.0,
+    "price_per_sqm_new_build": 1392.0,
+    "price_per_sqm_resale": 1230.0,
+    "sample_size": 126,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ნავთლუღი": {
+    "name_ka": "ნავთლუღი",
+    "price_per_sqm": 1265.0,
+    "price_per_sqm_new_build": 1300.0,
+    "price_per_sqm_resale": 1200.0,
+    "sample_size": 127,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ლოქინი": {
+    "name_ka": "ლოქინი",
+    "price_per_sqm": 1230.5,
+    "price_per_sqm_new_build": 1211.0,
+    "price_per_sqm_resale": 1250.0,
+    "sample_size": 56,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   },
   "ელია": {
     "name_ka": "ელია",
-    "price_per_sqm": 1167.0,
-    "price_per_sqm_new_build": null,
+    "price_per_sqm": 1224.0,
+    "price_per_sqm_new_build": 1645.0,
     "price_per_sqm_resale": 1167.0,
-    "sample_size": 12,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+    "sample_size": 127,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ვარკეთილი": {
+    "name_ka": "ვარკეთილი",
+    "price_per_sqm": 1221.5,
+    "price_per_sqm_new_build": 1320.0,
+    "price_per_sqm_resale": 1202.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "თემქა": {
+    "name_ka": "თემქა",
+    "price_per_sqm": 1195.0,
+    "price_per_sqm_new_build": 1320.0,
+    "price_per_sqm_resale": 1187.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ორხევი": {
+    "name_ka": "ორხევი",
+    "price_per_sqm": 1191.0,
+    "price_per_sqm_new_build": 1964.5,
+    "price_per_sqm_resale": 1172.0,
+    "sample_size": 122,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "კუკია": {
+    "name_ka": "კუკია",
+    "price_per_sqm": 1170.0,
+    "price_per_sqm_new_build": 1221.5,
+    "price_per_sqm_resale": 1170.0,
+    "sample_size": 117,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "სვანეთის უბანი": {
+    "name_ka": "სვანეთის უბანი",
+    "price_per_sqm": 1144.0,
+    "price_per_sqm_new_build": 2623.5,
+    "price_per_sqm_resale": 1058.5,
+    "sample_size": 115,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "აეროპორტის დასახლება": {
+    "name_ka": "აეროპორტის დასახლება",
+    "price_per_sqm": 1125.0,
+    "price_per_sqm_new_build": null,
+    "price_per_sqm_resale": 1125.0,
+    "sample_size": 56,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   },
   "ლილო": {
     "name_ka": "ლილო",
-    "price_per_sqm": 1015.0,
+    "price_per_sqm": 1069.0,
+    "price_per_sqm_new_build": 1282.0,
+    "price_per_sqm_resale": 1042.5,
+    "sample_size": 127,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ივერთუბანი": {
+    "name_ka": "ივერთუბანი",
+    "price_per_sqm": 1065.5,
+    "price_per_sqm_new_build": 1029.0,
+    "price_per_sqm_resale": 1150.0,
+    "sample_size": 118,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "აფრიკის დასახლება": {
+    "name_ka": "აფრიკის დასახლება",
+    "price_per_sqm": 1043.0,
     "price_per_sqm_new_build": null,
-    "price_per_sqm_resale": 1015.0,
-    "sample_size": 5,
-    "updated": "2026-04-21T19:16:58.488345+00:00"
+    "price_per_sqm_resale": 1043.0,
+    "sample_size": 126,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ზაჰესი": {
+    "name_ka": "ზაჰესი",
+    "price_per_sqm": 975.0,
+    "price_per_sqm_new_build": 883.0,
+    "price_per_sqm_resale": 1000.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "აეროპორტის გზატკეცილი": {
+    "name_ka": "აეროპორტის გზატკეცილი",
+    "price_per_sqm": 963.0,
+    "price_per_sqm_new_build": null,
+    "price_per_sqm_resale": 963.0,
+    "sample_size": 16,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "ფონიჭალა": {
+    "name_ka": "ფონიჭალა",
+    "price_per_sqm": 895.5,
+    "price_per_sqm_new_build": 895.0,
+    "price_per_sqm_resale": 896.0,
+    "sample_size": 128,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
+  },
+  "გლდანული": {
+    "name_ka": "გლდანული",
+    "price_per_sqm": 795.0,
+    "price_per_sqm_new_build": null,
+    "price_per_sqm_resale": 795.0,
+    "sample_size": 8,
+    "updated": "2026-04-28T09:45:55.923749+00:00"
   }
 }
