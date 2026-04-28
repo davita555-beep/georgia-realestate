@@ -1,4 +1,4 @@
-name: Scrape ss.ge prices
+name: Scrape ss.ge prices and rents
 
 on:
   schedule:
@@ -23,14 +23,17 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Run scraper
+      - name: Run sales price scraper
         run: python scripts/scrape_prices.py
 
-      - name: Commit updated prices
+      - name: Run rental price scraper
+        run: python scripts/scrape_rents.py
+
+      - name: Commit updated data
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/prices.json data/history.json
+          git add data/prices.json data/history.json data/rents.json data/rent_history.json
           if git diff --staged --quiet; then
             echo "No price changes this week."
           else
