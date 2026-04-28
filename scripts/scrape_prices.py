@@ -31,6 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 PRICES_FILE = DATA_DIR / "prices.json"
 HISTORY_FILE = DATA_DIR / "history.json"
+PUBLIC_PRICES_FILE = ROOT / "public" / "data" / "prices.json"
 
 # All confirmed Tbilisi subdistrict IDs on ss.ge (1-53, IDs 12 and 25 absent from all groups).
 # Source groups (for reference):
@@ -422,17 +423,17 @@ def main():
         sorted(new_prices.items(), key=lambda x: x[1].get("price_per_sqm", 0), reverse=True)
     )
 
-    PRICES_FILE.write_text(
-        json.dumps(sorted_prices, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    prices_json = json.dumps(sorted_prices, ensure_ascii=False, indent=2)
+    PRICES_FILE.write_text(prices_json, encoding="utf-8")
+    PUBLIC_PRICES_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PUBLIC_PRICES_FILE.write_text(prices_json, encoding="utf-8")
     history.append(run_log)
     history = history[-52:]
     HISTORY_FILE.write_text(
         json.dumps(history, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-    print(f"Done. Wrote {len(sorted_prices)} subdistricts to {PRICES_FILE.name}")
+    print(f"Done. Wrote {len(sorted_prices)} subdistricts to {PRICES_FILE.name} and {PUBLIC_PRICES_FILE.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
