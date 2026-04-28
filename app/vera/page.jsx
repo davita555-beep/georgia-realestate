@@ -1,88 +1,80 @@
 export const metadata = {
   title: "Vera Apartment Prices 2026 | TbilisiPrice.ge",
-  description: "Vera district apartment prices in Tbilisi. Average 1950$/sqm. Updated April 2026.",
+  description: "Vera district apartment prices in Tbilisi. Average $1,950/sqm. Updated April 2026.",
 };
-
 export default function DistrictPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <div>
-            <a href="/" className="text-2xl font-bold text-gray-900">TbilisiPrice.ge</a>
-            <p className="text-sm text-gray-500">Apartment Price Checker - Tbilisi 2026</p>
+    <main className="min-h-screen" style={{background:"#FAFAF8"}}>
+      <header style={{background:"rgba(11,28,61,0.97)",borderBottom:"1px solid rgba(201,168,76,0.2)"}}>
+        <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div style={{width:34,height:34,background:"linear-gradient(135deg,#C9A84C,#A8863A)",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:"#fff",fontWeight:800,fontSize:13}}>TP</span></div>
+            <a href="/" style={{fontWeight:700,color:"#fff",fontSize:17,textDecoration:"none"}}>TbilisiPrice.ge</a>
           </div>
-          <a href="/" className="text-blue-600 text-sm font-medium">Back to main</a>
+          <a href="/" style={{color:"#C9A84C",fontSize:13,fontWeight:500,textDecoration:"none",border:"1px solid rgba(201,168,76,0.4)",borderRadius:8,padding:"6px 14px"}}>&#8592; Back</a>
         </div>
       </header>
-      <section className="bg-blue-700 text-white px-6 py-16">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-blue-300 text-sm mb-2">Tbilisi / Vera</p>
-          <h1 className="text-4xl font-bold mb-2">ვერა — Vera</h1>
-          <p className="text-blue-200 text-lg">Apartment prices - April 2026</p>
+      <section style={{background:"linear-gradient(135deg,#0B1C3D 0%,#1E3A6E 55%,#0B2A4A 100%)",padding:"72px 24px 64px"}}>
+        <div className="max-w-5xl mx-auto">
+          <p style={{color:"rgba(201,168,76,0.7)",fontSize:13,fontWeight:500,marginBottom:10}}>Tbilisi / Vera</p>
+          <h1 style={{fontSize:"clamp(36px,5vw,56px)",fontWeight:800,color:"#fff",letterSpacing:"-0.02em",marginBottom:8}}>ვერა &#8212; Vera</h1>
+          <p style={{color:"rgba(255,255,255,0.5)",fontSize:16}}>Apartment prices &#183; April 2026</p>
         </div>
       </section>
-      <section className="px-6 py-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
-            <div className="bg-white rounded-xl p-6 border border-gray-200 text-center">
-              <p className="text-4xl font-bold text-blue-700">$1,950</p>
-              <p className="text-gray-500 text-sm mt-1">Average price / sqm</p>
+      <section style={{padding:"64px 24px"}}>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
+            <div style={{background:"#fff",borderRadius:16,padding:"28px 24px",textAlign:"center",boxShadow:"0 4px 24px rgba(11,28,61,0.08)",border:"1px solid #E2E8F0"}}>
+              <p style={{fontSize:36,fontWeight:800,color:"#C9A84C",letterSpacing:"-0.02em"}}>$1,950</p>
+              <p style={{color:"#94A3B8",fontSize:13,marginTop:6,fontWeight:500}}>Average / m&#178;</p>
             </div>
-            <div className="bg-white rounded-xl p-6 border border-gray-200 text-center">
-              <p className="text-4xl font-bold text-green-600">+8%</p>
-              <p className="text-gray-500 text-sm mt-1">Year over year</p>
+            <div style={{background:"#fff",borderRadius:16,padding:"28px 24px",textAlign:"center",boxShadow:"0 4px 24px rgba(11,28,61,0.08)",border:"1px solid #E2E8F0"}}>
+              <p style={{fontSize:36,fontWeight:800,color:"#059669",letterSpacing:"-0.02em"}}>+8%</p>
+              <p style={{color:"#94A3B8",fontSize:13,marginTop:6,fontWeight:500}}>Year over year</p>
             </div>
-            <div className="bg-white rounded-xl p-6 border border-gray-200 text-center">
-              <p className="text-4xl font-bold text-purple-700">Premium</p>
-              <p className="text-gray-500 text-sm mt-1">Segment</p>
-            </div>
-          </div>
-          <div className="bg-white rounded-xl p-8 border border-gray-200 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Prices by finish type</h2>
-            <div className="space-y-3">
-              <div className="bg-gray-100 rounded-lg px-4 py-3 flex justify-between">
-                <span className="font-medium text-gray-700">Black Frame</span>
-                <span className="font-bold">$1,950/sqm</span>
-              </div>
-              <div className="bg-blue-50 rounded-lg px-4 py-3 flex justify-between">
-                <span className="font-medium text-gray-700">White Frame</span>
-                <span className="font-bold">$2,203/sqm</span>
-              </div>
-              <div className="bg-green-50 rounded-lg px-4 py-3 flex justify-between">
-                <span className="font-medium text-gray-700">Green Frame</span>
-                <span className="font-bold">$2,301/sqm</span>
-              </div>
-              <div className="bg-amber-50 rounded-lg px-4 py-3 flex justify-between">
-                <span className="font-medium text-gray-700">Renovated</span>
-                <span className="font-bold">$2,574/sqm</span>
-              </div>
+            <div style={{background:"#fff",borderRadius:16,padding:"28px 24px",textAlign:"center",boxShadow:"0 4px 24px rgba(11,28,61,0.08)",border:"1px solid #E2E8F0"}}>
+              <p style={{fontSize:36,fontWeight:800,color:"#C9A84C",letterSpacing:"-0.02em"}}>Premium</p>
+              <p style={{color:"#94A3B8",fontSize:13,marginTop:6,fontWeight:500}}>Segment</p>
             </div>
           </div>
-          <div className="bg-blue-50 rounded-xl p-8 border border-blue-200 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">Check if a listing is fairly priced</h2>
-            <p className="text-gray-600 mb-6">Enter the apartment size and price to see if it matches the market.</p>
-            <a href="/" className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold inline-block">
-              Check price on main page
-            </a>
+          <div style={{background:"#fff",borderRadius:20,padding:"40px",boxShadow:"0 4px 24px rgba(11,28,61,0.08)",border:"1px solid #E2E8F0",marginBottom:24}}>
+            <h2 style={{fontSize:22,fontWeight:700,color:"#0B1C3D",marginBottom:24}}>Prices by finish type</h2>
+            <div style={{display:"flex",flexDirection:"column",gap:10}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:"#F8FAFC",borderRadius:12,padding:"14px 20px"}}>
+                <div><span style={{fontWeight:600,color:"#0B1C3D",fontSize:14}}>Black Frame</span><span style={{color:"#94A3B8",fontSize:12,marginLeft:10}}>Bare concrete</span></div>
+                <span style={{fontWeight:700,fontSize:16,color:"#64748B"}}>$1,950/m&#178;</span>
+              </div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(45,82,153,0.05)",borderRadius:12,padding:"14px 20px"}}>
+                <div><span style={{fontWeight:600,color:"#0B1C3D",fontSize:14}}>White Frame</span><span style={{color:"#94A3B8",fontSize:12,marginLeft:10}}>Plastered, utilities</span></div>
+                <span style={{fontWeight:700,fontSize:16,color:"#2D5299"}}>$2,204/m&#178;</span>
+              </div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(16,185,129,0.05)",borderRadius:12,padding:"14px 20px"}}>
+                <div><span style={{fontWeight:600,color:"#0B1C3D",fontSize:14}}>Green Frame</span><span style={{color:"#94A3B8",fontSize:12,marginLeft:10}}>Semi-finished</span></div>
+                <span style={{fontWeight:700,fontSize:16,color:"#059669"}}>$2,301/m&#178;</span>
+              </div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(201,168,76,0.07)",borderRadius:12,padding:"14px 20px"}}>
+                <div><span style={{fontWeight:600,color:"#0B1C3D",fontSize:14}}>Renovated</span><span style={{color:"#94A3B8",fontSize:12,marginLeft:10}}>Move-in ready</span></div>
+                <span style={{fontWeight:700,fontSize:16,color:"#A8863A"}}>$2,574/m&#178;</span>
+              </div>
+            </div>
           </div>
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Other districts</h2>
-            <div className="flex flex-wrap gap-2">
-              <a href="/vake" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-blue-600">Vake</a>
-              <a href="/saburtalo" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-blue-600">Saburtalo</a>
-              <a href="/mtatsminda" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-blue-600">Mtatsminda</a>
-              <a href="/gldani" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-blue-600">Gldani</a>
-              <a href="/isani" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-blue-600">Isani</a>
-              <a href="/samgori" className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-blue-600">Samgori</a>
+          <div style={{background:"linear-gradient(135deg,#0B1C3D,#1E3A6E)",borderRadius:20,padding:"40px",textAlign:"center",marginBottom:32}}>
+            <h2 style={{fontSize:22,fontWeight:700,color:"#fff",marginBottom:10}}>Check if a listing is fairly priced</h2>
+            <p style={{color:"rgba(255,255,255,0.55)",fontSize:15,marginBottom:24}}>Enter the apartment size and price to see if it matches the market.</p>
+            <a href="/" style={{display:"inline-block",background:"linear-gradient(135deg,#C9A84C,#A8863A)",color:"#fff",borderRadius:12,padding:"14px 32px",fontWeight:700,fontSize:15,textDecoration:"none"}}>Check price on main page</a>
+          </div>
+          <div>
+            <h2 style={{fontSize:20,fontWeight:700,color:"#0B1C3D",marginBottom:16}}>Other districts</h2>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+              {[{h:"vake",l:"Vake"},{h:"saburtalo",l:"Saburtalo"},{h:"mtatsminda",l:"Mtatsminda"},{h:"gldani",l:"Gldani"},{h:"isani",l:"Isani"},{h:"samgori",l:"Samgori"}].map(d => (
+                <a key={d.h} href={`/${d.h}`} style={{padding:"8px 16px",background:"#fff",border:"1.5px solid #E2E8F0",borderRadius:10,fontSize:13,color:"#1E3A6E",fontWeight:500,textDecoration:"none"}}>{d.l}</a>
+              ))}
             </div>
           </div>
         </div>
       </section>
-      <footer className="border-t border-gray-200 px-6 py-8 mt-8">
-        <div className="max-w-4xl mx-auto text-center text-gray-400 text-sm">
-          <p>Source: TBC Capital Tbilisi Residential Market Report, February 2026.</p>
-        </div>
+      <footer style={{background:"#0B1C3D",padding:"32px 24px",borderTop:"1px solid rgba(255,255,255,0.06)",textAlign:"center"}}>
+        <p style={{color:"rgba(255,255,255,0.3)",fontSize:12}}>Source: TBC Capital Tbilisi Residential Market Report, February 2026.</p>
       </footer>
     </main>
   );
