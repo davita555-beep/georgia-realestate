@@ -545,7 +545,7 @@ export default function Home() {
               {label:t.stats2, icon:"📊"},
               {label:t.stats3, icon:"🔄"},
             ].map(s => (
-              <div key={s.label} className="stat-card p-4 text-center">
+              <div key={s.label} className="stat-card p-4 text-center" onClick={() => document.getElementById('subdistrict-chart')?.scrollIntoView({behavior:'smooth'})} style={{cursor:"pointer"}}>
                 <div className="text-2xl mb-1">{s.icon}</div>
                 <div style={{color:"#fff",fontSize:13,fontWeight:500}}>{s.label}</div>
               </div>
