@@ -528,6 +528,14 @@ export default function Home() {
                 {t.viewDistricts}
               </button>
             </div>
+            <div className="flex flex-wrap gap-3 mt-5">
+              {[{tab:"sale",label:"იყიდება ფასები"},{tab:"rent",label:"ქირავდება ფასები"}].map(b => (
+                <button key={b.tab} onClick={() => { setChartTab(b.tab); document.getElementById('subdistrict-chart')?.scrollIntoView({behavior:'smooth'}); }}
+                  style={{touchAction:"manipulation",background:"transparent",border:"1px solid rgba(255,255,255,0.3)",color:"rgba(255,255,255,0.85)",borderRadius:20,padding:"9px 22px",fontSize:14,fontWeight:500,cursor:"pointer"}}>
+                  {b.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Hero stats */}
@@ -684,7 +692,7 @@ export default function Home() {
       )}
 
       {/* ── SUBDISTRICT CHART ── */}
-      <section style={{background:"linear-gradient(180deg,#F0F4FA 0%,#FAFAF8 100%)",padding:"72px 24px"}}>
+      <section id="subdistrict-chart" style={{background:"linear-gradient(180deg,#F0F4FA 0%,#FAFAF8 100%)",padding:"72px 24px"}}>
         <div className="max-w-4xl mx-auto">
           <div style={{display:"flex",gap:4,background:"#E2E8F0",borderRadius:12,padding:4,width:"fit-content",marginBottom:28}}>
             {[{id:"sale",label:"იყიდება"},{id:"rent",label:"ქირავდება"}].map(tab => (
