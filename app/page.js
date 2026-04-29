@@ -1,6 +1,7 @@
 "use client";
 import SubdistrictPriceChart from '@/components/SubdistrictPriceChart';
 import ApartmentEstimator from "@/components/ApartmentEstimator";
+import TickerBar from "@/components/TickerBar";
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 
@@ -463,6 +464,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen" style={{background:"#FAFAF8"}}>
+      <TickerBar />
 
       {/* ── STICKY HEADER ── */}
       <header style={{background:"rgba(11,28,61,0.97)",backdropFilter:"blur(12px)",borderBottom:"1px solid rgba(201,168,76,0.2)",position:"sticky",top:0,zIndex:50}}>
