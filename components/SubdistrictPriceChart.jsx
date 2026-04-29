@@ -57,7 +57,7 @@ const GROUP_CONFIG = [
   { id: 'gldani_nadzaladevi',  color: '#D97706', en: 'Gldani–Nadzaladevi',  ka: 'გლდანი–ნაძალადევი' },
 ];
 
-export default function SubdistrictPriceChart({ lang = 'en' }) {
+export default function SubdistrictPriceChart({ lang = 'en', dataSource = '/data/prices.json' }) {
   const [allData, setAllData] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
   const [activeGroup, setActiveGroup] = useState('all');
@@ -106,7 +106,7 @@ export default function SubdistrictPriceChart({ lang = 'en' }) {
   useEffect(() => {
     async function load() {
       try {
-        const data = await fetch('/data/prices.json').then(r => r.json());
+        const data = await fetch(dataSource).then(r => r.json());
         const items = Object.entries(data)
           .map(([key, v]) => ({
             name: v.name_ka || key,
@@ -132,7 +132,7 @@ export default function SubdistrictPriceChart({ lang = 'en' }) {
       }
     }
     load();
-  }, [lang]);
+  }, [lang, dataSource]);
 
   const maxPrice = allData.length ? Math.max(...allData.map(d => d.price)) : 1;
 

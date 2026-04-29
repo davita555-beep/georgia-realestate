@@ -235,6 +235,7 @@ export default function Home() {
   const [submitting, setSubmitting] = useState(false);
   const [selectedFinish, setSelectedFinish] = useState("black");
   const [gridFinish, setGridFinish] = useState("black");
+  const [chartTab, setChartTab] = useState("sale");
   const [formData, setFormData] = useState({
     budget: "", purpose: "", district: "", propertyType: "",
     timeline: "", financing: "", whatsapp: "", name: "",
@@ -685,7 +686,17 @@ export default function Home() {
       {/* ── SUBDISTRICT CHART ── */}
       <section style={{background:"linear-gradient(180deg,#F0F4FA 0%,#FAFAF8 100%)",padding:"72px 24px"}}>
         <div className="max-w-4xl mx-auto">
-          <SubdistrictPriceChart lang={lang} />
+          <div style={{display:"flex",gap:4,background:"#E2E8F0",borderRadius:12,padding:4,width:"fit-content",marginBottom:28}}>
+            {[{id:"sale",label:"იყიდება"},{id:"rent",label:"ქირავდება"}].map(tab => (
+              <button key={tab.id} onClick={() => setChartTab(tab.id)}
+                style={{touchAction:"manipulation",padding:"8px 22px",borderRadius:9,fontSize:14,fontWeight:600,border:"none",cursor:"pointer",transition:"all 0.2s",
+                  background: chartTab===tab.id ? "#1E3A6E" : "transparent",
+                  color: chartTab===tab.id ? "#fff" : "#64748B"}}>
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <SubdistrictPriceChart lang={lang} dataSource={chartTab==="rent" ? "/data/rents.json" : "/data/prices.json"} />
         </div>
       </section>
 
