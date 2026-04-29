@@ -36,7 +36,7 @@ export default function TickerBar() {
         const built = [
           rate     && { label: 'USD/GEL:',       value: rate },
           avgSale  && { label: 'საშ. გაყიდვა:',  value: `$${avgSale.toLocaleString()}/მ²` },
-          cheapest && { label: 'იაფი ქირა:',      value: `${cheapest.name_ka} ₾${Number(cheapest.median_usd ?? cheapest.price_per_sqm).toFixed(2)}/მ²` },
+          cheapest && { label: 'დაბალი ფასი:',     value: `${cheapest.name_ka} ₾${Number(cheapest.median_usd ?? cheapest.price_per_sqm).toFixed(2)}/მ²` },
         ].filter(Boolean);
 
         if (built.length) setParts(built);

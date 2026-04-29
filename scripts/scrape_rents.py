@@ -103,7 +103,7 @@ ENGLISH_SLUG_TO_GEORGIAN: dict[str, str] = {
     "msakhuri": "მსახური",
     "gldani-half": "გლდანის ნახევარი",
     "dighomi-massif": "დიღმის მასივი",
-    "gldanula": "გლდანული",
+    "gldanula": "გლდანი",
     "konyaki-settlement": "კონიაკის დასახლება",
     "koniaki-village": "კონიაკის დასახლება",   # ss.ge actual slug
     "sanzona": "სანზონა",
