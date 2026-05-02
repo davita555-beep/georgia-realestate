@@ -256,7 +256,7 @@ def scrape_subdistrict(subdistrict_id: int) -> tuple[str, list[dict]]:
         if page == 1 and name is None:
             name = extract_name_from_page(soup)
 
-        page_listings = parse_listings_page(resp.text)
+        page_listings = parse_listings_page(resp.text, subdistrict_id=subdistrict_id)
         if not page_listings:
             break
         listings.extend(page_listings)
@@ -267,11 +267,17 @@ def scrape_subdistrict(subdistrict_id: int) -> tuple[str, list[dict]]:
     if not name:
         name = f"#ID-{subdistrict_id}"
 
+    # Stamp resolved name onto every listing now that we know it.
+    for l in listings:
+        l["subdistrict_name_ka"] = name
+
     return name, listings
 
 
-def parse_listings_page(html: str) -> list[dict]:
-    """Parse listings page; extract price-per-sqm, new-build flag, and URL slug."""
+def parse_listings_page(html: str, subdistrict_id: int | None = None) -> list[dict]:
+    """Parse listings page; extract price-per-sqm, new-build flag, URL slug, and
+    listing-level fields (Phase 2). subdistrict_name_ka is stamped later by
+    scrape_subdistrict once the name is resolved."""
     soup = BeautifulSoup(html, "html.parser")
     results: list[dict] = []
 
@@ -312,11 +318,87 @@ def parse_listings_page(html: str) -> list[dict]:
             for k in ["ახალაშენ", "new build", "newly built", "new construction", "ახალ აშენ"]
         )
 
+        # --- Phase 2: listing-level fields ---
+
+        # listing_id: trailing integer in the href slug
+        listing_id: int | None = None
+        try:
+            m2 = re.search(r"-(\d+)$", href)
+            if m2:
+                listing_id = int(m2.group(1))
+        except Exception:
+            pass
+
+        # area_m2: div containing icon-crop_free span
+        area_m2: float | None = None
+        try:
+            crop = card.select_one("span.icon-crop_free")
+            if crop:
+                area_m2 = extract_number(crop.find_parent("div"))
+        except Exception:
+            pass
+
+        # bedrooms: div containing icon-bed span (bed count, not total rooms)
+        bedrooms: int | None = None
+        try:
+            bed = card.select_one("span.icon-bed")
+            if bed:
+                val = extract_number(bed.find_parent("div"))
+                if val is not None:
+                    bedrooms = int(val)
+        except Exception:
+            pass
+
+        # total_rooms: from href slug "iyideba-{N}-otaxiani-bina"
+        total_rooms: int | None = None
+        try:
+            m3 = re.search(r"iyideba-(\d+)-otaxiani-bina", href)
+            if m3:
+                total_rooms = int(m3.group(1))
+        except Exception:
+            pass
+
+        # floor / total_floors: div containing icon-stairs span, text "N / M"
+        floor: int | None = None
+        total_floors: int | None = None
+        try:
+            stairs = card.select_one("span.icon-stairs")
+            if stairs:
+                text = stairs.find_parent("div").get_text(" ", strip=True)
+                mf = re.search(r"(\d+)\s*/\s*(\d+)", text)
+                if mf:
+                    floor = int(mf.group(1))
+                    total_floors = int(mf.group(2))
+        except Exception:
+            pass
+
+        # seller_name: not in card HTML (JS tooltip); None until Phase 3 / detail fetch
+        seller_name: str | None = None
+
+        # project_type, condition, price_assessment: detail-page only; None for now
+        project_type: str | None = None
+        condition: str | None = None
+        price_assessment: str | None = None
+
         results.append({
+            # --- existing fields (unchanged) ---
             "price_usd": price,
             "price_per_sqm": round(price_per_sqm, 2),
             "new_build": is_new_build,
             "href": href,
+            # --- Phase 2 additions ---
+            "listing_id": listing_id,
+            "subdistrict_id": subdistrict_id,
+            "subdistrict_name_ka": None,   # filled in by scrape_subdistrict
+            "area_m2": area_m2,
+            "total_rooms": total_rooms,
+            "bedrooms": bedrooms,
+            "floor": floor,
+            "total_floors": total_floors,
+            "project_type": project_type,
+            "condition": condition,
+            "seller_name": seller_name,
+            "price_assessment": price_assessment,
         })
 
     return results
@@ -437,4 +519,33 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--test", type=int, metavar="ID",
+                        help="Scrape only this subdistrict ID, print 5 samples + coverage. No file writes.")
+    args = parser.parse_args()
+
+    if args.test is not None:
+        print(f"--- TEST MODE: subdistrict ID {args.test} ---")
+        name, listings = scrape_subdistrict(args.test)
+        print(f"Resolved name : {name}")
+        print(f"Total listings: {len(listings)}")
+
+        print("\n=== 5 sample listings ===")
+        for l in listings[:5]:
+            print(json.dumps(l, ensure_ascii=False, indent=2))
+
+        NEW_FIELDS = [
+            "listing_id", "subdistrict_id", "subdistrict_name_ka",
+            "area_m2", "total_rooms", "bedrooms", "floor", "total_floors",
+            "project_type", "condition", "seller_name", "price_assessment",
+        ]
+        CRITICAL = {"listing_id", "area_m2", "total_rooms", "bedrooms", "floor", "total_floors"}
+        print("\n=== Coverage report (new fields) ===")
+        for field in NEW_FIELDS:
+            populated = sum(1 for l in listings if l.get(field) is not None)
+            pct = populated / len(listings) * 100 if listings else 0
+            flag = "  *** CRITICAL — check selector ***" if field in CRITICAL and pct < 70 else ""
+            print(f"  {field:<22} {populated:>4}/{len(listings)}  ({pct:5.1f}%){flag}")
+    else:
+        main()
