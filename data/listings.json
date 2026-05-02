@@ -1,0 +1,309 @@
+{
+  "meta": {
+    "last_run": "2026-05-02T13:21:30.700848+00:00",
+    "total_listings_ever": 10,
+    "active_count": 10
+  },
+  "listings": {
+    "33386315": {
+      "listing_id": 33386315,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 64500.0,
+      "area_m2": 55.11,
+      "total_rooms": 2,
+      "bedrooms": 1,
+      "floor": 2,
+      "total_floors": 12,
+      "project_type": "არასტანდარტული",
+      "condition": "თეთრი კარკასი",
+      "new_build": false,
+      "seller_name": null,
+      "price_assessment": "საშუალოზე იაფი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-2-otaxiani-bina-saburtaloze-33386315",
+      "price_per_sqm": 1171.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 64500.0
+        }
+      ]
+    },
+    "34886407": {
+      "listing_id": 34886407,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 132000.0,
+      "area_m2": 78.0,
+      "total_rooms": 3,
+      "bedrooms": 2,
+      "floor": 6,
+      "total_floors": 7,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": false,
+      "seller_name": null,
+      "price_assessment": "საშუალოზე იაფი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-3-otaxiani-bina-saburtaloze-34886407",
+      "price_per_sqm": 1693.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 132000.0
+        }
+      ]
+    },
+    "35019751": {
+      "listing_id": 35019751,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 285000.0,
+      "area_m2": 180.0,
+      "total_rooms": 4,
+      "bedrooms": 2,
+      "floor": 13,
+      "total_floors": 14,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": false,
+      "seller_name": null,
+      "price_assessment": "საშუალოზე იაფი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-4-otaxiani-bina-saburtaloze-35019751",
+      "price_per_sqm": 1584.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 285000.0
+        }
+      ]
+    },
+    "34898599": {
+      "listing_id": 34898599,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 88000.0,
+      "area_m2": 43.0,
+      "total_rooms": 2,
+      "bedrooms": 1,
+      "floor": 10,
+      "total_floors": 12,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": true,
+      "seller_name": null,
+      "price_assessment": "საშუალო ფასი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-2-otaxiani-bina-saburtaloze-34898599",
+      "price_per_sqm": 2047.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 88000.0
+        }
+      ]
+    },
+    "35252034": {
+      "listing_id": 35252034,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 141000.0,
+      "area_m2": 55.0,
+      "total_rooms": 2,
+      "bedrooms": 1,
+      "floor": 2,
+      "total_floors": 12,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": false,
+      "seller_name": null,
+      "price_assessment": "საშუალოზე მაღალი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-2-otaxiani-bina-saburtaloze-35252034",
+      "price_per_sqm": 2564.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 141000.0
+        }
+      ]
+    },
+    "35323859": {
+      "listing_id": 35323859,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 73000.0,
+      "area_m2": 56.0,
+      "total_rooms": 2,
+      "bedrooms": 1,
+      "floor": 8,
+      "total_floors": 10,
+      "project_type": "არასტანდარტული",
+      "condition": "თეთრი კარკასი",
+      "new_build": true,
+      "seller_name": null,
+      "price_assessment": "TOP შეთავაზება",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-2-otaxiani-bina-saburtaloze-35323859",
+      "price_per_sqm": 1304.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 73000.0
+        }
+      ]
+    },
+    "35200952": {
+      "listing_id": 35200952,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 280000.0,
+      "area_m2": 124.0,
+      "total_rooms": 4,
+      "bedrooms": 3,
+      "floor": 17,
+      "total_floors": 17,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": false,
+      "seller_name": null,
+      "price_assessment": "საშუალოზე მაღალი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-4-otaxiani-bina-saburtaloze-35200952",
+      "price_per_sqm": 2259.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 280000.0
+        }
+      ]
+    },
+    "35322780": {
+      "listing_id": 35322780,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 150000.0,
+      "area_m2": 54.0,
+      "total_rooms": 2,
+      "bedrooms": 1,
+      "floor": 5,
+      "total_floors": 6,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": false,
+      "seller_name": null,
+      "price_assessment": "მაღალი ფასი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-2-otaxiani-bina-saburtaloze-35322780",
+      "price_per_sqm": 2778.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 150000.0
+        }
+      ]
+    },
+    "34904131": {
+      "listing_id": 34904131,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 225000.0,
+      "area_m2": 110.0,
+      "total_rooms": 3,
+      "bedrooms": 2,
+      "floor": 10,
+      "total_floors": 14,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": true,
+      "seller_name": null,
+      "price_assessment": "საშუალოზე მაღალი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-3-otaxiani-bina-saburtaloze-34904131",
+      "price_per_sqm": 2046.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 225000.0
+        }
+      ]
+    },
+    "34283214": {
+      "listing_id": 34283214,
+      "subdistrict_id": 3,
+      "subdistrict_name_ka": "საბურთალო",
+      "first_seen": "2026-05-02",
+      "last_seen": "2026-05-02",
+      "status": "active",
+      "final_dom_days": null,
+      "current_price_usd": 167000.0,
+      "area_m2": 80.0,
+      "total_rooms": 3,
+      "bedrooms": 2,
+      "floor": 10,
+      "total_floors": 14,
+      "project_type": "არასტანდარტული",
+      "condition": "ახალი რემონტით",
+      "new_build": true,
+      "seller_name": null,
+      "price_assessment": "საშუალო ფასი",
+      "enrichment_status": "complete",
+      "enrichment_attempts": 1,
+      "href": "/ka/udzravi-qoneba/iyideba-3-otaxiani-bina-saburtaloze-34283214",
+      "price_per_sqm": 2088.0,
+      "price_history": [
+        {
+          "date": "2026-05-02",
+          "price_usd": 167000.0
+        }
+      ]
+    }
+  }
+}

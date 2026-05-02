@@ -9,6 +9,7 @@ on listing URL slugs, then #ID-{n} fallback for unmapped areas.
 """
 
 import json
+import os
 import re
 import random
 import statistics
@@ -31,6 +32,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 PRICES_FILE = DATA_DIR / "prices.json"
 HISTORY_FILE = DATA_DIR / "history.json"
+LISTINGS_FILE = DATA_DIR / "listings.json"
 PUBLIC_PRICES_FILE = ROOT / "public" / "data" / "prices.json"
 
 # All confirmed Tbilisi subdistrict IDs on ss.ge (1-53, IDs 12 and 25 absent from all groups).
@@ -155,6 +157,16 @@ MAX_WEEK_OVER_WEEK_SWING = 0.25  # 25%
 
 MAX_PAGES_PER_SUBDISTRICT = 8
 REQUEST_DELAY_RANGE = (1.0, 2.5)
+
+# Known ss.ge price-assessment labels (appear in the "ღირებულების შეფასება" section).
+ASSESSMENT_LABELS = (
+    "TOP შეთავაზება",
+    "საშუალოზე იაფი",
+    "საშუალო ფასი",
+    "საშუალოზე მაღალი",
+    "მაღალი ფასი",
+)
+
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -412,6 +424,190 @@ def extract_number(el) -> float | None:
     return float(m.group()) if m else None
 
 
+# ---------- Detail-page enrichment ----------
+
+def enrich_from_detail_page(listing: dict) -> dict:
+    """Fetch the listing detail page; fill condition, project_type, price_assessment.
+    seller_name is absent from SSR HTML and stays None.
+    Mutates the listing dict in-place; returns it for convenience."""
+    listing["enrichment_attempts"] = listing.get("enrichment_attempts", 0) + 1
+    href = listing.get("href", "")
+    if not href:
+        listing["enrichment_status"] = "no_href"
+        return listing
+    try:
+        resp = requests.get(f"https://home.ss.ge{href}", headers=HEADERS, timeout=25)
+        resp.raise_for_status()
+    except requests.RequestException:
+        listing["enrichment_status"] = "fetch_error"
+        return listing
+
+    soup = BeautifulSoup(resp.text, "html.parser")
+
+    # Spec rows are elements whose text is exactly "LABEL VALUE".
+    # Robust: no dependency on styled-component class names.
+    condition: str | None = None
+    project_type: str | None = None
+    for el in soup.find_all(True):
+        text = el.get_text(" ", strip=True)
+        if condition is None and text.startswith("მდგომარეობა ") and len(text) < 80:
+            condition = text[len("მდგომარეობა "):].strip()
+        if project_type is None and text.startswith("პროექტი ") and len(text) < 80:
+            project_type = text[len("პროექტი "):].strip()
+        if condition is not None and project_type is not None:
+            break
+    listing["condition"] = condition
+    listing["project_type"] = project_type
+
+    # Price assessment: the active label is the first ASSESSMENT_LABELS entry that
+    # appears in the assessment section text before the listing price number.
+    price_assessment: str | None = None
+    for el in soup.find_all(True):
+        text = el.get_text(" ", strip=True)
+        if "ღირებულების შეფასება" in text and len(text) < 600:
+            before_price = re.split(r"\d{2,3},\d{3}", text)[0]
+            for label in ASSESSMENT_LABELS:
+                if label in before_price:
+                    price_assessment = label
+                    break
+            break
+    listing["price_assessment"] = price_assessment
+
+    listing["seller_name"] = None   # not in SSR HTML
+    listing["enrichment_status"] = "complete"
+    return listing
+
+
+# ---------- listings.json persistence ----------
+
+def _save_listings(db: dict[str, dict], timestamp: str) -> None:
+    """Atomic write of listings.json (.tmp → os.replace)."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    active_count = sum(1 for e in db.values() if e.get("status") == "active")
+    payload = {
+        "meta": {
+            "last_run": timestamp,
+            "total_listings_ever": len(db),
+            "active_count": active_count,
+        },
+        "listings": db,
+    }
+    tmp = LISTINGS_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(tmp, LISTINGS_FILE)
+
+
+def persist_listings(scraped: list[dict], today: str) -> tuple[dict, dict]:
+    """Merge scraped listings into listings.json.
+    NEW → add with enrichment_status='pending'.
+    EXISTING → update last_seen, track price changes.
+    MISSING active → mark 'delisted', compute final_dom_days.
+    Returns (db, summary)."""
+    store = load_json(LISTINGS_FILE, {"meta": {}, "listings": {}})
+    db: dict[str, dict] = store.get("listings", {})
+
+    seen_ids: set[str] = set()
+    n_new = n_updated = n_price_changed = n_delisted = 0
+
+    for l in scraped:
+        lid = l.get("listing_id")
+        if lid is None:
+            continue
+        key = str(lid)
+        seen_ids.add(key)
+
+        if key not in db:
+            db[key] = {
+                "listing_id": lid,
+                "subdistrict_id": l.get("subdistrict_id"),
+                "subdistrict_name_ka": l.get("subdistrict_name_ka"),
+                "first_seen": today,
+                "last_seen": today,
+                "status": "active",
+                "final_dom_days": None,
+                "current_price_usd": l.get("price_usd"),
+                "area_m2": l.get("area_m2"),
+                "total_rooms": l.get("total_rooms"),
+                "bedrooms": l.get("bedrooms"),
+                "floor": l.get("floor"),
+                "total_floors": l.get("total_floors"),
+                "project_type": None,
+                "condition": None,
+                "new_build": l.get("new_build"),
+                "seller_name": None,
+                "price_assessment": None,
+                "enrichment_status": "pending",
+                "enrichment_attempts": 0,
+                "href": l.get("href"),
+                "price_per_sqm": l.get("price_per_sqm"),
+                "price_history": [{"date": today, "price_usd": l.get("price_usd")}],
+            }
+            n_new += 1
+        else:
+            entry = db[key]
+            entry["last_seen"] = today
+            entry["status"] = "active"
+            cur_price = l.get("price_usd")
+            if cur_price is not None and cur_price != entry.get("current_price_usd"):
+                entry["price_history"].append({"date": today, "price_usd": cur_price})
+                entry["current_price_usd"] = cur_price
+                n_price_changed += 1
+            for field in ("area_m2", "total_rooms", "bedrooms", "floor",
+                          "total_floors", "new_build", "price_per_sqm"):
+                entry[field] = l.get(field)
+            n_updated += 1
+
+    for key, entry in db.items():
+        if key not in seen_ids and entry.get("status") == "active":
+            entry["status"] = "delisted"
+            try:
+                first = datetime.strptime(entry["first_seen"], "%Y-%m-%d").date()
+                last  = datetime.strptime(entry["last_seen"],  "%Y-%m-%d").date()
+                entry["final_dom_days"] = (last - first).days
+            except Exception:
+                entry["final_dom_days"] = None
+            n_delisted += 1
+
+    _save_listings(db, datetime.now(timezone.utc).isoformat())
+    summary = {
+        "new": n_new, "updated": n_updated,
+        "price_changed": n_price_changed, "delisted": n_delisted,
+        "total": len(db),
+        "active": sum(1 for e in db.values() if e.get("status") == "active"),
+    }
+    return db, summary
+
+
+def run_enrichment(db: dict[str, dict], max_enrich: int | None = None,
+                   save_every: int = 50, log_every: int = 25) -> dict[str, dict]:
+    """Fetch detail pages for listings where enrichment_status != 'complete'
+    and enrichment_attempts < 3. Saves listings.json every save_every fetches.
+    Logs listing_id progress every log_every fetches."""
+    pending = [
+        e for e in db.values()
+        if e.get("enrichment_status") != "complete"
+        and e.get("enrichment_attempts", 0) < 3
+    ]
+    if max_enrich is not None:
+        pending = pending[:max_enrich]
+
+    total = len(pending)
+    print(f"  Enriching {total} listings from detail pages...")
+    timestamp = datetime.now(timezone.utc).isoformat()
+
+    for i, entry in enumerate(pending, 1):
+        enrich_from_detail_page(entry)
+        if i % log_every == 0 or i == total:
+            print(f"  [{i}/{total}] {entry['listing_id']} → {entry['enrichment_status']}")
+        if i % save_every == 0:
+            _save_listings(db, timestamp)
+            print(f"  checkpoint saved ({i} enriched)")
+        time.sleep(random.uniform(*REQUEST_DELAY_RANGE))
+
+    _save_listings(db, datetime.now(timezone.utc).isoformat())
+    return db
+
+
 # ---------- Stats ----------
 
 def robust_median(values: list[float]) -> float | None:
@@ -523,9 +719,40 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", type=int, metavar="ID",
                         help="Scrape only this subdistrict ID, print 5 samples + coverage. No file writes.")
+    parser.add_argument("--test-listings", action="store_true",
+                        help="Scrape subdistrict 3, persist + enrich first 10 listings. Writes listings.json only.")
     args = parser.parse_args()
 
-    if args.test is not None:
+    if args.test_listings:
+        print("--- TEST-LISTINGS MODE: subdistrict 3, first 10 listings ---")
+        name, listings = scrape_subdistrict(3)
+        subset = [l for l in listings if l.get("listing_id")][:10]
+        print(f"Scraped {len(subset)} listings from {name}")
+
+        today = datetime.now(timezone.utc).date().isoformat()
+        db, s = persist_listings(subset, today)
+        print(f"\nPersist: new={s['new']} updated={s['updated']} "
+              f"price_changed={s['price_changed']} delisted={s['delisted']} total={s['total']}")
+
+        db = run_enrichment(db, max_enrich=10)
+
+        data = load_json(LISTINGS_FILE, {})
+        entries = list(data["listings"].values())
+
+        print("\n=== 3 sample listings ===")
+        for e in entries[:3]:
+            print(json.dumps(e, ensure_ascii=False, indent=2))
+
+        print("\n=== Enrichment status — all 10 ===")
+        for e in entries:
+            print(f"  {e['listing_id']}  {e['enrichment_status']:<12}  attempts={e['enrichment_attempts']}")
+
+        conditions = Counter(e["condition"] for e in entries if e.get("condition"))
+        projects   = Counter(e["project_type"] for e in entries if e.get("project_type"))
+        print(f"\ncondition values:    {conditions.most_common()}")
+        print(f"project_type values: {projects.most_common()}")
+
+    elif args.test is not None:
         print(f"--- TEST MODE: subdistrict ID {args.test} ---")
         name, listings = scrape_subdistrict(args.test)
         print(f"Resolved name : {name}")
