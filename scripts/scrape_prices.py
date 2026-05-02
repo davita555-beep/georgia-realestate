@@ -167,6 +167,31 @@ ASSESSMENT_LABELS = (
     "მაღალი ფასი",
 )
 
+# Georgian → English slug mappings applied at enrichment time and in the migration.
+CONDITION_MAP: dict[str, str] = {
+    "ახალი რემონტით":      "renovated",
+    "თეთრი კარკასი":       "white_frame",
+    "შავი კარკასი":        "black_frame",
+    "ძველი რემონტით":      "old_renovation",
+    "კოსმეტიკური რემონტი": "cosmetic_renovation",
+}
+
+PROJECT_TYPE_MAP: dict[str, str] = {
+    "არასტანდარტული": "non_standard",
+    "ხრუშჩოვი":       "khrushchev",
+    "ლვოვი":          "lvov",
+    "მოსკოვი":        "moscow",
+    "გაუმჯობესებული": "improved",
+    "ქართული":        "georgian",
+    "ახალი პროექტი":  "new_project",
+    "ლენინგრადი":     "leningrad",
+    "საავიაციო":      "aviation",
+}
+
+# Condition buckets for renovation_premium_pct (English slugs post-mapping).
+CONDITION_RENOVATED  = frozenset({"renovated"})
+CONDITION_UNFINISHED = frozenset({"white_frame", "black_frame"})
+
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -456,7 +481,18 @@ def enrich_from_detail_page(listing: dict) -> dict:
             project_type = text[len("პროექტი "):].strip()
         if condition is not None and project_type is not None:
             break
+    if condition is not None:
+        if condition in CONDITION_MAP:
+            condition = CONDITION_MAP[condition]
+        elif condition not in CONDITION_MAP.values():
+            print(f"  WARNING: unmapped condition '{condition}' (listing {listing.get('listing_id')})")
     listing["condition"] = condition
+
+    if project_type is not None:
+        if project_type in PROJECT_TYPE_MAP:
+            project_type = PROJECT_TYPE_MAP[project_type]
+        elif project_type not in PROJECT_TYPE_MAP.values():
+            print(f"  WARNING: unmapped project_type '{project_type}' (listing {listing.get('listing_id')})")
     listing["project_type"] = project_type
 
     # Price assessment: the active label is the first ASSESSMENT_LABELS entry that
@@ -621,6 +657,131 @@ def robust_median(values: list[float]) -> float | None:
     return round(statistics.median(trimmed), 2)
 
 
+# ---------- Phase 4 aggregation extras ----------
+
+def build_subdistrict_index(db: dict) -> dict[str, list]:
+    """Group listings.json entries by subdistrict_name_ka."""
+    idx: dict[str, list] = defaultdict(list)
+    for entry in db.values():
+        name = entry.get("subdistrict_name_ka")
+        if name:
+            idx[name].append(entry)
+    return idx
+
+
+def compute_aggregation_extras(subdistrict_name: str, db_index: dict[str, list]) -> dict:
+    """Compute by_condition, by_project, renovation_premium_pct, dom for one subdistrict.
+    Returns only keys that have meaningful data; callers .update() this into the entry."""
+    entries = db_index.get(subdistrict_name, [])
+
+    # --- by_condition ---
+    condition_prices: dict[str, list[float]] = defaultdict(list)
+    for e in entries:
+        cond = e.get("condition")
+        ppsm = e.get("price_per_sqm")
+        if cond and ppsm is not None:
+            condition_prices[cond].append(ppsm)
+
+    by_condition: dict = {}
+    for cond, prices in condition_prices.items():
+        if len(prices) >= MIN_LISTINGS_PER_SUBDISTRICT:
+            m = robust_median(prices)
+            if m is not None:
+                by_condition[cond] = {"price_per_sqm": m, "sample_size": len(prices)}
+
+    # --- by_project ---
+    project_prices: dict[str, list[float]] = defaultdict(list)
+    for e in entries:
+        proj = e.get("project_type")
+        ppsm = e.get("price_per_sqm")
+        if proj and ppsm is not None:
+            project_prices[proj].append(ppsm)
+
+    by_project: dict = {}
+    for proj, prices in project_prices.items():
+        if len(prices) >= MIN_LISTINGS_PER_SUBDISTRICT:
+            m = robust_median(prices)
+            if m is not None:
+                by_project[proj] = {"price_per_sqm": m, "sample_size": len(prices)}
+
+    # --- renovation_premium_pct ---
+    renovated: list[float] = []
+    for cond in CONDITION_RENOVATED:
+        renovated.extend(condition_prices.get(cond, []))
+    unfinished: list[float] = []
+    for cond in CONDITION_UNFINISHED:
+        unfinished.extend(condition_prices.get(cond, []))
+
+    renovation_premium_pct: float | None = None
+    if len(renovated) >= 5 and len(unfinished) >= 5:
+        r_med = robust_median(renovated)
+        u_med = robust_median(unfinished)
+        if r_med and u_med:
+            renovation_premium_pct = round((r_med / u_med - 1) * 100, 1)
+
+    # --- dom ---
+    today_date = datetime.now(timezone.utc).date()
+    dom_days: list[int] = []
+    for e in entries:
+        if e.get("status") == "active":
+            try:
+                first = datetime.strptime(e["first_seen"], "%Y-%m-%d").date()
+                dom_days.append((today_date - first).days)
+            except Exception:
+                pass
+
+    dom: dict | None = None
+    if dom_days:
+        dom_days.sort()
+        dom = {
+            "avg_days": round(sum(dom_days) / len(dom_days), 1),
+            "median_days": float(statistics.median(dom_days)),
+            "sample_size": len(dom_days),
+        }
+
+    extras: dict = {}
+    if by_condition:
+        extras["by_condition"] = by_condition
+    if by_project:
+        extras["by_project"] = by_project
+    extras["renovation_premium_pct"] = renovation_premium_pct
+    extras["dom"] = dom
+    return extras
+
+
+def migrate_to_slugs() -> None:
+    """One-time backfill: replace raw Georgian condition/project_type values with English slugs."""
+    store = load_json(LISTINGS_FILE, {"meta": {}, "listings": {}})
+    db: dict = store.get("listings", {})
+    original_ts: str = store.get("meta", {}).get("last_run", datetime.now(timezone.utc).isoformat())
+
+    n_cond = n_proj = n_warn = 0
+    slug_values_cond = set(CONDITION_MAP.values())
+    slug_values_proj = set(PROJECT_TYPE_MAP.values())
+
+    for entry in db.values():
+        raw_cond = entry.get("condition")
+        if raw_cond is not None:
+            if raw_cond in CONDITION_MAP:
+                entry["condition"] = CONDITION_MAP[raw_cond]
+                n_cond += 1
+            elif raw_cond not in slug_values_cond:
+                print(f"  WARNING: unmapped condition '{raw_cond}' (listing {entry.get('listing_id')})")
+                n_warn += 1
+
+        raw_proj = entry.get("project_type")
+        if raw_proj is not None:
+            if raw_proj in PROJECT_TYPE_MAP:
+                entry["project_type"] = PROJECT_TYPE_MAP[raw_proj]
+                n_proj += 1
+            elif raw_proj not in slug_values_proj:
+                print(f"  WARNING: unmapped project_type '{raw_proj}' (listing {entry.get('listing_id')})")
+                n_warn += 1
+
+    _save_listings(db, original_ts)
+    print(f"Migration done: {n_cond} condition remapped, {n_proj} project_type remapped, {n_warn} warnings.")
+
+
 # ---------- Main ----------
 
 def load_json(path: Path, default):
@@ -634,6 +795,8 @@ def main():
     previous = load_json(PRICES_FILE, {})
     history = load_json(HISTORY_FILE, [])
     timestamp = datetime.now(timezone.utc).isoformat()
+    listings_store = load_json(LISTINGS_FILE, {"listings": {}})
+    db_index = build_subdistrict_index(listings_store.get("listings", {}))
 
     # Collect listings keyed by resolved subdistrict name.
     # If two IDs resolve to the same name, their listings are merged.
@@ -686,6 +849,7 @@ def main():
                 "sample_size": len(all_prices),
                 "updated": timestamp,
             }
+            new_prices[subdistrict].update(compute_aggregation_extras(subdistrict, db_index))
             print(f"  ✓ {subdistrict}: ${median_all}/m² ({len(all_prices)} listings)")
 
         run_log["subdistricts"][subdistrict] = {
@@ -721,9 +885,60 @@ if __name__ == "__main__":
                         help="Scrape only this subdistrict ID, print 5 samples + coverage. No file writes.")
     parser.add_argument("--test-listings", action="store_true",
                         help="Scrape subdistrict 3, persist + enrich first 10 listings. Writes listings.json only.")
+    parser.add_argument("--test-aggregation", action="store_true",
+                        help="Verify Phase 4 extras against existing prices.json + listings.json. No scrape, no writes.")
+    parser.add_argument("--migrate-slugs", action="store_true",
+                        help="One-time backfill: replace raw Georgian strings with English slugs in listings.json.")
     args = parser.parse_args()
 
-    if args.test_listings:
+    if args.migrate_slugs:
+        migrate_to_slugs()
+
+    elif args.test_aggregation:
+        PROTECTED = {"name_ka", "price_per_sqm", "price_per_sqm_new_build",
+                     "price_per_sqm_resale", "sample_size", "updated"}
+        existing_prices = load_json(PRICES_FILE, {})
+        if not existing_prices:
+            print("No prices.json found — run the full scraper first.")
+            sys.exit(1)
+        listings_store = load_json(LISTINGS_FILE, {"listings": {}})
+        db_index = build_subdistrict_index(listings_store.get("listings", {}))
+        active_in_db = sum(1 for e in listings_store["listings"].values() if e.get("status") == "active")
+        print(f"prices.json:   {len(existing_prices)} subdistricts")
+        print(f"listings.json: {len(listings_store['listings'])} total entries, "
+              f"{active_in_db} active, across {len(db_index)} named subdistricts")
+
+        augmented: dict = {}
+        for subdistrict, entry in existing_prices.items():
+            if not isinstance(entry, dict):
+                continue
+            new_entry = {**entry}
+            new_entry.update(compute_aggregation_extras(subdistrict, db_index))
+            augmented[subdistrict] = new_entry
+
+        # Verify all 6 protected fields present in every entry
+        violations = [
+            f"  {sd}: missing {PROTECTED - e.keys()}"
+            for sd, e in augmented.items()
+            if PROTECTED - e.keys()
+        ]
+        if violations:
+            print("\n!!! PROTECTED FIELD VIOLATIONS !!!")
+            for v in violations:
+                print(v)
+        else:
+            print(f"\nAll 6 protected fields confirmed present in all {len(augmented)} entries.")
+
+        # Pick 2 sample districts: prefer one with listings.json data, then any other
+        with_data = [sd for sd in augmented if sd in db_index]
+        without_data = [sd for sd in augmented if sd not in db_index]
+        samples = (with_data[:1] + without_data[:1]) or list(augmented.keys())[:2]
+        print("\n=== 2 sample district entries ===")
+        for sd in samples:
+            print(f"\n--- {sd} ---")
+            print(json.dumps(augmented[sd], ensure_ascii=False, indent=2))
+
+    elif args.test_listings:
         print("--- TEST-LISTINGS MODE: subdistrict 3, first 10 listings ---")
         name, listings = scrape_subdistrict(3)
         subset = [l for l in listings if l.get("listing_id")][:10]
