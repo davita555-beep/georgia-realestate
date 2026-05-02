@@ -205,5 +205,286 @@
         "median_resale": 7.32
       }
     }
+  },
+  {
+    "date": "2026-05-02T15:00:19.087574+00:00",
+    "subdistricts": {
+      "დიდუბე": {
+        "sample_size": 109,
+        "median": 9.17,
+        "median_new_build": 9.09,
+        "median_resale": 9.17
+      },
+      "ნუცუბიძის ფერდობი": {
+        "sample_size": 96,
+        "median": 9.71,
+        "median_new_build": 9.75,
+        "median_resale": 9.52
+      },
+      "საბურთალო": {
+        "sample_size": 112,
+        "median": 10.71,
+        "median_new_build": 11.17,
+        "median_resale": 10.61
+      },
+      "სოფელი დიღომი": {
+        "sample_size": 75,
+        "median": 8.54,
+        "median_new_build": null,
+        "median_resale": 8.54
+      },
+      "ვაჟა-ფშაველას კვარტლები": {
+        "sample_size": 102,
+        "median": 9.39,
+        "median_new_build": null,
+        "median_resale": 9.27
+      },
+      "აეროპორტის დასახლება": {
+        "sample_size": 24,
+        "median": 6.18,
+        "median_new_build": null,
+        "median_resale": 6.18
+      },
+      "ვაზისუბანი": {
+        "sample_size": 56,
+        "median": 8.89,
+        "median_new_build": null,
+        "median_resale": 8.89
+      },
+      "ვარკეთილი": {
+        "sample_size": 45,
+        "median": 8.89,
+        "median_new_build": null,
+        "median_resale": 8.89
+      },
+      "ისანი": {
+        "sample_size": 99,
+        "median": 9.09,
+        "median_new_build": 10.0,
+        "median_resale": 9.09
+      },
+      "ლილო": {
+        "sample_size": 68,
+        "median": 8.76,
+        "median_new_build": 7.53,
+        "median_resale": 8.82
+      },
+      "მესამე მასივი": {
+        "sample_size": 54,
+        "median": 8.06,
+        "median_new_build": null,
+        "median_resale": 8.1
+      },
+      "ორთაჭალა": {
+        "sample_size": 122,
+        "median": 10.56,
+        "median_new_build": 10.0,
+        "median_resale": 10.62
+      },
+      "ორხევი": {
+        "sample_size": 40,
+        "median": 11.82,
+        "median_new_build": null,
+        "median_resale": 11.82
+      },
+      "სამგორი": {
+        "sample_size": 55,
+        "median": 8.98,
+        "median_new_build": 8.84,
+        "median_resale": 9.0
+      },
+      "ფონიჭალა": {
+        "sample_size": 12,
+        "median": 6.87,
+        "median_new_build": null,
+        "median_resale": 6.87
+      },
+      "აფრიკის დასახლება": {
+        "sample_size": 35,
+        "median": 8.98,
+        "median_new_build": null,
+        "median_resale": 8.67
+      },
+      "აბანოთუბანი": {
+        "sample_size": 116,
+        "median": 10.0,
+        "median_new_build": 11.25,
+        "median_resale": 10.0
+      },
+      "ავლაბარი": {
+        "sample_size": 97,
+        "median": 9.41,
+        "median_new_build": 10.72,
+        "median_resale": 9.2
+      },
+      "ელია": {
+        "sample_size": 80,
+        "median": 9.33,
+        "median_new_build": 10.0,
+        "median_resale": 9.32
+      },
+      "ვერა": {
+        "sample_size": 124,
+        "median": 10.75,
+        "median_new_build": 10.62,
+        "median_resale": 10.77
+      },
+      "ნავთლუღი": {
+        "sample_size": 80,
+        "median": 8.57,
+        "median_new_build": 9.09,
+        "median_resale": 8.42
+      },
+      "ლისი": {
+        "sample_size": 122,
+        "median": 11.11,
+        "median_new_build": 11.11,
+        "median_resale": 11.15
+      },
+      "დიღომი": {
+        "sample_size": 175,
+        "median": 9.0,
+        "median_new_build": 8.62,
+        "median_resale": 9.0
+      },
+      "კუკია": {
+        "sample_size": 69,
+        "median": 10.0,
+        "median_new_build": null,
+        "median_resale": 10.0
+      },
+      "სვანეთის უბანი": {
+        "sample_size": 30,
+        "median": 8.12,
+        "median_new_build": null,
+        "median_resale": 7.93
+      },
+      "ჩუღურეთი": {
+        "sample_size": 78,
+        "median": 10.0,
+        "median_new_build": 9.09,
+        "median_resale": 10.0
+      },
+      "ავჭალა": {
+        "sample_size": 62,
+        "median": 8.93,
+        "median_new_build": null,
+        "median_resale": 8.96
+      },
+      "გლდანი": {
+        "sample_size": 76,
+        "median": 7.92,
+        "median_new_build": null,
+        "median_resale": 7.86
+      },
+      "ზაჰესი": {
+        "sample_size": 79,
+        "median": 8.73,
+        "median_new_build": null,
+        "median_resale": 8.73
+      },
+      "თბილისის ზღვა": {
+        "sample_size": 16,
+        "median": 7.6,
+        "median_new_build": null,
+        "median_resale": 7.6
+      },
+      "თემქა": {
+        "sample_size": 17,
+        "median": 9.05,
+        "median_new_build": null,
+        "median_resale": 9.05
+      },
+      "კონიაკის დასახლება": {
+        "sample_size": 5,
+        "median": 8.24,
+        "median_new_build": null,
+        "median_resale": 8.24
+      },
+      "ლოქინი": {
+        "sample_size": 24,
+        "median": 8.0,
+        "median_new_build": null,
+        "median_resale": 8.0
+      },
+      "მუხიანი": {
+        "sample_size": 60,
+        "median": 9.09,
+        "median_new_build": 9.09,
+        "median_resale": 9.09
+      },
+      "ნაძალადევი": {
+        "sample_size": 89,
+        "median": 9.12,
+        "median_new_build": 7.86,
+        "median_resale": 9.17
+      },
+      "სანზონა": {
+        "sample_size": 51,
+        "median": 7.53,
+        "median_new_build": null,
+        "median_resale": 7.5
+      },
+      "სოფელი გლდანი": {
+        "sample_size": 40,
+        "median": 13.64,
+        "median_new_build": null,
+        "median_resale": 13.64
+      },
+      "ბაგები": {
+        "sample_size": 119,
+        "median": 10.0,
+        "median_new_build": 9.83,
+        "median_resale": 10.44
+      },
+      "დიდი დიღომი": {
+        "sample_size": 75,
+        "median": 8.57,
+        "median_new_build": 10.0,
+        "median_resale": 8.33
+      },
+      "ვაკე": {
+        "sample_size": 123,
+        "median": 13.33,
+        "median_new_build": 12.5,
+        "median_resale": 13.33
+      },
+      "ვაშლიჯვარი": {
+        "sample_size": 107,
+        "median": 8.46,
+        "median_new_build": 7.86,
+        "median_resale": 8.46
+      },
+      "ვეძისი": {
+        "sample_size": 109,
+        "median": 9.33,
+        "median_new_build": 10.0,
+        "median_resale": 9.29
+      },
+      "ტყინვალი": {
+        "sample_size": 50,
+        "median": 10.91,
+        "median_new_build": 11.54,
+        "median_resale": 10.58
+      },
+      "მთაწმინდა": {
+        "sample_size": 118,
+        "median": 11.67,
+        "median_new_build": 12.5,
+        "median_resale": 11.67
+      },
+      "სოლოლაკი": {
+        "sample_size": 121,
+        "median": 13.64,
+        "median_new_build": 11.82,
+        "median_resale": 13.75
+      },
+      "ივერთუბანი": {
+        "sample_size": 53,
+        "median": 6.94,
+        "median_new_build": 6.92,
+        "median_resale": 7.45
+      }
+    }
   }
 ]
