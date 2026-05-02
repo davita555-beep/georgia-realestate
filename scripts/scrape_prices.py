@@ -795,8 +795,7 @@ def main():
     previous = load_json(PRICES_FILE, {})
     history = load_json(HISTORY_FILE, [])
     timestamp = datetime.now(timezone.utc).isoformat()
-    listings_store = load_json(LISTINGS_FILE, {"listings": {}})
-    db_index = build_subdistrict_index(listings_store.get("listings", {}))
+    today = datetime.now(timezone.utc).date().isoformat()
 
     # Collect listings keyed by resolved subdistrict name.
     # If two IDs resolve to the same name, their listings are merged.
@@ -813,6 +812,17 @@ def main():
         print(f"  -> ID {sid} = {name}: {len(listings)} listings {tag}")
 
     print(f"\nSubdistricts identified: {len(subdistrict_listings)}")
+
+    # Persist all scraped listings and run enrichment before aggregation so
+    # compute_aggregation_extras works against fresh data.
+    all_scraped = [l for listings in subdistrict_listings.values() for l in listings]
+    db, persist_summary = persist_listings(all_scraped, today)
+    print(f"\nListings persist: new={persist_summary['new']} updated={persist_summary['updated']} "
+          f"price_changed={persist_summary['price_changed']} delisted={persist_summary['delisted']} "
+          f"total={persist_summary['total']}")
+
+    db = run_enrichment(db)
+    db_index = build_subdistrict_index(db)
 
     new_prices: dict = {}
     run_log = {"date": timestamp, "subdistricts": {}}
