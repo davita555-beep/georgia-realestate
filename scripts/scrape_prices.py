@@ -155,7 +155,7 @@ MAX_PRICE_PER_SQM = 10_000
 MIN_LISTINGS_PER_SUBDISTRICT = 5
 MAX_WEEK_OVER_WEEK_SWING = 0.25  # 25%
 
-MAX_PAGES_PER_SUBDISTRICT = 8
+MAX_PAGES_PER_SUBDISTRICT = 16
 REQUEST_DELAY_RANGE = (1.0, 2.5)
 
 # Known ss.ge price-assessment labels (appear in the "ღირებულების შეფასება" section).
