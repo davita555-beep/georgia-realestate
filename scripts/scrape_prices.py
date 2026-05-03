@@ -170,22 +170,36 @@ ASSESSMENT_LABELS = (
 # Georgian → English slug mappings applied at enrichment time and in the migration.
 CONDITION_MAP: dict[str, str] = {
     "ახალი რემონტით":      "renovated",
+    "გარემონტებული":       "renovated",        # synonym for ახალი რემონტით
     "თეთრი კარკასი":       "white_frame",
+    "მწვანე კარკასი":      "green_frame",
     "შავი კარკასი":        "black_frame",
     "ძველი რემონტით":      "old_renovation",
+    "სარემონტო":           "needs_renovation",
+    "მიმდინარე რემონტი":   "ongoing_renovation",
     "კოსმეტიკური რემონტი": "cosmetic_renovation",
 }
 
+# ss.ge detail pages emit project-type proper nouns in the Georgian genitive case
+# (e.g. "მოსკოვის" not "მოსკოვი"), so map keys must use the genitive form.
 PROJECT_TYPE_MAP: dict[str, str] = {
     "არასტანდარტული": "non_standard",
-    "ხრუშჩოვი":       "khrushchev",
-    "ლვოვი":          "lvov",
-    "მოსკოვი":        "moscow",
+    "ხრუშჩოვის":      "khrushchev",       # was "ხრუშჩოვი" (nominative)
+    "ლვოვის":         "lvov",              # was "ლვოვი"
+    "მოსკოვის":       "moscow",            # was "მოსკოვი"
+    "ლენინგრადის":    "leningrad",         # was "ლენინგრადი"
     "გაუმჯობესებული": "improved",
     "ქართული":        "georgian",
     "ახალი პროექტი":  "new_project",
-    "ლენინგრადი":     "leningrad",
     "საავიაციო":      "aviation",
+    "ქალაქური":       "urban",
+    "ჩეხური":         "czech",
+    "თბილისური ეზო":  "tbilisian_courtyard",
+    "ყავლაშვილის":    "kavlashvili",
+    "თუხარელის":      "tukhareli",
+    "კიევი":          "kyiv",
+    "კიევის":         "kyiv",              # genitive variant; both forms seen
+    "მეტრომშენის":    "metro_construction",
 }
 
 # Condition buckets for renovation_premium_pct (English slugs post-mapping).
