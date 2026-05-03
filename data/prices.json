@@ -12,20 +12,16 @@
         "sample_size": 14
       },
       "renovated": {
-        "price_per_sqm": 2383.0,
-        "sample_size": 72
+        "price_per_sqm": 2381.0,
+        "sample_size": 85
       },
       "black_frame": {
         "price_per_sqm": 2697.0,
         "sample_size": 7
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 2724.5,
         "sample_size": 6
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 2381.0,
-        "sample_size": 13
       }
     },
     "by_project": {
@@ -51,13 +47,9 @@
     "by_condition": {
       "renovated": {
         "price_per_sqm": 2481.0,
-        "sample_size": 74
+        "sample_size": 86
       },
-      "გარემონტებული": {
-        "price_per_sqm": 2483.0,
-        "sample_size": 12
-      },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1335.0,
         "sample_size": 10
       },
@@ -71,7 +63,7 @@
       }
     },
     "by_project": {
-      "თბილისური ეზო": {
+      "tbilisian_courtyard": {
         "price_per_sqm": 1897.0,
         "sample_size": 23
       },
@@ -79,7 +71,7 @@
         "price_per_sqm": 2515.0,
         "sample_size": 79
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1937.5,
         "sample_size": 10
       }
@@ -103,25 +95,21 @@
         "price_per_sqm": 2000.0,
         "sample_size": 22
       },
-      "გარემონტებული": {
-        "price_per_sqm": 2160.0,
-        "sample_size": 18
-      },
       "renovated": {
-        "price_per_sqm": 2575.0,
-        "sample_size": 67
+        "price_per_sqm": 2555.0,
+        "sample_size": 85
       },
       "black_frame": {
         "price_per_sqm": 2432.0,
         "sample_size": 6
       },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 2010.0,
         "sample_size": 10
       }
     },
     "by_project": {
-      "თბილისური ეზო": {
+      "tbilisian_courtyard": {
         "price_per_sqm": 2024.0,
         "sample_size": 30
       },
@@ -130,7 +118,7 @@
         "sample_size": 85
       }
     },
-    "renovation_premium_pct": 23.0,
+    "renovation_premium_pct": 22.0,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -146,18 +134,14 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 2339.5,
-        "sample_size": 66
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 2128.0,
-        "sample_size": 21
+        "price_per_sqm": 2315.0,
+        "sample_size": 87
       },
       "old_renovation": {
         "price_per_sqm": 2086.5,
         "sample_size": 24
       },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1886.0,
         "sample_size": 5
       }
@@ -167,7 +151,7 @@
         "price_per_sqm": 2273.0,
         "sample_size": 105
       },
-      "თბილისური ეზო": {
+      "tbilisian_courtyard": {
         "price_per_sqm": 2037.0,
         "sample_size": 9
       }
@@ -201,21 +185,17 @@
     "sample_size": 128,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1597.0,
         "sample_size": 23
       },
       "renovated": {
         "price_per_sqm": 2307.5,
-        "sample_size": 79
+        "sample_size": 85
       },
       "old_renovation": {
         "price_per_sqm": 1400.5,
         "sample_size": 10
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 2162.5,
-        "sample_size": 6
       }
     },
     "by_project": {
@@ -223,11 +203,11 @@
         "price_per_sqm": 2000.0,
         "sample_size": 99
       },
-      "თბილისური ეზო": {
+      "tbilisian_courtyard": {
         "price_per_sqm": 1367.0,
         "sample_size": 8
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 2648.5,
         "sample_size": 6
       }
@@ -252,14 +232,10 @@
         "sample_size": 6
       },
       "renovated": {
-        "price_per_sqm": 2059.0,
-        "sample_size": 76
+        "price_per_sqm": 2000.0,
+        "sample_size": 96
       },
-      "გარემონტებული": {
-        "price_per_sqm": 1842.5,
-        "sample_size": 20
-      },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1810.5,
         "sample_size": 10
       },
@@ -273,12 +249,12 @@
         "price_per_sqm": 1994.0,
         "sample_size": 104
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1612.0,
         "sample_size": 5
       }
     },
-    "renovation_premium_pct": 27.9,
+    "renovation_premium_pct": 24.2,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -294,14 +270,10 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1974.5,
-        "sample_size": 87
+        "price_per_sqm": 2003.0,
+        "sample_size": 99
       },
-      "გარემონტებული": {
-        "price_per_sqm": 2023.0,
-        "sample_size": 12
-      },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1615.5,
         "sample_size": 14
       },
@@ -316,7 +288,7 @@
         "sample_size": 116
       }
     },
-    "renovation_premium_pct": 18.4,
+    "renovation_premium_pct": 20.2,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -332,8 +304,8 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1726.5,
-        "sample_size": 12
+        "price_per_sqm": 2000.0,
+        "sample_size": 13
       }
     },
     "by_project": {
@@ -358,20 +330,16 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 2087.0,
-        "sample_size": 69
+        "price_per_sqm": 2075.0,
+        "sample_size": 79
       },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1212.5,
         "sample_size": 6
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1741.5,
         "sample_size": 12
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1951.0,
-        "sample_size": 10
       },
       "old_renovation": {
         "price_per_sqm": 1334.0,
@@ -388,7 +356,7 @@
         "sample_size": 116
       }
     },
-    "renovation_premium_pct": 18.5,
+    "renovation_premium_pct": 17.8,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -405,19 +373,15 @@
     "by_condition": {
       "renovated": {
         "price_per_sqm": 1875.0,
-        "sample_size": 89
+        "sample_size": 97
       },
       "white_frame": {
         "price_per_sqm": 1334.0,
         "sample_size": 9
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1477.0,
         "sample_size": 5
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1732.5,
-        "sample_size": 8
       }
     },
     "by_project": {
@@ -441,21 +405,17 @@
     "sample_size": 128,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1498.0,
         "sample_size": 40
       },
       "renovated": {
-        "price_per_sqm": 1905.0,
-        "sample_size": 71
+        "price_per_sqm": 1913.5,
+        "sample_size": 78
       },
       "white_frame": {
         "price_per_sqm": 1301.5,
         "sample_size": 6
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1938.0,
-        "sample_size": 7
       }
     },
     "by_project": {
@@ -464,7 +424,7 @@
         "sample_size": 116
       }
     },
-    "renovation_premium_pct": 46.4,
+    "renovation_premium_pct": 47.0,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -480,12 +440,8 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 2017.0,
-        "sample_size": 67
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1667.0,
-        "sample_size": 17
+        "price_per_sqm": 1986.0,
+        "sample_size": 84
       },
       "white_frame": {
         "price_per_sqm": 1531.0,
@@ -501,20 +457,20 @@
         "price_per_sqm": 1898.0,
         "sample_size": 81
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1930.0,
         "sample_size": 10
       },
-      "ხრუშჩოვის": {
+      "khrushchev": {
         "price_per_sqm": 1360.0,
         "sample_size": 21
       },
-      "თუხარელის": {
+      "tukhareli": {
         "price_per_sqm": 1667.0,
         "sample_size": 7
       }
     },
-    "renovation_premium_pct": 31.7,
+    "renovation_premium_pct": 29.7,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -529,17 +485,13 @@
     "sample_size": 127,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "გარემონტებული": {
-        "price_per_sqm": 1625.0,
-        "sample_size": 21
+      "renovated": {
+        "price_per_sqm": 1689.5,
+        "sample_size": 72
       },
       "old_renovation": {
         "price_per_sqm": 1786.0,
         "sample_size": 38
-      },
-      "renovated": {
-        "price_per_sqm": 1762.0,
-        "sample_size": 51
       }
     },
     "by_project": {
@@ -547,16 +499,16 @@
         "price_per_sqm": 1786.0,
         "sample_size": 78
       },
-      "თბილისური ეზო": {
+      "tbilisian_courtyard": {
         "price_per_sqm": 1632.0,
         "sample_size": 34
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1786.0,
         "sample_size": 7
       }
     },
-    "renovation_premium_pct": 9.2,
+    "renovation_premium_pct": 4.7,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -571,7 +523,7 @@
     "sample_size": 128,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1371.0,
         "sample_size": 9
       },
@@ -580,12 +532,8 @@
         "sample_size": 6
       },
       "renovated": {
-        "price_per_sqm": 1739.0,
-        "sample_size": 94
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1823.0,
-        "sample_size": 6
+        "price_per_sqm": 1747.5,
+        "sample_size": 100
       },
       "old_renovation": {
         "price_per_sqm": 1313.0,
@@ -597,12 +545,12 @@
         "price_per_sqm": 1721.0,
         "sample_size": 105
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1406.0,
         "sample_size": 8
       }
     },
-    "renovation_premium_pct": 26.8,
+    "renovation_premium_pct": 27.5,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -618,8 +566,8 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1806.0,
-        "sample_size": 76
+        "price_per_sqm": 1800.0,
+        "sample_size": 80
       },
       "old_renovation": {
         "price_per_sqm": 1501.0,
@@ -629,7 +577,7 @@
         "price_per_sqm": 1522.0,
         "sample_size": 11
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1300.0,
         "sample_size": 13
       }
@@ -639,12 +587,12 @@
         "price_per_sqm": 1725.0,
         "sample_size": 101
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1461.0,
         "sample_size": 5
       }
     },
-    "renovation_premium_pct": 19.0,
+    "renovation_premium_pct": 18.6,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -660,14 +608,10 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1707.5,
-        "sample_size": 71
+        "price_per_sqm": 1667.0,
+        "sample_size": 82
       },
-      "გარემონტებული": {
-        "price_per_sqm": 1448.0,
-        "sample_size": 11
-      },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1169.0,
         "sample_size": 14
       },
@@ -679,7 +623,7 @@
         "price_per_sqm": 1417.0,
         "sample_size": 11
       },
-      "მიმდინარე რემონტი": {
+      "ongoing_renovation": {
         "price_per_sqm": 1298.0,
         "sample_size": 6
       }
@@ -689,12 +633,12 @@
         "price_per_sqm": 1550.5,
         "sample_size": 97
       },
-      "ხრუშჩოვის": {
+      "khrushchev": {
         "price_per_sqm": 1414.0,
         "sample_size": 10
       }
     },
-    "renovation_premium_pct": 74.9,
+    "renovation_premium_pct": 70.7,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -710,18 +654,14 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1541.5,
-        "sample_size": 74
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1382.5,
-        "sample_size": 14
+        "price_per_sqm": 1531.0,
+        "sample_size": 88
       },
       "white_frame": {
         "price_per_sqm": 1278.5,
         "sample_size": 8
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1278.0,
         "sample_size": 13
       },
@@ -735,11 +675,11 @@
       }
     },
     "by_project": {
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1500.0,
         "sample_size": 5
       },
-      "მოსკოვის": {
+      "moscow": {
         "price_per_sqm": 1315.0,
         "sample_size": 7
       },
@@ -748,7 +688,7 @@
         "sample_size": 97
       }
     },
-    "renovation_premium_pct": 23.3,
+    "renovation_premium_pct": 22.5,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -763,13 +703,13 @@
     "sample_size": 127,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1653.0,
         "sample_size": 23
       },
       "renovated": {
-        "price_per_sqm": 1500.0,
-        "sample_size": 76
+        "price_per_sqm": 1511.5,
+        "sample_size": 79
       },
       "white_frame": {
         "price_per_sqm": 1185.5,
@@ -782,7 +722,7 @@
         "sample_size": 116
       }
     },
-    "renovation_premium_pct": 30.4,
+    "renovation_premium_pct": 31.4,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -798,20 +738,16 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1580.0,
-        "sample_size": 58
+        "price_per_sqm": 1534.0,
+        "sample_size": 72
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1400.0,
         "sample_size": 9
       },
       "white_frame": {
         "price_per_sqm": 1400.0,
         "sample_size": 20
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1363.0,
-        "sample_size": 14
       },
       "old_renovation": {
         "price_per_sqm": 1292.0,
@@ -823,20 +759,20 @@
         "price_per_sqm": 1500.0,
         "sample_size": 77
       },
-      "ყავლაშვილის": {
+      "kavlashvili": {
         "price_per_sqm": 1429.0,
         "sample_size": 10
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1386.0,
         "sample_size": 12
       },
-      "თუხარელის": {
+      "tukhareli": {
         "price_per_sqm": 1298.0,
         "sample_size": 6
       }
     },
-    "renovation_premium_pct": 12.9,
+    "renovation_premium_pct": 9.6,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -851,23 +787,19 @@
     "sample_size": 126,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1235.5,
         "sample_size": 18
       },
       "renovated": {
-        "price_per_sqm": 1512.0,
-        "sample_size": 69
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1248.0,
-        "sample_size": 10
+        "price_per_sqm": 1492.0,
+        "sample_size": 79
       },
       "old_renovation": {
         "price_per_sqm": 1133.0,
         "sample_size": 13
       },
-      "მიმდინარე რემონტი": {
+      "ongoing_renovation": {
         "price_per_sqm": 1288.0,
         "sample_size": 5
       }
@@ -877,11 +809,11 @@
         "price_per_sqm": 1436.0,
         "sample_size": 96
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1383.0,
         "sample_size": 5
       },
-      "მოსკოვის": {
+      "moscow": {
         "price_per_sqm": 1277.0,
         "sample_size": 5
       }
@@ -902,14 +834,10 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1517.5,
-        "sample_size": 76
+        "price_per_sqm": 1517.0,
+        "sample_size": 85
       },
-      "გარემონტებული": {
-        "price_per_sqm": 1334.0,
-        "sample_size": 9
-      },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1286.0,
         "sample_size": 25
       },
@@ -924,7 +852,7 @@
         "sample_size": 114
       }
     },
-    "renovation_premium_pct": 35.5,
+    "renovation_premium_pct": 35.4,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -939,7 +867,7 @@
     "sample_size": 382,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1200.0,
         "sample_size": 47
       },
@@ -948,26 +876,22 @@
         "sample_size": 25
       },
       "renovated": {
-        "price_per_sqm": 1438.0,
-        "sample_size": 217
+        "price_per_sqm": 1440.0,
+        "sample_size": 238
       },
       "old_renovation": {
         "price_per_sqm": 1174.0,
         "sample_size": 35
       },
-      "მიმდინარე რემონტი": {
+      "ongoing_renovation": {
         "price_per_sqm": 1200.0,
         "sample_size": 7
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1460.0,
-        "sample_size": 21
       },
       "black_frame": {
         "price_per_sqm": 1123.0,
         "sample_size": 12
       },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1055.0,
         "sample_size": 10
       }
@@ -977,24 +901,24 @@
         "price_per_sqm": 1359.5,
         "sample_size": 290
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1525.0,
         "sample_size": 14
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1168.0,
         "sample_size": 6
       },
-      "ხრუშჩოვის": {
+      "khrushchev": {
         "price_per_sqm": 1063.0,
         "sample_size": 8
       },
-      "თუხარელის": {
+      "tukhareli": {
         "price_per_sqm": 1187.0,
         "sample_size": 9
       }
     },
-    "renovation_premium_pct": 30.7,
+    "renovation_premium_pct": 30.9,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1028,10 +952,10 @@
         "sample_size": 17
       },
       "renovated": {
-        "price_per_sqm": 1635.0,
-        "sample_size": 91
+        "price_per_sqm": 1633.5,
+        "sample_size": 95
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1265.0,
         "sample_size": 9
       },
@@ -1046,7 +970,7 @@
         "sample_size": 120
       }
     },
-    "renovation_premium_pct": 25.8,
+    "renovation_premium_pct": 25.7,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1061,21 +985,17 @@
     "sample_size": 127,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1320.0,
         "sample_size": 43
       },
       "renovated": {
         "price_per_sqm": 1338.0,
-        "sample_size": 49
+        "sample_size": 57
       },
       "old_renovation": {
         "price_per_sqm": 1236.0,
         "sample_size": 11
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1412.0,
-        "sample_size": 8
       },
       "white_frame": {
         "price_per_sqm": 1320.0,
@@ -1087,7 +1007,7 @@
         "price_per_sqm": 1320.0,
         "sample_size": 110
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1245.0,
         "sample_size": 5
       }
@@ -1107,17 +1027,13 @@
     "sample_size": 135,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "გარემონტებული": {
-        "price_per_sqm": 1329.0,
-        "sample_size": 23
+      "renovated": {
+        "price_per_sqm": 1487.0,
+        "sample_size": 80
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1204.0,
         "sample_size": 13
-      },
-      "renovated": {
-        "price_per_sqm": 1518.0,
-        "sample_size": 57
       },
       "old_renovation": {
         "price_per_sqm": 1072.0,
@@ -1127,7 +1043,7 @@
         "price_per_sqm": 1195.0,
         "sample_size": 5
       },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1111.0,
         "sample_size": 6
       }
@@ -1137,16 +1053,16 @@
         "price_per_sqm": 1449.5,
         "sample_size": 83
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1134.0,
         "sample_size": 14
       },
-      "მოსკოვის": {
+      "moscow": {
         "price_per_sqm": 1240.0,
         "sample_size": 7
       }
     },
-    "renovation_premium_pct": 27.0,
+    "renovation_premium_pct": 24.4,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1161,13 +1077,9 @@
     "sample_size": 127,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "გარემონტებული": {
-        "price_per_sqm": 1349.0,
-        "sample_size": 25
-      },
       "renovated": {
-        "price_per_sqm": 1458.0,
-        "sample_size": 44
+        "price_per_sqm": 1429.0,
+        "sample_size": 69
       },
       "old_renovation": {
         "price_per_sqm": 1188.0,
@@ -1177,7 +1089,7 @@
         "price_per_sqm": 1230.0,
         "sample_size": 6
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1196.0,
         "sample_size": 17
       }
@@ -1187,20 +1099,20 @@
         "price_per_sqm": 1411.0,
         "sample_size": 73
       },
-      "მოსკოვის": {
+      "moscow": {
         "price_per_sqm": 1263.5,
         "sample_size": 16
       },
-      "ლვოვის": {
+      "lvov": {
         "price_per_sqm": 1154.0,
         "sample_size": 9
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1054.0,
         "sample_size": 9
       }
     },
-    "renovation_premium_pct": 20.3,
+    "renovation_premium_pct": 17.9,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1215,13 +1127,13 @@
     "sample_size": 117,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1545.0,
         "sample_size": 29
       },
       "renovated": {
         "price_per_sqm": 1340.0,
-        "sample_size": 21
+        "sample_size": 22
       },
       "black_frame": {
         "price_per_sqm": 900.0,
@@ -1258,16 +1170,12 @@
         "sample_size": 24
       },
       "renovated": {
-        "price_per_sqm": 1514.0,
-        "sample_size": 67
+        "price_per_sqm": 1500.0,
+        "sample_size": 74
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1236.0,
         "sample_size": 13
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1239.0,
-        "sample_size": 7
       }
     },
     "by_project": {
@@ -1275,12 +1183,12 @@
         "price_per_sqm": 1277.0,
         "sample_size": 82
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1209.0,
         "sample_size": 19
       }
     },
-    "renovation_premium_pct": 41.5,
+    "renovation_premium_pct": 40.2,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1295,19 +1203,15 @@
     "sample_size": 125,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "გარემონტებული": {
-        "price_per_sqm": 1135.0,
-        "sample_size": 13
-      },
       "renovated": {
         "price_per_sqm": 1375.0,
-        "sample_size": 60
+        "sample_size": 73
       },
       "old_renovation": {
         "price_per_sqm": 1180.0,
         "sample_size": 23
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1010.0,
         "sample_size": 17
       },
@@ -1317,7 +1221,7 @@
       }
     },
     "by_project": {
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1224.0,
         "sample_size": 9
       },
@@ -1325,11 +1229,11 @@
         "price_per_sqm": 1329.0,
         "sample_size": 86
       },
-      "ყავლაშვილის": {
+      "kavlashvili": {
         "price_per_sqm": 1135.0,
         "sample_size": 19
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1288.5,
         "sample_size": 6
       }
@@ -1349,13 +1253,9 @@
     "sample_size": 128,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "გარემონტებული": {
-        "price_per_sqm": 1286.0,
-        "sample_size": 19
-      },
       "renovated": {
         "price_per_sqm": 1261.0,
-        "sample_size": 61
+        "sample_size": 80
       },
       "white_frame": {
         "price_per_sqm": 1200.0,
@@ -1367,7 +1267,7 @@
       }
     },
     "by_project": {
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1214.0,
         "sample_size": 39
       },
@@ -1375,15 +1275,15 @@
         "price_per_sqm": 1452.0,
         "sample_size": 43
       },
-      "მოსკოვის": {
+      "moscow": {
         "price_per_sqm": 1297.0,
         "sample_size": 12
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1257.0,
         "sample_size": 19
       },
-      "თუხარელის": {
+      "tukhareli": {
         "price_per_sqm": 1163.0,
         "sample_size": 5
       }
@@ -1404,14 +1304,14 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1500.0,
-        "sample_size": 45
+        "price_per_sqm": 1494.5,
+        "sample_size": 52
       },
       "old_renovation": {
         "price_per_sqm": 1180.0,
         "sample_size": 36
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1184.0,
         "sample_size": 23
       },
@@ -1419,21 +1319,17 @@
         "price_per_sqm": 1165.0,
         "sample_size": 7
       },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1226.0,
         "sample_size": 5
       },
-      "მიმდინარე რემონტი": {
+      "ongoing_renovation": {
         "price_per_sqm": 1147.0,
         "sample_size": 5
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1302.0,
-        "sample_size": 7
       }
     },
     "by_project": {
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1010.0,
         "sample_size": 5
       },
@@ -1441,24 +1337,24 @@
         "price_per_sqm": 1286.0,
         "sample_size": 74
       },
-      "ხრუშჩოვის": {
+      "khrushchev": {
         "price_per_sqm": 1250.0,
         "sample_size": 15
       },
-      "მოსკოვის": {
+      "moscow": {
         "price_per_sqm": 1180.0,
         "sample_size": 11
       },
-      "თუხარელის": {
+      "tukhareli": {
         "price_per_sqm": 1257.0,
         "sample_size": 8
       },
-      "ლენინგრადის": {
+      "leningrad": {
         "price_per_sqm": 1358.0,
         "sample_size": 5
       }
     },
-    "renovation_premium_pct": 28.8,
+    "renovation_premium_pct": 28.3,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1474,14 +1370,10 @@
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
       "renovated": {
-        "price_per_sqm": 1511.0,
-        "sample_size": 52
+        "price_per_sqm": 1486.5,
+        "sample_size": 70
       },
-      "გარემონტებული": {
-        "price_per_sqm": 1139.0,
-        "sample_size": 18
-      },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 970.0,
         "sample_size": 5
       },
@@ -1489,7 +1381,7 @@
         "price_per_sqm": 1091.0,
         "sample_size": 14
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1135.0,
         "sample_size": 15
       },
@@ -1503,20 +1395,20 @@
         "price_per_sqm": 1446.0,
         "sample_size": 83
       },
-      "ყავლაშვილის": {
+      "kavlashvili": {
         "price_per_sqm": 1061.0,
         "sample_size": 5
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1019.0,
         "sample_size": 13
       },
-      "ლვოვის": {
+      "lvov": {
         "price_per_sqm": 1103.5,
         "sample_size": 8
       }
     },
-    "renovation_premium_pct": 38.5,
+    "renovation_premium_pct": 36.3,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1533,7 +1425,7 @@
     "by_condition": {
       "renovated": {
         "price_per_sqm": 1500.0,
-        "sample_size": 11
+        "sample_size": 15
       },
       "old_renovation": {
         "price_per_sqm": 1195.0,
@@ -1545,7 +1437,7 @@
         "price_per_sqm": 1300.0,
         "sample_size": 21
       },
-      "ხრუშჩოვის": {
+      "khrushchev": {
         "price_per_sqm": 933.0,
         "sample_size": 7
       }
@@ -1597,7 +1489,7 @@
         "price_per_sqm": 1141.0,
         "sample_size": 9
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 1425.0,
         "sample_size": 6
       }
@@ -1623,13 +1515,13 @@
     "sample_size": 120,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 723.0,
         "sample_size": 5
       },
       "renovated": {
-        "price_per_sqm": 1645.0,
-        "sample_size": 7
+        "price_per_sqm": 1443.0,
+        "sample_size": 11
       },
       "old_renovation": {
         "price_per_sqm": 1066.0,
@@ -1662,12 +1554,8 @@
         "sample_size": 63
       },
       "renovated": {
-        "price_per_sqm": 1237.0,
-        "sample_size": 36
-      },
-      "გარემონტებული": {
-        "price_per_sqm": 1058.0,
-        "sample_size": 19
+        "price_per_sqm": 1125.0,
+        "sample_size": 55
       }
     },
     "by_project": {
@@ -1675,19 +1563,19 @@
         "price_per_sqm": 1045.0,
         "sample_size": 27
       },
-      "ჩეხური": {
+      "czech": {
         "price_per_sqm": 1105.0,
         "sample_size": 10
       },
-      "ყავლაშვილის": {
+      "kavlashvili": {
         "price_per_sqm": 1108.0,
         "sample_size": 28
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1043.0,
         "sample_size": 38
       },
-      "ხრუშჩოვის": {
+      "khrushchev": {
         "price_per_sqm": 1237.0,
         "sample_size": 7
       }
@@ -1733,19 +1621,15 @@
     "sample_size": 126,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "გარემონტებული": {
-        "price_per_sqm": 971.5,
-        "sample_size": 16
-      },
       "renovated": {
-        "price_per_sqm": 1203.0,
-        "sample_size": 58
+        "price_per_sqm": 1199.0,
+        "sample_size": 74
       },
       "old_renovation": {
         "price_per_sqm": 1015.0,
         "sample_size": 23
       },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1069.0,
         "sample_size": 9
       },
@@ -1759,20 +1643,20 @@
         "price_per_sqm": 1084.0,
         "sample_size": 77
       },
-      "მოსკოვის": {
+      "moscow": {
         "price_per_sqm": 951.5,
         "sample_size": 22
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 1143.0,
         "sample_size": 11
       },
-      "ლვოვის": {
+      "lvov": {
         "price_per_sqm": 809.0,
         "sample_size": 5
       }
     },
-    "renovation_premium_pct": 38.5,
+    "renovation_premium_pct": 38.1,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1796,10 +1680,10 @@
         "sample_size": 9
       },
       "renovated": {
-        "price_per_sqm": 1000.0,
-        "sample_size": 50
+        "price_per_sqm": 1084.0,
+        "sample_size": 54
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 980.0,
         "sample_size": 13
       },
@@ -1807,7 +1691,7 @@
         "price_per_sqm": 989.0,
         "sample_size": 26
       },
-      "მიმდინარე რემონტი": {
+      "ongoing_renovation": {
         "price_per_sqm": 954.0,
         "sample_size": 10
       }
@@ -1818,7 +1702,7 @@
         "sample_size": 97
       }
     },
-    "renovation_premium_pct": 13.3,
+    "renovation_premium_pct": 22.8,
     "dom": {
       "avg_days": 1.0,
       "median_days": 1.0,
@@ -1833,11 +1717,11 @@
     "sample_size": 127,
     "updated": "2026-05-02T20:55:53.095163+00:00",
     "by_condition": {
-      "გარემონტებული": {
+      "renovated": {
         "price_per_sqm": 1038.0,
-        "sample_size": 5
+        "sample_size": 35
       },
-      "მწვანე კარკასი": {
+      "green_frame": {
         "price_per_sqm": 850.0,
         "sample_size": 18
       },
@@ -1845,15 +1729,11 @@
         "price_per_sqm": 983.0,
         "sample_size": 18
       },
-      "მიმდინარე რემონტი": {
+      "ongoing_renovation": {
         "price_per_sqm": 539.0,
         "sample_size": 7
       },
-      "renovated": {
-        "price_per_sqm": 1038.0,
-        "sample_size": 30
-      },
-      "სარემონტო": {
+      "needs_renovation": {
         "price_per_sqm": 1075.0,
         "sample_size": 12
       },
@@ -1867,11 +1747,11 @@
         "price_per_sqm": 855.0,
         "sample_size": 82
       },
-      "ლვოვის": {
+      "lvov": {
         "price_per_sqm": 1055.5,
         "sample_size": 16
       },
-      "ქალაქური": {
+      "urban": {
         "price_per_sqm": 817.0,
         "sample_size": 9
       }
