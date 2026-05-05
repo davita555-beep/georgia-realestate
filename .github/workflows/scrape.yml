@@ -2,7 +2,8 @@ name: Scrape ss.ge prices and rents
 
 on:
   schedule:
-    - cron: '0 6 * * 1'   # Every Monday 06:00 UTC (10:00 Tbilisi)
+    - cron: '0 6 * * 1'   # Every Monday 06:00 UTC (10:00 Tbilisi) — prices + rents
+    - cron: '0 7 * * *'   # Every day 07:00 UTC — listings
   workflow_dispatch:       # Allow manual runs from GitHub UI
 
 concurrency:
@@ -14,6 +15,10 @@ permissions:
 
 jobs:
   scrape:
+    # Runs on the weekly Monday trigger and on manual dispatch.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.schedule == '0 6 * * 1'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -43,5 +48,39 @@ jobs:
             echo "No price changes this week."
           else
             git commit -m "chore: weekly price update [skip ci]"
+            git push
+          fi
+
+  scrape-listings:
+    # Runs every day (including Monday after the weekly job) and on manual dispatch.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.schedule == '0 7 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run listings scraper
+        run: python scripts/scrape_listings.py
+
+      - name: Commit updated listings
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/listings.json
+          if git diff --staged --quiet; then
+            echo "No listing changes today."
+          else
+            git commit -m "data: daily listings update [skip ci]"
             git push
           fi
