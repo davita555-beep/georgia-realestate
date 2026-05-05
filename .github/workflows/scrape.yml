@@ -5,12 +5,17 @@ on:
     - cron: '0 6 * * 1'   # Every Monday 06:00 UTC (10:00 Tbilisi)
   workflow_dispatch:       # Allow manual runs from GitHub UI
 
+concurrency:
+  group: scrape
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
