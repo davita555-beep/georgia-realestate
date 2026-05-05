@@ -15,6 +15,7 @@ import re
 import random
 import sys
 import time
+import urllib.parse
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -39,14 +40,25 @@ SUBDISTRICT_IDS = [
     43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
 ]
 
-SALE_SEARCH_URL = (
-    "https://home.ss.ge/ka/udzravi-qoneba/l/bina/iyideba"
-    "?cityIdList=95&currencyId=1&subdistrictIds={}"
+_SALE_BASE = "https://home.ss.ge/ka/udzravi-qoneba/l/bina/iyideba"
+_RENT_BASE = "https://home.ss.ge/en/real-estate/l/Flat/For-Rent"
+
+# advancedSearch={"individualEntityOnly":true} — verified working on ss.ge.
+# Built programmatically so the JSON encoding stays explicit and maintainable.
+_OWNER_PARAM = urllib.parse.quote(
+    json.dumps({"individualEntityOnly": True}, separators=(",", ":")),
+    safe="",
 )
-RENT_SEARCH_URL = (
-    "https://home.ss.ge/en/real-estate/l/Flat/For-Rent"
-    "?cityIdList=95&currencyId=1&subdistrictIds={}"
-)
+
+
+def _sale_url(subdistrict_id: int, *, individual_only: bool) -> str:
+    base = f"{_SALE_BASE}?cityIdList=95&currencyId=1&subdistrictIds={subdistrict_id}"
+    return f"{base}&advancedSearch={_OWNER_PARAM}" if individual_only else base
+
+
+def _rent_url(subdistrict_id: int, *, individual_only: bool) -> str:
+    base = f"{_RENT_BASE}?cityIdList=95&currencyId=1&subdistrictIds={subdistrict_id}"
+    return f"{base}&advancedSearch={_OWNER_PARAM}" if individual_only else base
 
 MAX_PAGES = 16
 MIN_AREA_SQM = 10
@@ -216,11 +228,6 @@ RENT_SLUG_TO_DISTRICT: dict[str, str] = {
     "ivertubani": "ივერთუბანი",
 }
 
-# Text patterns that indicate owner type inside a card's text content.
-_AGENCY_SIGNALS = frozenset(["სააგენტო", "agency", "broker", "realtor", "რეალტ"])
-_OWNER_SIGNALS  = frozenset(["მეპატრონე", "პირდაპირ", "direct", "private owner", "owner"])
-
-
 # ---------- Helpers ----------
 
 def fetch_with_retry(url: str) -> requests.Response | None:
@@ -290,25 +297,6 @@ def district_from_rent_href(href: str) -> str | None:
     return None
 
 
-def detect_owner_type(card) -> str | None:
-    """Best-effort: returns 'owner', 'agency', or None from card HTML."""
-    text_lower = card.get_text(" ", strip=True).lower()
-    for sig in _AGENCY_SIGNALS:
-        if sig in text_lower:
-            return "agency"
-    for sig in _OWNER_SIGNALS:
-        if sig in text_lower:
-            return "owner"
-    # Class-name heuristic on child elements
-    for el in card.find_all(True):
-        cls = " ".join(el.get("class", [])).lower()
-        if any(s in cls for s in ("agency", "agent", "broker")):
-            return "agency"
-        if any(s in cls for s in ("owner", "private")):
-            return "owner"
-    return None
-
-
 def infer_district_from_cards(cards: list[dict], listing_type: str) -> str | None:
     resolver = district_from_sale_href if listing_type == "sale" else district_from_rent_href
     names = [resolver(c.get("href", "")) for c in cards]
@@ -349,7 +337,6 @@ def parse_sale_page(html: str, subdistrict_id: int) -> list[dict]:
             rooms = int(m.group(1))
 
         district = district_from_sale_href(href)
-        owner_type = detect_owner_type(card)
 
         results.append({
             "listing_id": listing_id,
@@ -360,7 +347,6 @@ def parse_sale_page(html: str, subdistrict_id: int) -> list[dict]:
             "rooms": rooms,
             "district": district,
             "subdistrict_id": subdistrict_id,
-            "owner_type": owner_type,
         })
 
     return results
@@ -404,7 +390,6 @@ def parse_rent_page(html: str) -> list[dict]:
             rooms = int(m.group(1))
 
         district = district_from_rent_href(href)
-        owner_type = detect_owner_type(card)
 
         results.append({
             "listing_id": listing_id,
@@ -414,7 +399,6 @@ def parse_rent_page(html: str) -> list[dict]:
             "size_m2": area,
             "rooms": rooms,
             "district": district,
-            "owner_type": owner_type,
         })
 
     return results
@@ -422,55 +406,90 @@ def parse_rent_page(html: str) -> list[dict]:
 
 # ---------- District-level scrapers ----------
 
-def scrape_district_sale(subdistrict_id: int) -> list[dict]:
-    url = SALE_SEARCH_URL.format(subdistrict_id)
+def _fetch_sale_pages(base_url: str, subdistrict_id: int, label: str) -> list[dict]:
     listings: list[dict] = []
-
     for page in range(1, MAX_PAGES + 1):
-        resp = fetch_with_retry(f"{url}&page={page}")
+        resp = fetch_with_retry(f"{base_url}&page={page}")
         if resp is None:
-            print(f"    ! sale ID {subdistrict_id} page {page}: giving up")
+            print(f"    ! {label} page {page}: giving up")
             break
-
         page_listings = parse_sale_page(resp.text, subdistrict_id)
         if not page_listings:
             break
         listings.extend(page_listings)
         time.sleep(random.uniform(*REQUEST_DELAY))
-
-    # Backfill district for cards that had unrecognised slugs using majority vote.
-    majority = infer_district_from_cards(listings, "sale")
-    if majority:
-        for l in listings:
-            if not l["district"]:
-                l["district"] = majority
-
     return listings
 
 
-def scrape_district_rent(subdistrict_id: int) -> list[dict]:
-    url = RENT_SEARCH_URL.format(subdistrict_id)
+def _fetch_rent_pages(base_url: str, label: str) -> list[dict]:
     listings: list[dict] = []
-
     for page in range(1, MAX_PAGES + 1):
-        resp = fetch_with_retry(f"{url}&page={page}")
+        resp = fetch_with_retry(f"{base_url}&page={page}")
         if resp is None:
-            print(f"    ! rent ID {subdistrict_id} page {page}: giving up")
+            print(f"    ! {label} page {page}: giving up")
             break
-
         page_listings = parse_rent_page(resp.text)
         if not page_listings:
             break
         listings.extend(page_listings)
         time.sleep(random.uniform(*REQUEST_DELAY))
+    return listings
 
-    majority = infer_district_from_cards(listings, "rent")
+
+def scrape_district_sale(subdistrict_id: int) -> list[dict]:
+    sid = subdistrict_id
+
+    # Pass 1: owner-only (individualEntityOnly filter).
+    owner_raw = _fetch_sale_pages(_sale_url(sid, individual_only=True), sid, f"sale/owner ID {sid}")
+    owner_ids = {l["listing_id"] for l in owner_raw}
+    for l in owner_raw:
+        l["owner_type"] = "owner"
+    print(f"    sale/owner  ID {sid}: {len(owner_raw)} listings")
+
+    # Pass 2: all listings — anything not in the owner set is agency.
+    all_raw = _fetch_sale_pages(_sale_url(sid, individual_only=False), sid, f"sale/all   ID {sid}")
+    agency_listings = [l for l in all_raw if l["listing_id"] not in owner_ids]
+    for l in agency_listings:
+        l["owner_type"] = "agency"
+    print(f"    sale/agency ID {sid}: {len(agency_listings)} listings (of {len(all_raw)} total)")
+
+    combined = owner_raw + agency_listings
+
+    majority = infer_district_from_cards(combined, "sale")
     if majority:
-        for l in listings:
+        for l in combined:
             if not l["district"]:
                 l["district"] = majority
 
-    return listings
+    return combined
+
+
+def scrape_district_rent(subdistrict_id: int) -> list[dict]:
+    sid = subdistrict_id
+
+    # Pass 1: owner-only.
+    owner_raw = _fetch_rent_pages(_rent_url(sid, individual_only=True), f"rent/owner ID {sid}")
+    owner_ids = {l["listing_id"] for l in owner_raw}
+    for l in owner_raw:
+        l["owner_type"] = "owner"
+    print(f"    rent/owner  ID {sid}: {len(owner_raw)} listings")
+
+    # Pass 2: all listings — anything not in the owner set is agency.
+    all_raw = _fetch_rent_pages(_rent_url(sid, individual_only=False), f"rent/all   ID {sid}")
+    agency_listings = [l for l in all_raw if l["listing_id"] not in owner_ids]
+    for l in agency_listings:
+        l["owner_type"] = "agency"
+    print(f"    rent/agency ID {sid}: {len(agency_listings)} listings (of {len(all_raw)} total)")
+
+    combined = owner_raw + agency_listings
+
+    majority = infer_district_from_cards(combined, "rent")
+    if majority:
+        for l in combined:
+            if not l["district"]:
+                l["district"] = majority
+
+    return combined
 
 
 # ---------- Persistence ----------
