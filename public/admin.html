@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — tbilisiprice.ge</title>
+  <style>
+    :root {
+      --bg:        #0B1C3D;
+      --bg-mid:    #111f40;
+      --card:      #1E3A6E;
+      --card-alt:  #162d55;
+      --gold:      #C9A84C;
+      --gold-dim:  rgba(201,168,76,0.12);
+      --gold-ring: rgba(201,168,76,0.22);
+      --text:      #FAFAF8;
+      --muted:     rgba(250,250,248,0.5);
+      --border:    rgba(201,168,76,0.18);
+      --row-hover: rgba(255,255,255,0.03);
+      --green:     #4ade80;
+      --red:       #f87171;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 2rem 2.5rem 4rem;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: normal;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+
+    header h1 span { color: var(--muted); font-size: 0.9rem; margin-left: 0.5rem; }
+
+    #last-updated {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    /* ── Error ───────────────────────────────────────────── */
+    #error-msg {
+      display: none;
+      background: rgba(248,113,113,0.1);
+      border: 1px solid var(--red);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      color: var(--red);
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── Stat cards ──────────────────────────────────────── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 2.75rem;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.1rem 1.1rem;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 0.45rem;
+      font-family: 'Georgia', serif;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .stat-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .gold  { color: var(--gold) !important; }
+    .green { color: var(--green) !important; }
+    .red   { color: var(--red) !important; }
+
+    /* ── Section heading ─────────────────────────────────── */
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: normal;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.9rem;
+    }
+
+    /* ── Table ───────────────────────────────────────────── */
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    /* column-group header rows */
+    .col-group-row th {
+      background: var(--gold-dim);
+      padding: 0.35rem 1rem;
+      font-size: 0.65rem;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .col-group-row th:first-child { text-align: left; }
+    .col-group-row th.blank { background: var(--card-alt); }
+
+    /* main header row */
+    .col-header-row th {
+      background: var(--card);
+      padding: 0.6rem 1rem;
+      font-size: 0.68rem;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .col-header-row th:first-child { text-align: left; }
+
+    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--row-hover); }
+
+    td {
+      padding: 0.6rem 1rem;
+      text-align: right;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    td:first-child {
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    td.muted { color: var(--muted); }
+
+    .sale-col { border-left: 1px solid var(--border); }
+    .rent-col { border-left: 1px solid var(--border); }
+
+    /* highlight non-zero DOM */
+    .dom-val { color: var(--gold); font-weight: 500; }
+
+    /* loading placeholder */
+    .loading-row td {
+      text-align: center;
+      color: var(--muted);
+      padding: 2.5rem;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>tbilisiprice.ge <span>/ admin</span></h1>
+  <span id="last-updated">—</span>
+</header>
+
+<div id="error-msg"></div>
+
+<!-- ── Stat cards ─────────────────────────────────────────────── -->
+<div class="stats" id="stats">
+  <div class="stat">
+    <div class="stat-label">Total listings ever</div>
+    <div class="stat-value" id="s-total">—</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Active sale</div>
+    <div class="stat-value gold" id="s-sale">—</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Active rent</div>
+    <div class="stat-value gold" id="s-rent">—</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">DOM &gt; 0 days</div>
+    <div class="stat-value" id="s-dom">—</div>
+    <div class="stat-sub">listings with tracked history</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Delisted</div>
+    <div class="stat-value red" id="s-delisted">—</div>
+    <div class="stat-sub">gone from ss.ge</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Price drops</div>
+    <div class="stat-value green" id="s-drops">—</div>
+    <div class="stat-sub">at least one reduction</div>
+  </div>
+</div>
+
+<!-- ── DOM table ──────────────────────────────────────────────── -->
+<p class="section-title">Days on Market — per district</p>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr class="col-group-row">
+        <th class="blank"></th>
+        <th colspan="3">Sale</th>
+        <th colspan="3" class="rent-col">Rent</th>
+      </tr>
+      <tr class="col-header-row">
+        <th>District</th>
+        <th class="sale-col">Avg DOM</th>
+        <th>Median</th>
+        <th>Listings</th>
+        <th class="rent-col">Avg DOM</th>
+        <th>Median</th>
+        <th>Listings</th>
+      </tr>
+    </thead>
+    <tbody id="dom-tbody">
+      <tr class="loading-row"><td colspan="7">Loading…</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const fmt = n => (n == null ? '—' : Number.isInteger(n) ? n.toLocaleString() : n.toFixed(1));
+
+  // Returns the inner HTML for a DOM value cell (no <td> wrapper).
+  function domContent(val) {
+    if (val == null) return '<span class="muted">—</span>';
+    return val > 0 ? `<span class="dom-val">${fmt(val)}</span>` : '<span class="muted">0</span>';
+  }
+
+  function getPriceFromHistoryItem(item) {
+    // New entries use "price"; legacy entries from scrape_prices.py use "price_usd".
+    return item.price ?? item.price_usd ?? null;
+  }
+
+  async function load() {
+    try {
+      const [listingsResp, domResp] = await Promise.all([
+        fetch('/data/listings.json'),
+        fetch('/data/dom_summary.json'),
+      ]);
+
+      if (!listingsResp.ok) throw new Error(`listings.json: ${listingsResp.status}`);
+      if (!domResp.ok)      throw new Error(`dom_summary.json: ${domResp.status}`);
+
+      const [listingsData, domData] = await Promise.all([
+        listingsResp.json(),
+        domResp.json(),
+      ]);
+
+      renderStats(listingsData);
+      renderDomTable(domData);
+
+      // Last updated: prefer the most recent of the two files.
+      const ts1 = listingsData.meta?.last_run;
+      const ts2 = domData.updated;
+      const latest = [ts1, ts2].filter(Boolean).sort().at(-1);
+      if (latest) {
+        document.getElementById('last-updated').textContent =
+          'Updated ' + new Date(latest).toLocaleString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
+          });
+      }
+
+    } catch (err) {
+      const el = document.getElementById('error-msg');
+      el.style.display = 'block';
+      el.textContent = 'Failed to load data: ' + err.message;
+    }
+  }
+
+  function renderStats(data) {
+    const meta = data.meta ?? {};
+    const listings = data.listings ?? {};
+    const values = Object.values(listings);
+
+    let domGt0 = 0, delisted = 0, drops = 0;
+
+    for (const entry of values) {
+      if ((entry.dom_days ?? 0) > 0) domGt0++;
+      if (entry.status === 'delisted') delisted++;
+
+      const h = entry.price_history;
+      if (h && h.length > 1) {
+        const first = getPriceFromHistoryItem(h[0]);
+        const last  = getPriceFromHistoryItem(h[h.length - 1]);
+        if (first != null && last != null && last < first) drops++;
+      }
+    }
+
+    document.getElementById('s-total').textContent    = fmt(meta.total_listings_ever ?? values.length);
+    document.getElementById('s-sale').textContent     = fmt(meta.active_sale ?? '—');
+    document.getElementById('s-rent').textContent     = fmt(meta.active_rent ?? '—');
+    document.getElementById('s-dom').textContent      = fmt(domGt0);
+    document.getElementById('s-delisted').textContent = fmt(delisted);
+    document.getElementById('s-drops').textContent    = fmt(drops);
+  }
+
+  function renderDomTable(data) {
+    const districts = data.districts ?? {};
+    const rows = Object.entries(districts);
+
+    if (rows.length === 0) {
+      document.getElementById('dom-tbody').innerHTML =
+        '<tr class="loading-row"><td colspan="7">No district data yet — run calc_dom.py after a full scrape.</td></tr>';
+      return;
+    }
+
+    // Sort by sale avg_dom desc, then rent avg_dom desc, then name asc.
+    rows.sort((a, b) => {
+      const sa = a[1].sale?.avg_dom ?? -1;
+      const sb = b[1].sale?.avg_dom ?? -1;
+      if (sb !== sa) return sb - sa;
+      const ra = a[1].rent?.avg_dom ?? -1;
+      const rb = b[1].rent?.avg_dom ?? -1;
+      if (rb !== ra) return rb - ra;
+      return a[0].localeCompare(b[0]);
+    });
+
+    const html = rows.map(([district, d]) => {
+      const s = d.sale ?? null;
+      const r = d.rent ?? null;
+      return `<tr>
+        <td>${district}</td>
+        <td class="sale-col">${s ? domContent(s.avg_dom)          : '<span class="muted">—</span>'}</td>
+        <td>              ${s ? fmt(s.median_dom)                  : '<span class="muted">—</span>'}</td>
+        <td class="muted">${s ? fmt(s.sample_size)                 : '—'}</td>
+        <td class="rent-col">${r ? domContent(r.avg_dom)          : '<span class="muted">—</span>'}</td>
+        <td>              ${r ? fmt(r.median_dom)                  : '<span class="muted">—</span>'}</td>
+        <td class="muted">${r ? fmt(r.sample_size)                 : '—'}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('dom-tbody').innerHTML = html;
+  }
+
+  load();
+</script>
+</body>
+</html>
