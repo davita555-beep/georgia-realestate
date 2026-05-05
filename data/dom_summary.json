@@ -1,0 +1,18 @@
+{
+  "updated": "2026-05-05T19:07:57.722775+00:00",
+  "total_active_listings": 837,
+  "districts": {
+    "საბურთალო": {
+      "sale": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 432
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 405
+      }
+    }
+  }
+}

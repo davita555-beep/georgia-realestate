@@ -17,7 +17,7 @@ import sys
 import time
 import urllib.parse
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import requests
@@ -549,6 +549,7 @@ def upsert_listings(
                 "owner_type": raw.get("owner_type"),
                 "first_seen": today,
                 "last_seen": today,
+                "dom_days": 0,
                 "status": "active",
                 "price_history": [{"date": today, "price": raw["price"]}],
             }
@@ -556,6 +557,7 @@ def upsert_listings(
         else:
             entry = db[key]
             entry["last_seen"] = today
+            entry["dom_days"] = (date.fromisoformat(today) - date.fromisoformat(entry["first_seen"])).days
             entry["status"] = "active"
             new_price = raw.get("price")
             if new_price is not None and new_price != entry.get("price"):
