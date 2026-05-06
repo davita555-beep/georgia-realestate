@@ -46,6 +46,7 @@ const T = {
   ka: {
     tagline: "ბინის ფასების შემოწმება - თბილისი 2026",
     findApt: "ბინის მოძებნა",
+    domAnalysis: "DOM ანალიზი",
     mortgage: "იპოთეკა",
     rental: "იჯარა",
     hero: "ბინის ყიდვა თბილისში?",
@@ -130,6 +131,7 @@ const T = {
   en: {
     tagline: "Apartment Price Checker - Tbilisi 2026",
     findApt: "Find my apartment",
+    domAnalysis: "DOM Analysis",
     mortgage: "Mortgage",
     rental: "Rental",
     hero: "Buying property in Tbilisi?",
@@ -493,6 +495,11 @@ export default function Home() {
               style={{border:"1px solid rgba(201,168,76,0.5)",color:"#C9A84C",background:"transparent",borderRadius:8,padding:"6px 14px",fontSize:13,fontWeight:500}}
               className="hidden sm:block transition-all hover:bg-yellow-500/10">
               {t.rental}
+            </a>
+            <a href="/dom"
+              style={{border:"1px solid rgba(201,168,76,0.5)",color:"#C9A84C",background:"transparent",borderRadius:8,padding:"6px 14px",fontSize:13,fontWeight:500}}
+              className="hidden sm:block transition-all hover:bg-yellow-500/10">
+              {t.domAnalysis}
             </a>
             <button onClick={openForm}
               style={{touchAction:"manipulation",minHeight:40,background:"linear-gradient(135deg,#C9A84C,#A8863A)",border:"none",color:"#fff",borderRadius:8,padding:"8px 18px",fontSize:13,fontWeight:600}}
