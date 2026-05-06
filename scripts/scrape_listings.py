@@ -60,7 +60,7 @@ def _rent_url(subdistrict_id: int, *, individual_only: bool) -> str:
     base = f"{_RENT_BASE}?cityIdList=95&currencyId=1&subdistrictIds={subdistrict_id}"
     return f"{base}&advancedSearch={_OWNER_PARAM}" if individual_only else base
 
-MAX_PAGES = 16
+MAX_PAGES = 2          # 2 pages × 4 passes × 51 districts ≈ 25 min with delays
 MIN_AREA_SQM = 10
 MAX_AREA_SQM = 500
 REQUEST_DELAY = (2.0, 4.0)
@@ -409,12 +409,14 @@ def parse_rent_page(html: str) -> list[dict]:
 def _fetch_sale_pages(base_url: str, subdistrict_id: int, label: str) -> list[dict]:
     listings: list[dict] = []
     for page in range(1, MAX_PAGES + 1):
+        print(f"    {label} page {page}/{MAX_PAGES}…", flush=True)
         resp = fetch_with_retry(f"{base_url}&page={page}")
         if resp is None:
             print(f"    ! {label} page {page}: giving up")
             break
         page_listings = parse_sale_page(resp.text, subdistrict_id)
         if not page_listings:
+            print(f"    {label} page {page}: empty — stopping")
             break
         listings.extend(page_listings)
         time.sleep(random.uniform(*REQUEST_DELAY))
@@ -424,12 +426,14 @@ def _fetch_sale_pages(base_url: str, subdistrict_id: int, label: str) -> list[di
 def _fetch_rent_pages(base_url: str, label: str) -> list[dict]:
     listings: list[dict] = []
     for page in range(1, MAX_PAGES + 1):
+        print(f"    {label} page {page}/{MAX_PAGES}…", flush=True)
         resp = fetch_with_retry(f"{base_url}&page={page}")
         if resp is None:
             print(f"    ! {label} page {page}: giving up")
             break
         page_listings = parse_rent_page(resp.text)
         if not page_listings:
+            print(f"    {label} page {page}: empty — stopping")
             break
         listings.extend(page_listings)
         time.sleep(random.uniform(*REQUEST_DELAY))
@@ -595,21 +599,24 @@ def main(test_id: int | None = None, listing_type: str | None = None) -> None:
 
     ids = [test_id] if test_id is not None else SUBDISTRICT_IDS
     types = [listing_type] if listing_type else ["sale", "rent"]
+    total_ids = len(ids)
 
     all_scraped: dict[str, list[dict]] = {"sale": [], "rent": []}
 
-    for sid in ids:
+    for idx, sid in enumerate(ids, 1):
+        print(f"\n── District {idx}/{total_ids} (ID {sid}) ──", flush=True)
+
         if "sale" in types:
-            print(f"  [sale] subdistrict ID {sid}...")
+            print(f"  [sale] subdistrict ID {sid}…", flush=True)
             sale_listings = scrape_district_sale(sid)
             all_scraped["sale"].extend(sale_listings)
-            print(f"    -> {len(sale_listings)} listings")
+            print(f"    -> {len(sale_listings)} sale listings total for ID {sid}", flush=True)
 
         if "rent" in types:
-            print(f"  [rent] subdistrict ID {sid}...")
+            print(f"  [rent] subdistrict ID {sid}…", flush=True)
             rent_listings = scrape_district_rent(sid)
             all_scraped["rent"].extend(rent_listings)
-            print(f"    -> {len(rent_listings)} listings")
+            print(f"    -> {len(rent_listings)} rent listings total for ID {sid}", flush=True)
 
     if test_id is not None:
         print("\n--- TEST MODE: sample listings ---")
