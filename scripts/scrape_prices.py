@@ -34,6 +34,8 @@ PRICES_FILE = DATA_DIR / "prices.json"
 HISTORY_FILE = DATA_DIR / "history.json"
 LISTINGS_FILE = DATA_DIR / "listings.json"
 PUBLIC_PRICES_FILE = ROOT / "public" / "data" / "prices.json"
+PRICES_BY_CONDITION_FILE = DATA_DIR / "prices_by_condition.json"
+PUBLIC_PRICES_BY_CONDITION_FILE = ROOT / "public" / "data" / "prices_by_condition.json"
 
 # All confirmed Tbilisi subdistrict IDs on ss.ge (1-53, IDs 12 and 25 absent from all groups).
 # Source groups (for reference):
@@ -53,6 +55,19 @@ SUBDISTRICT_IDS = [
 BASE_SEARCH_URL = (
     "https://home.ss.ge/ka/udzravi-qoneba/l/bina/iyideba"
     "?cityIdList=95&currencyId=1&subdistrictIds={}"
+)
+
+# conditionIds as used by the ss.ge search API
+CONDITION_IDS: dict[str, int] = {
+    "black":     1,
+    "white":     2,
+    "green":     3,
+    "renovated": 4,
+}
+
+CONDITION_SEARCH_URL = (
+    "https://home.ss.ge/ka/udzravi-qoneba/l/bina/iyideba"
+    "?cityIdList=95&currencyId=1&subdistrictIds={subdistrict_id}&conditionIds={condition_id}"
 )
 
 # URL slug → Georgian nominative name.
@@ -796,6 +811,100 @@ def migrate_to_slugs() -> None:
     print(f"Migration done: {n_cond} condition remapped, {n_proj} project_type remapped, {n_warn} warnings.")
 
 
+# ---------- Per-condition scraping ----------
+
+def scrape_subdistrict_by_condition(subdistrict_id: int) -> tuple[str, dict[str, list[float]]]:
+    """Scrape one subdistrict 4 times, once per conditionId.
+    Returns (resolved_name, {slug: [price_per_sqm, ...]}).
+    Name is resolved from the first breadcrumb found across condition passes."""
+    prices_by_cond: dict[str, list[float]] = {slug: [] for slug in CONDITION_IDS}
+    name: str | None = None
+    all_listings_for_vote: list[dict] = []
+
+    for cond_slug, cond_id in CONDITION_IDS.items():
+        url = CONDITION_SEARCH_URL.format(
+            subdistrict_id=subdistrict_id, condition_id=cond_id
+        )
+        cond_prices: list[float] = []
+
+        for page in range(1, MAX_PAGES_PER_SUBDISTRICT + 1):
+            page_url = f"{url}&page={page}"
+            try:
+                resp = requests.get(page_url, headers=HEADERS, timeout=25)
+                resp.raise_for_status()
+            except requests.RequestException as e:
+                print(f"    ! ID {subdistrict_id}/{cond_slug} page {page}: {e}")
+                break
+
+            soup = BeautifulSoup(resp.text, "html.parser")
+
+            if page == 1 and name is None:
+                name = extract_name_from_page(soup)
+
+            page_listings = parse_listings_page(resp.text, subdistrict_id=subdistrict_id)
+            if not page_listings:
+                break
+            cond_prices.extend(l["price_per_sqm"] for l in page_listings)
+            all_listings_for_vote.extend(page_listings)
+            time.sleep(random.uniform(*REQUEST_DELAY_RANGE))
+
+        prices_by_cond[cond_slug] = cond_prices
+        print(f"    ID {subdistrict_id}/{cond_slug}: {len(cond_prices)} listings")
+
+    if not name:
+        name = infer_name_from_listings(all_listings_for_vote)
+    if not name:
+        name = f"#ID-{subdistrict_id}"
+
+    return name, prices_by_cond
+
+
+def run_by_condition_scrape() -> None:
+    """Scrape every subdistrict × condition, compute medians, write prices_by_condition.json."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Accumulate prices keyed by resolved name so duplicate IDs that share a name merge.
+    district_prices: dict[str, dict[str, list[float]]] = {}
+
+    for sid in SUBDISTRICT_IDS:
+        print(f"\nSubdistrict ID {sid}...")
+        name, by_cond = scrape_subdistrict_by_condition(sid)
+
+        if name.startswith("#ID-"):
+            print(f"  ~ ID {sid}: name unknown — skipping")
+            continue
+
+        if name not in district_prices:
+            district_prices[name] = {slug: [] for slug in CONDITION_IDS}
+        for slug, prices in by_cond.items():
+            district_prices[name][slug].extend(prices)
+
+        summary = ", ".join(f"{s}={len(by_cond[s])}" for s in CONDITION_IDS)
+        print(f"  -> {name}: {summary}")
+
+    print(f"\nComputing medians for {len(district_prices)} districts...")
+    result: dict[str, dict[str, float | None]] = {}
+    for name in sorted(district_prices):
+        by_cond = district_prices[name]
+        entry: dict[str, float | None] = {
+            slug: robust_median(by_cond[slug]) for slug in CONDITION_IDS
+        }
+        if any(v is not None for v in entry.values()):
+            result[name] = entry
+            filled = {s: f"${v}" for s, v in entry.items() if v is not None}
+            print(f"  {name}: {filled}")
+
+    payload = json.dumps(result, ensure_ascii=False, indent=2)
+    PRICES_BY_CONDITION_FILE.write_text(payload, encoding="utf-8")
+    PUBLIC_PRICES_BY_CONDITION_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PUBLIC_PRICES_BY_CONDITION_FILE.write_text(payload, encoding="utf-8")
+    print(
+        f"\nWrote {len(result)} districts to "
+        f"{PRICES_BY_CONDITION_FILE.name} and "
+        f"{PUBLIC_PRICES_BY_CONDITION_FILE.relative_to(ROOT)}"
+    )
+
+
 # ---------- Main ----------
 
 def load_json(path: Path, default):
@@ -913,9 +1022,14 @@ if __name__ == "__main__":
                         help="Verify Phase 4 extras against existing prices.json + listings.json. No scrape, no writes.")
     parser.add_argument("--migrate-slugs", action="store_true",
                         help="One-time backfill: replace raw Georgian strings with English slugs in listings.json.")
+    parser.add_argument("--by-condition", action="store_true",
+                        help="Scrape per-condition prices and write prices_by_condition.json.")
     args = parser.parse_args()
 
-    if args.migrate_slugs:
+    if args.by_condition:
+        run_by_condition_scrape()
+
+    elif args.migrate_slugs:
         migrate_to_slugs()
 
     elif args.test_aggregation:

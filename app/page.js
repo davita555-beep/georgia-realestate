@@ -13,10 +13,10 @@ function getSupabase() {
 }
 
 const FINISH_TYPES = [
-  { id: "black",     ka: "შავი კარკასი",    en: "Black Frame",  desc_ka: "მხოლოდ კონსტრუქცია",        desc_en: "Bare concrete shell",             multiplier: 1.0  },
-  { id: "white",     ka: "თეთრი კარკასი",   en: "White Frame",  desc_ka: "შელესილი, კომუნიკაციები",    desc_en: "Plastered, utilities installed",   multiplier: 1.13 },
-  { id: "green",     ka: "მწვანე კარკასი",  en: "Green Frame",  desc_ka: "ნახევრად დამთავრებული",       desc_en: "Semi-finished, flooring included", multiplier: 1.18 },
-  { id: "renovated", ka: "გარემონტებული",   en: "Renovated",    desc_ka: "სრულად მოწყობილი",           desc_en: "Fully finished, move-in ready",    multiplier: 1.32 },
+  { id: "black",     ka: "შავი კარკასი",    en: "Black Frame",  desc_ka: "მხოლოდ კონსტრუქცია",        desc_en: "Bare concrete shell",             multiplier: 0.85 },
+  { id: "white",     ka: "თეთრი კარკასი",   en: "White Frame",  desc_ka: "შელესილი, კომუნიკაციები",    desc_en: "Plastered, utilities installed",   multiplier: 0.97 },
+  { id: "green",     ka: "მწვანე კარკასი",  en: "Green Frame",  desc_ka: "ნახევრად დამთავრებული",       desc_en: "Semi-finished, flooring included", multiplier: 1.02 },
+  { id: "renovated", ka: "გარემონტებული",   en: "Renovated",    desc_ka: "სრულად მოწყობილი",           desc_en: "Fully finished, move-in ready",    multiplier: 1.15 },
 ];
 
 const DISTRICTS_STATIC = [
