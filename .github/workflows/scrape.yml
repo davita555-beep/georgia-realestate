@@ -6,10 +6,6 @@ on:
     - cron: '0 7 * * *'   # Every day 07:00 UTC — listings
   workflow_dispatch:       # Allow manual runs from GitHub UI
 
-concurrency:
-  group: scrape
-  cancel-in-progress: true
-
 permissions:
   contents: write
 
@@ -21,6 +17,9 @@ jobs:
       github.event.schedule == '0 6 * * 1'
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    concurrency:
+      group: scrape-weekly
+      cancel-in-progress: true
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -58,6 +57,9 @@ jobs:
       github.event.schedule == '0 7 * * *'
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    concurrency:
+      group: scrape-daily
+      cancel-in-progress: true
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
