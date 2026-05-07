@@ -764,6 +764,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── DOM ANALYSIS PROMO ── */}
+      <section style={{background:"linear-gradient(135deg,#0B1C3D 0%,#162D55 55%,#0B2A4A 100%)",padding:"80px 24px"}}>
+        <div className="max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full" style={{background:"rgba(201,168,76,0.15)",border:"1px solid rgba(201,168,76,0.35)"}}>
+            <span className="pulse-dot"></span>
+            <span style={{color:"#C9A84C",fontSize:13,fontWeight:500}}>ახალი ფუნქცია</span>
+          </div>
+          <h2 className="font-bold mb-4" style={{fontSize:"clamp(28px,4vw,44px)",color:"#fff",letterSpacing:"-0.02em",maxWidth:640}}>
+            ახალი ფუნქცია — DOM ანალიზი
+          </h2>
+          <p className="mb-8" style={{color:"rgba(255,255,255,0.6)",fontSize:17,lineHeight:1.6,maxWidth:560}}>
+            აღმოაჩინე ბინები, რომლებიც დიდხანს იყიდება — სადაც ფასდაკლების რეალური შანსი არის
+          </p>
+          <a href="/dom"
+            style={{touchAction:"manipulation",display:"inline-block",background:"linear-gradient(135deg,#C9A84C,#A8863A)",color:"#fff",borderRadius:12,padding:"15px 36px",fontSize:15,fontWeight:700,textDecoration:"none",minHeight:52,lineHeight:"22px"}}>
+            იხილე DOM ანალიზი →
+          </a>
+          <div className="grid grid-cols-3 gap-4 mt-12 max-w-xl">
+            {[
+              {icon:"🏠", label:"5,800+ განცხადება"},
+              {icon:"🗺", label:"49 რაიონი"},
+              {icon:"🔄", label:"ყოველდღიური განახლება"},
+            ].map(s => (
+              <div key={s.label} className="stat-card p-4 text-center">
+                <div className="text-2xl mb-1">{s.icon}</div>
+                <div style={{color:"#fff",fontSize:13,fontWeight:500}}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── BOTTOM CTA ── */}
       <section style={{background:"linear-gradient(135deg,#0B1C3D 0%,#1E3A6E 60%,#0B2A4A 100%)",padding:"96px 24px",textAlign:"center"}}>
         <div className="max-w-2xl mx-auto">
