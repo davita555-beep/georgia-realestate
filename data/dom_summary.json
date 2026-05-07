@@ -1,19 +1,17 @@
 {
-  "updated": "2026-05-07T19:52:48.439822+00:00",
-  "total_active_listings": 5647,
+  "updated": "2026-05-07T20:11:17.812516+00:00",
+  "total_active_listings": 8109,
   "districts": {
-    "#ID-7": {
-      "sale": {
-        "avg_dom": 5.0,
-        "median_dom": 5,
-        "sample_size": 1
-      }
-    },
     "აბანოთუბანი": {
       "sale": {
-        "avg_dom": 5.0,
-        "median_dom": 5,
-        "sample_size": 16
+        "avg_dom": 2.5,
+        "median_dom": 2,
+        "sample_size": 32
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 30
       }
     },
     "აეროპორტის დასახლება": {
@@ -21,20 +19,35 @@
         "avg_dom": 5.0,
         "median_dom": 5,
         "sample_size": 7
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 1
       }
     },
     "ავლაბარი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 191
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 37
       }
     },
     "ავჭალა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.7,
         "median_dom": 5,
-        "sample_size": 125
+        "sample_size": 170
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 14
       }
     },
     "აფრიკის დასახლება": {
@@ -42,291 +55,499 @@
         "avg_dom": 5.0,
         "median_dom": 5,
         "sample_size": 127
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 8
       }
     },
     "ბაგები": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 188
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 48
       }
     },
     "გლდანი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 181
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 32
       }
     },
     "გლდანული": {
       "sale": {
-        "avg_dom": 5.0,
-        "median_dom": 5,
-        "sample_size": 1
+        "avg_dom": 2.5,
+        "median_dom": 2,
+        "sample_size": 2
+      }
+    },
+    "დიდი დიღომი": {
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 33
       }
     },
     "დიდუბე": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.6,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 180
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 51
       }
     },
     "დიღმის მასივი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 182
       }
     },
     "დიღომი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.6,
         "median_dom": 5,
-        "sample_size": 382
+        "sample_size": 532
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 73
       }
     },
     "ელია": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.7,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 172
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 23
       }
     },
     "ვაზისუბანი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 126
+        "sample_size": 183
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 21
       }
     },
     "ვაკე": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.6,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 179
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 47
       }
     },
     "ვაჟა-ფშაველას კვარტლები": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 187
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 43
       }
     },
     "ვარკეთილი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.6,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 178
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 25
       }
     },
     "ვაშლიჯვარი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 187
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 48
       }
     },
     "ვერა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 188
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 50
       }
     },
     "ვეძისი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.8,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 170
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 26
       }
     },
     "ზაჰესი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.8,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 168
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 14
+      }
+    },
+    "თბილისის ზღვა": {
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 3
       }
     },
     "თემქა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.6,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 179
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 8
       }
     },
     "ივერთუბანი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 101
+        "sample_size": 146
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 11
       }
     },
     "ისანი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.6,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 178
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 34
       }
     },
     "კონიაკის დასახლება": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 2.5,
         "median_dom": 5,
-        "sample_size": 33
+        "sample_size": 65
       }
     },
     "კუკია": {
       "sale": {
-        "avg_dom": 5.0,
-        "median_dom": 5,
-        "sample_size": 20
+        "avg_dom": 2.4,
+        "median_dom": 0,
+        "sample_size": 42
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 19
       }
     },
     "ლილო": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.8,
         "median_dom": 5,
-        "sample_size": 126
+        "sample_size": 168
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 20
       }
     },
     "ლისი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 2.8,
         "median_dom": 5,
-        "sample_size": 5
+        "sample_size": 9
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 53
       }
     },
     "ლისის ტბა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.6,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 180
       }
     },
     "ლოქინი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 2.7,
         "median_dom": 5,
-        "sample_size": 6
+        "sample_size": 11
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 2
       }
     },
     "მესამე მასივი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 185
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 17
       }
     },
     "მთაწმინდა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 182
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 53
       }
     },
     "მუხიანი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 186
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 29
       }
     },
     "ნავთლუღი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 189
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 33
       }
     },
     "ნაძალადევი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 128
+        "sample_size": 184
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 31
       }
     },
     "ნუცუბიძის ფერდობი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 124
+        "sample_size": 179
+      },
+      "rent": {
+        "avg_dom": 0.4,
+        "median_dom": 0,
+        "sample_size": 51
       }
     },
     "ორთაჭალა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.7,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 172
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 48
       }
     },
     "ორხევი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 2.6,
         "median_dom": 5,
-        "sample_size": 24
+        "sample_size": 47
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 4
       }
     },
     "საბურთალო": {
       "sale": {
-        "avg_dom": 2.7,
-        "median_dom": 2,
-        "sample_size": 559
+        "avg_dom": 4.1,
+        "median_dom": 5,
+        "sample_size": 171
       },
       "rent": {
-        "avg_dom": 2.0,
+        "avg_dom": 1.5,
         "median_dom": 2,
-        "sample_size": 405
+        "sample_size": 45
       }
     },
     "სამგორი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 126
+        "sample_size": 182
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 30
       }
     },
     "სანზონა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 184
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 22
       }
     },
     "სვანეთის უბანი": {
       "sale": {
-        "avg_dom": 5.0,
-        "median_dom": 5,
-        "sample_size": 13
+        "avg_dom": 2.2,
+        "median_dom": 0,
+        "sample_size": 29
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 5
       }
     },
     "სოლოლაკი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 186
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 45
+      }
+    },
+    "სოფელი გლდანი": {
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 5
+      }
+    },
+    "სოფელი დიღომი": {
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 31
       }
     },
     "ტყინვალი": {
       "sale": {
-        "avg_dom": 5.0,
-        "median_dom": 5,
-        "sample_size": 1
+        "avg_dom": 2.5,
+        "median_dom": 2,
+        "sample_size": 2
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 12
       }
     },
     "ფონიჭალა": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.4,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 188
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 5
       }
     },
     "ჩუღურეთი": {
       "sale": {
-        "avg_dom": 5.0,
+        "avg_dom": 3.5,
         "median_dom": 5,
-        "sample_size": 127
+        "sample_size": 184
+      },
+      "rent": {
+        "avg_dom": 0.0,
+        "median_dom": 0,
+        "sample_size": 37
       }
     }
   }

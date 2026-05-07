@@ -57,7 +57,7 @@ def main() -> None:
                 lt = "sale"
             elif isinstance(key, str) and key.startswith("rent_"):
                 lt = "rent"
-        if not district or not lt:
+        if not district or not lt or district.startswith("#ID-"):
             skipped += 1
             continue
         dom = entry.get("dom_days")
