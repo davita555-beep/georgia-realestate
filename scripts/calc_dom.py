@@ -39,11 +39,24 @@ def main() -> None:
     groups: dict[tuple[str, str], list[int]] = defaultdict(list)
     skipped = 0
 
-    for entry in listings.values():
+    for key, entry in listings.items():
         if entry.get("status") != "active":
             continue
-        district = entry.get("district")
+        # New schema uses subdistrict_name_ka; old schema uses district
+        district = entry.get("subdistrict_name_ka") or entry.get("district")
+        # New schema: derive from href (iyideba=sale, iqiraveba=rent)
+        # Old schema: listing_type field, or key prefix (sale_/rent_)
         lt = entry.get("listing_type")
+        if not lt:
+            href = entry.get("href") or ""
+            if "iyideba" in href:
+                lt = "sale"
+            elif "iqiraveba" in href:
+                lt = "rent"
+            elif isinstance(key, str) and key.startswith("sale_"):
+                lt = "sale"
+            elif isinstance(key, str) and key.startswith("rent_"):
+                lt = "rent"
         if not district or not lt:
             skipped += 1
             continue
