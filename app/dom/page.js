@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 const CONDITION_LABELS = {
@@ -137,7 +137,7 @@ function DOMBadge({ days, t }) {
   );
 }
 
-export default function DOMPage() {
+function DOMPageInner() {
   const searchParams = useSearchParams();
   if (searchParams.get("preview") !== "mx7Kp2wQnR4s") {
     return (
@@ -593,5 +593,13 @@ export default function DOMPage() {
         </div>
       </footer>
     </main>
+  );
+}
+
+export default function DOMPage() {
+  return (
+    <Suspense fallback={null}>
+      <DOMPageInner />
+    </Suspense>
   );
 }
