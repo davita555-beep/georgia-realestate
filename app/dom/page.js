@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 const CONDITION_LABELS = {
   black_frame:        { ka: "შავი კარკასი",      en: "Black Frame" },
@@ -137,6 +138,16 @@ function DOMBadge({ days, t }) {
 }
 
 export default function DOMPage() {
+  const searchParams = useSearchParams();
+  if (searchParams.get("preview") !== "mx7Kp2wQnR4s") {
+    return (
+      <main style={{minHeight:"100vh",background:"#0B1C3D",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",textAlign:"center",padding:"24px"}}>
+        <h1 style={{fontSize:"clamp(64px,12vw,120px)",fontWeight:800,color:"#fff",letterSpacing:"-0.04em",lineHeight:1}}>404</h1>
+        <p style={{color:"rgba(255,255,255,0.5)",fontSize:16,marginTop:16}}>გვერდი ვერ მოიძებნა / Page not found</p>
+      </main>
+    );
+  }
+
   const [lang, setLang] = useState("ka");
   const t = T[lang];
 
