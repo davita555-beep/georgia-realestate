@@ -623,6 +623,8 @@ def persist_listings(scraped: list[dict], today: str) -> tuple[dict, dict]:
             n_updated += 1
 
     for key, entry in db.items():
+        if key.startswith(("sale_", "rent_")):
+            continue  # scrape_listings.py owns these keys; don't touch them
         if key not in seen_ids and entry.get("status") == "active":
             entry["status"] = "delisted"
             try:
