@@ -20,16 +20,16 @@ const T = {
     heroDesc:     "ბაზარზე დიდი ხნის განმავლობაში განთავსებული ბინა ნიშნავს მოტივირებულ გამყიდველს. ჩვენ ვაკვირდებით განთავსების ვადებს ყველა რაიონში — ასე იგებ, სად ღირს მოლაპარაკება.",
     liveData:     "ლაივ მონაცემები",
     domSectionLabel: "Market Intelligence",
-    domTitle:     "DOM — ბაზარზე ყოფნის დრო, რაიონების მიხედვით",
-    domSub:       "საშუალო დღეები ბაზარზე — გაყიდვა და იჯარა. რაც მეტია, მით მეტია ფასდაკლების შანსი.",
+    domTitle:     "ბოლო განთავსებიდან გასული დღეები — რაიონების მიხედვით",
+    domSub:       "საშუალო დღეები ბოლო განთავსებიდან — გაყიდვა. რაც მეტია, მით მეტია ფასდაკლების შანსი.",
     district:     "რაიონი",
-    saleAvg:      "გაყიდვა — საშ. DOM",
+    saleAvg:      "გაყიდვა — საშ. დღეები",
     saleN:        "განცხ.",
     rentAvg:      "იჯარა — საშ. DOM",
     rentN:        "განცხ.",
     days:         "დღე",
     updated:      "განახლდა",
-    gatedLabel:   "High DOM Listings",
+    gatedLabel:   "ძველი განცხადებები",
     gatedTitle:   "აღმოაჩინე ბინები რეალური ფასდაკლების პოტენციალით",
     gatedSub:     "მონაცემებზე დაფუძნებული ანალიტიკა, რომელიც გაძლევს წვდომას იმ ობიექტებზე, სადაც ფასზე მოლაპარაკების რეალური პოტენციალი არსებობს. ჩვენ ყოველდღიურად ვამუშავებთ ასობით განცხადებას და სპეციალური ალგორითმით გამოვყოფთ ბინებს, რომლებიც: ბაზარზე საშუალოზე დიდხანს არის განთავსებული, მიანიშნებს მოლაპარაკების მაღალ ალბათობაზე, შეიძლება რეალურ საბაზრო ღირებულებაზე უკეთეს ფასში შეიძინო.",
     unlockTitle:  "სრული სიის სანახავად შეავსე ფორმა",
@@ -68,18 +68,18 @@ const T = {
     heroDesc:     "Apartments sitting on the market signal motivated sellers. We track days on market across all districts so you know where to negotiate hardest.",
     liveData:     "Live Data",
     domSectionLabel: "Market Intelligence",
-    domTitle:     "Days on Market by District",
-    domSub:       "Average days listed — sale and rental. Higher DOM = better negotiation position.",
+    domTitle:     "Days Since Last Listed by District",
+    domSub:       "Average days since last listed — sale. Higher = better negotiation leverage.",
     district:     "District",
-    saleAvg:      "Sale — Avg DOM",
+    saleAvg:      "Sale — Avg Days",
     saleN:        "listings",
     rentAvg:      "Rent — Avg DOM",
     rentN:        "listings",
     days:         "days",
     updated:      "Updated",
-    gatedLabel:   "High DOM Listings",
-    gatedTitle:   "High DOM — Individual Listings",
-    gatedSub:     "Properties with the most negotiation potential, sorted by days on market.",
+    gatedLabel:   "Long-Standing Listings",
+    gatedTitle:   "Discover apartments with real discount potential",
+    gatedSub:     "Properties with the most negotiation potential, sorted by days since last listed.",
     unlockTitle:  "Unlock the full listing feed",
     unlockSub:    "Fill the form to see the full list — we'll also send you matching deals on WhatsApp.",
     nameLabel:    "Your name",
@@ -126,6 +126,14 @@ function calcPriceDrops(history) {
     if (prev > 0 && curr < prev) drops++;
   }
   return drops;
+}
+
+function getBucket(days, lang) {
+  const ka = lang === "ka";
+  if (days <=  7) return { label: ka ? "ახალი"    : "Fresh",  color: "#059669", bg: "rgba(5,150,105,0.10)"  };
+  if (days <= 30) return { label: ka ? "აქტიური"  : "Active", color: "#1E3A6E", bg: "rgba(30,58,110,0.10)"  };
+  if (days <= 90) return { label: ka ? "ძველი"    : "Stale",  color: "#D97706", bg: "rgba(217,119,6,0.10)"  };
+  return           { label: ka ? "გაყინული" : "Frozen", color: "#991B1B", bg: "rgba(153,27,27,0.10)" };
 }
 
 function DOMBadge({ days, t }) {
@@ -322,15 +330,13 @@ function DOMPageInner() {
           ) : (
             <div style={{ border: "1px solid #E2E8F0", borderRadius: 16, overflow: "hidden", boxShadow: "0 4px 20px rgba(11,28,61,0.06)" }}>
               <div style={{ overflowX: "auto" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 560 }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 360 }}>
                   <thead>
                     <tr style={{ background: "#F8FAFC" }}>
                       {[
                         { label: t.district,  align: "left"  },
                         { label: t.saleAvg,   align: "right" },
                         { label: t.saleN,     align: "right" },
-                        { label: t.rentAvg,   align: "right" },
-                        { label: t.rentN,     align: "right" },
                       ].map(h => (
                         <th key={h.label} style={{ padding: "12px 18px", fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.07em", color: "#64748B", textAlign: h.align, borderBottom: "2px solid #E2E8F0", whiteSpace: "nowrap" }}>
                           {h.label}
@@ -341,25 +347,19 @@ function DOMPageInner() {
                   <tbody>
                     {districtRows.map(([distName, d], idx) => {
                       const saleAvg = d.sale?.avg_dom;
-                      const rentAvg = d.rent?.avg_dom;
-                      const hot     = (saleAvg ?? 0) > 20;
+                      const bucket  = saleAvg != null ? getBucket(Math.round(saleAvg), lang) : null;
                       return (
                         <tr key={distName} style={{ background: idx % 2 === 0 ? "#fff" : "#FAFAF8" }}>
                           <td style={{ padding: "14px 18px", fontWeight: 600, color: "#0B1C3D", fontSize: 14, borderBottom: "1px solid #F1F5F9" }}>
                             {distName}
-                            {hot && <span style={{ marginLeft: 8, fontSize: 11, fontWeight: 600, padding: "2px 7px", borderRadius: 5, background: "rgba(201,168,76,0.12)", color: "#A8863A" }}>high DOM</span>}
                           </td>
-                          <td style={{ padding: "14px 18px", textAlign: "right", fontWeight: 700, color: saleAvg > 20 ? "#DC2626" : "#1E3A6E", fontSize: 15, borderBottom: "1px solid #F1F5F9" }}>
-                            {saleAvg != null ? <>{Math.round(saleAvg)} <span style={{ fontSize: 11, color: "#94A3B8", fontWeight: 400 }}>{t.days}</span></> : "—"}
+                          <td style={{ padding: "14px 18px", textAlign: "right", fontWeight: 700, color: bucket?.color ?? "#1E3A6E", fontSize: 15, borderBottom: "1px solid #F1F5F9" }}>
+                            {saleAvg != null ? (
+                              <>{Math.round(saleAvg)} <span style={{ fontSize: 11, color: "#94A3B8", fontWeight: 400 }}>{t.days}</span>{" "}<span style={{ fontSize: 11, fontWeight: 600, padding: "2px 7px", borderRadius: 5, background: bucket.bg, color: bucket.color, marginLeft: 4, whiteSpace: "nowrap" }}>{bucket.label}</span></>
+                            ) : "—"}
                           </td>
                           <td style={{ padding: "14px 18px", textAlign: "right", color: "#94A3B8", fontSize: 13, borderBottom: "1px solid #F1F5F9" }}>
                             {d.sale?.sample_size ?? "—"}
-                          </td>
-                          <td style={{ padding: "14px 18px", textAlign: "right", fontWeight: 700, color: "#1E3A6E", fontSize: 15, borderBottom: "1px solid #F1F5F9" }}>
-                            {rentAvg != null ? <>{Math.round(rentAvg)} <span style={{ fontSize: 11, color: "#94A3B8", fontWeight: 400 }}>{t.days}</span></> : "—"}
-                          </td>
-                          <td style={{ padding: "14px 18px", textAlign: "right", color: "#94A3B8", fontSize: 13, borderBottom: "1px solid #F1F5F9" }}>
-                            {d.rent?.sample_size ?? "—"}
                           </td>
                         </tr>
                       );
