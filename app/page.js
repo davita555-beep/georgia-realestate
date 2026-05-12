@@ -496,11 +496,6 @@ export default function Home() {
               className="hidden sm:block transition-all hover:bg-yellow-500/10">
               {t.rental}
             </a>
-            <button onClick={openForm}
-              style={{touchAction:"manipulation",minHeight:40,background:"linear-gradient(135deg,#C9A84C,#A8863A)",border:"none",color:"#fff",borderRadius:8,padding:"8px 18px",fontSize:13,fontWeight:600}}
-              className="transition-all hover:opacity-90">
-              {t.findApt}
-            </button>
           </div>
         </div>
       </header>
@@ -523,6 +518,10 @@ export default function Home() {
               {t.heroDesc}
             </p>
             <div className="flex flex-wrap gap-4">
+              <button onClick={openForm}
+                style={{touchAction:"manipulation",background:"linear-gradient(135deg,#C9A84C,#A8863A)",border:"none",color:"#fff",borderRadius:12,padding:"15px 32px",fontSize:15,fontWeight:600,minHeight:52}}>
+                {t.findApt}
+              </button>
               <button onClick={() => document.getElementById('price-checker')?.scrollIntoView({behavior:'smooth'})}
                 style={{touchAction:"manipulation",background:"linear-gradient(135deg,#C9A84C,#A8863A)",border:"none",color:"#fff",borderRadius:12,padding:"15px 32px",fontSize:15,fontWeight:600,minHeight:52}}>
                 {t.checkPriceBtn}
