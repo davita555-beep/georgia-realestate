@@ -63,7 +63,8 @@ def main() -> None:
         dom = entry.get("dom_days")
         if dom is None:
             try:
-                first = datetime.strptime(entry["first_seen"], "%Y-%m-%d").date()
+                anchor = entry.get("listing_published_date") or entry["first_seen"]
+                first = datetime.strptime(anchor, "%Y-%m-%d").date()
                 dom = (today - first).days
             except (KeyError, ValueError):
                 skipped += 1

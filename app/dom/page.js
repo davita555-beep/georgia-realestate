@@ -111,9 +111,10 @@ const T = {
   },
 };
 
-function calcDOM(firstSeen, finalDom) {
+function calcDOM(firstSeen, finalDom, publishedDate) {
   if (finalDom != null && finalDom > 0) return finalDom;
-  return Math.floor((Date.now() - new Date(firstSeen).getTime()) / 86400000);
+  const anchor = publishedDate || firstSeen;
+  return Math.floor((Date.now() - new Date(anchor).getTime()) / 86400000);
 }
 
 function calcPriceDrops(history) {
@@ -174,7 +175,7 @@ function DOMPageInner() {
           .filter(l => l.status === "active" && l.current_price_usd > 0)
           .map(l => ({
             ...l,
-            domDays:    calcDOM(l.first_seen, l.final_dom_days),
+            domDays:    calcDOM(l.first_seen, l.final_dom_days, l.listing_published_date),
             priceDrops: calcPriceDrops(l.price_history),
           }))
           .sort((a, b) => b.domDays - a.domDays);

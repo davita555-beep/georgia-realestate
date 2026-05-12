@@ -539,6 +539,20 @@ def enrich_from_detail_page(listing: dict) -> dict:
     listing["price_assessment"] = price_assessment
 
     listing["seller_name"] = None   # not in SSR HTML
+
+    # Publish date from __NEXT_DATA__ — only reliable when isMovedUp is False.
+    listing["listing_published_date"] = None
+    script_tag = soup.find("script", {"id": "__NEXT_DATA__"})
+    if script_tag:
+        try:
+            app_data = json.loads(script_tag.string)["props"]["pageProps"]["applicationData"]
+            if not app_data.get("isMovedUp", True):
+                raw = app_data.get("orderDate")
+                if raw:
+                    listing["listing_published_date"] = raw[:10]
+        except Exception:
+            print(f"  WARNING: could not parse __NEXT_DATA__ for listing {listing.get('listing_id')}")
+
     listing["enrichment_status"] = "complete"
     return listing
 
@@ -652,7 +666,7 @@ def run_enrichment(db: dict[str, dict], max_enrich: int | None = None,
     Logs listing_id progress every log_every fetches."""
     pending = [
         e for e in db.values()
-        if e.get("enrichment_status") != "complete"
+        if (e.get("enrichment_status") != "complete" or e.get("listing_published_date") is None)
         and e.get("enrichment_attempts", 0) < 3
     ]
     if max_enrich is not None:
