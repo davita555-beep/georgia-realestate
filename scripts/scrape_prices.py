@@ -669,6 +669,7 @@ def run_enrichment(db: dict[str, dict], max_enrich: int | None = None,
         if (e.get("enrichment_status") != "complete" or e.get("listing_published_date") is None)
         and e.get("enrichment_attempts", 0) < 3
     ]
+    total_pending = len(pending)
     if max_enrich is not None:
         pending = pending[:max_enrich]
 
@@ -686,6 +687,7 @@ def run_enrichment(db: dict[str, dict], max_enrich: int | None = None,
         time.sleep(random.uniform(*REQUEST_DELAY_RANGE))
 
     _save_listings(db, datetime.now(timezone.utc).isoformat())
+    print(f"Enrichment: processed {total} of {total_pending} pending, {total_pending - total} remain")
     return db
 
 
@@ -960,7 +962,7 @@ def main():
           f"price_changed={persist_summary['price_changed']} delisted={persist_summary['delisted']} "
           f"total={persist_summary['total']}")
 
-    db = run_enrichment(db)
+    db = run_enrichment(db, max_enrich=2500)
     db_index = build_subdistrict_index(db)
 
     new_prices: dict = {}

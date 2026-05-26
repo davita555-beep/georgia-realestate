@@ -35,6 +35,32 @@ jobs:
       - name: Run sales price scraper
         run: python scripts/scrape_prices.py
 
+      - name: Verify scrape completed
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          from datetime import datetime, timezone, timedelta
+
+          with open("data/history.json") as f:
+              history = json.load(f)
+
+          if not history:
+              print("::error::data/history.json is empty")
+              sys.exit(1)
+
+          last_date = datetime.fromisoformat(history[-1]["date"])
+          if last_date.tzinfo is None:
+              last_date = last_date.replace(tzinfo=timezone.utc)
+
+          age = datetime.now(timezone.utc) - last_date
+          if age > timedelta(hours=24):
+              h = age.total_seconds() / 3600
+              print(f"::error::history.json last entry is {h:.1f}h old — scrape_prices.py did not complete")
+              sys.exit(1)
+
+          print(f"OK — completed {age.total_seconds()/60:.0f} min ago ({history[-1]['date']})")
+          EOF
+
       - name: Run rental price scraper
         run: python scripts/scrape_rents.py
 
