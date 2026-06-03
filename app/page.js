@@ -5,12 +5,11 @@ import TickerBar from "@/components/TickerBar";
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-function getSupabase() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
-}
+/** @type {import('@supabase/supabase-js').SupabaseClient} */
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 const FINISH_TYPES = [
   { id: "black",     ka: "შავი კარკასი",    en: "Black Frame",  desc_ka: "მხოლოდ კონსტრუქცია",        desc_en: "Bare concrete shell",             multiplier: 0.85 },
@@ -224,8 +223,10 @@ const TYPE_COLORS = {
 export default function Home() {
   const [lang, setLang] = useState("ka");
   const t = T[lang];
+  /** @type {[Array, Function]} */
   const [districts, setDistricts] = useState([]);
   const [loading, setLoading] = useState(true);
+  /** @type {[Array, Function]} */
   const [chartData, setChartData] = useState([]);
   const [chartOpen, setChartOpen] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -237,8 +238,8 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [selectedFinish, setSelectedFinish] = useState("black");
-  const [gridFinish, setGridFinish] = useState("black");
   const [chartTab, setChartTab] = useState("sale");
+  /** @type {[Object, Function]} */
   const [formData, setFormData] = useState({
     budget: "", purpose: "", district: "", propertyType: "",
     timeline: "", financing: "", whatsapp: "", name: "",
@@ -246,11 +247,14 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchPrices() {
-      const { data } = await getSupabase()
+      const { data, error } = await supabase
         .from("prices")
         .select("*")
         .order("recorded_at", { ascending: false });
-      if (data) {
+      
+      if (error) {
+        console.error("Error fetching prices:", error.message);
+      } else if (data) {
         const latest = {};
         const byDistrict = {};
         data.forEach((row) => {
